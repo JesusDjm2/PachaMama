@@ -1,0 +1,144 @@
+body {
+  background: #2f5472;
+}
+
+.compartir .share {
+  color: grey;
+  background: #fff;
+  font-size: 15px;
+  padding: 1em;
+  border-radius: 50%;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+}
+
+.modal-dialog .close {
+  background: #2f5472;
+  color: #fff;
+  border: none;
+}
+.modal-dialog .modal-body a {
+  display: block;
+  margin-bottom: 1.2em;
+  text-decoration: none;
+  padding-left: 25%;
+  padding-right: 25%;
+  padding-bottom: 0.4em;
+  color: #2f5472;
+  border-bottom: 1px dashed transparent;
+  float: left;
+  transition: 0.6s;
+}
+.modal-dialog .modal-body a:hover {
+  border-bottom: 1px dashed #2f5472;
+  transition: 0.6s;
+}
+.modal-dialog .modal-body a:hover i {
+  background: #2f5472;
+  color: #fff;
+  transition: 0.6s;
+}
+.modal-dialog .modal-body a i {
+  background: #fff;
+  color: #2f5472;
+  border-bottom: dashed 1px #2f5472;
+  padding: 0.4em 0.5em;
+  border-radius: 4px;
+  border: 1px solid #2f5472;
+  transition: 0.6s;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 60%;
+}
+.popup-content .modal-content {
+  border: none !important;
+}
+
+.contenedor p {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+.contenedor span {
+  font-size: 20px;
+  margin-right: 0.4em;
+  color: #2f5472;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border: #2f5472 solid 1px;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.contenedor span:hover {
+  border: #2f5472 solid 1px;
+  background: #43cfcf;
+  color: #ffffff;
+  transition: 0.4s;
+  transform: translateY(-0.2em);
+}
+.contenedor a {
+  background: #ffffff;
+  color: #2f5472;
+  padding: 0.8em 0em;
+  display: block;
+  margin-top: 0.2em;
+  text-decoration: none;
+  border: 1px solid #737d85;
+  transition: 0.5s;
+  border-radius: 25px;
+}
+.contenedor a:hover {
+  box-shadow: inset 83.5em 0 0 0 #07afaf;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.close-popup {
+  background: red;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+}
+
+.btnTransparent {
+  transition: 0.4s ease;
+}
+.btnTransparent:hover {
+  background: #07afaf;
+  color: #000;
+  transition: 0.4s ease;
+}
+
+@media (max-width: 767px) {
+  .modal-dialog .modal-body a {
+    padding-left: 3em;
+    padding-right: 0px;
+  }
+  .popup-content {
+    width: 90%;
+  }
+}
+
+/*# sourceMappingURL=landing.css.map */

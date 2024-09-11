@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="float-left">Actualizar tour: {{ $tour->nombre }}</h3>
-            <a href="{{ route('toursen.create') }}" class="btn btn-primary float-right">Crear tour en Ingles</a>
+            <a href="{{ route('toursen.index') }}" class="btn btn-primary btn-sm float-right">Volver</a>
         </div>
         <div class="col-12">
             <form action="/toursen/{{ $tour->id }}" method="post" enctype="multipart/form-data" class="bg-light"
@@ -20,24 +20,37 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" required
+                        <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" required
                             value="{{ $tour->nombre }}">
                     </div>
                     <div class="col-lg-3">
                         <label for="" class="form-label">Precio:</label>
-                        <input type="text" id="precio" name="precio" class="form-control" required
+                        <input type="text" id="precio" name="precio" class="form-control form-control-sm" required
                             value="{{ $tour->precio }}">
                     </div>
                     <div class="col-lg-3">
                         <label for="" class="form-label">Días:</label>
-                        <input type="text" id="dias" name="dias" class="form-control" required
+                        <input type="text" id="dias" name="dias" class="form-control form-control-sm" required
                             value="{{ $tour->dias }}">
                     </div>
                     <div class="col-lg-12 mt-3">
                         <label for="descripcion" class="form-label">Descripción:</label>
-                        <input type="text" id="descripcion" name="descripcion" class="form-control" required
-                            value="{{ $tour->descripcion }}">
+                        <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm"
+                            required value="{{ $tour->descripcion }}">
                     </div>
+                    <div class="col-lg-12 mt-3">
+                        <label for="tour_id">Seleccionar Tour:</label>
+                        <select name="tour_id" id="tour_id" class="form-control form-control-sm">
+                            <option value="">Seleccionar Tour</option>
+                            @foreach ($toursDisponibles as $tourDisponible)
+                                <option value="{{ $tourDisponible->id }}"
+                                    {{ $tourDisponible->id == old('tour_id', $tour->tour_id) ? 'selected' : '' }}>
+                                    {{ $tourDisponible->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="col-lg-12 mt-3">
                         <label for="contenido" class="form-label">Contenido:</label>
                         <textarea class="ckeditor form-control" name="contenido" id="contenido">{!! Request::old('content', $tour->contenido) !!}</textarea>
@@ -64,17 +77,19 @@
                         <textarea class="ckeditor form-control" name="importante" id="importante">{!! Request::old('content', $tour->importante) !!}</textarea>
                         </textarea>
                     </div>
+
+
                     <div class="col-lg-4 mt-3">
                         <label for="img" class="form-label">Imagen:</label>
-                        <input type="file" id="img" name="img" class="form-control" accept="image/*"
-                            value="{{ $tour->img }}">
+                        <input type="file" id="img" name="img" class="form-control form-control-sm"
+                            accept="image/*" value="{{ $tour->img }}">
                         <img src="../../{{ $tour->img }}" width="100%" height="220px" style="object-fit: cover"><br>
                     </div>
 
-                    <div class="col-lg-3 mt-3">
+                    {{-- <div class="col-lg-3 mt-3">
                         <label for="" class="form-label">Categoría:</label><br>
-                        <select name="categoria[]" id="categoria" class="form-select" aria-label="Default select example"
-                            required multiple="multiple">
+                        <select name="categoria[]" id="categoria" class="form-control form-control-sm"
+                            aria-label="Default select example" required multiple="multiple">
                             <option value="{{ $tour->categoria }}" selected style="text-transform: capitalize">
                                 {{ $tour->categoria }} <small>(Seleccionado)</small></option>
                             <option value="hikes">Caminatas</option>
@@ -83,6 +98,31 @@
                             <option value="luxury">Luxury</option>
                             <option value="fullday">Full day</option>
                         </select>
+                    </div> --}}
+                    <div class="col-lg-8 mt-3">
+                        <label for="categories">Categorías:</label>
+                        <div class="row">
+                            @foreach ($categorias as $categoria)
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="categories[]" value="{{ $categoria->id }}"
+                                            class="form-check-input" id="categoria-{{ $categoria->id }}"
+                                            {{-- Mostrar el old value si existe, sino las categorías relacionadas --}}
+                                            {{ in_array($categoria->id, old('categories', $tour->categories->pluck('id')->toArray())) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="categoria-{{ $categoria->id }}">
+                                            {{ $categoria->nombre }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        {{-- Mostrar errores de validación para categorías --}}
+                        @if ($errors->has('categories'))
+                            <div class="text-danger">
+                                {{ $errors->first('categories') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-5 mt-3">
                         <label for="" class="form-label">Clase:</label>
@@ -108,27 +148,28 @@
                             <option value="pisco">Reserva Nacional Paracas</option>
                             <option value="puerto">Puerto Maldonado</option>
                         </select>
-                        <div style="width: 100%; height: 180px; object-fit: cover;" id="dynamic-class-div" class="default-class">
+                        <div style="width: 100%; height: 280px; object-fit: cover;" id="dynamic-class-div"
+                            class="default-class">
                             <!-- Contenido aquí -->
                         </div>
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var selectElement = document.getElementById('clase');
                                 var dynamicDiv = document.getElementById('dynamic-class-div');
-                                
+
                                 // Inicializa el div con la clase correspondiente al valor seleccionado por defecto
                                 var defaultClass = selectElement.value;
                                 if (defaultClass) {
                                     dynamicDiv.classList.add(defaultClass);
                                 }
-                    
+
                                 // Actualiza la clase del div cuando cambia la selección
                                 selectElement.addEventListener('change', function() {
                                     var selectedClass = this.value;
-                                    
+
                                     // Elimina todas las clases dinámicas anteriores (excepto la clase predeterminada)
                                     dynamicDiv.className = 'default-class';
-                                    
+
                                     // Agrega la nueva clase basada en la opción seleccionada
                                     if (selectedClass) {
                                         dynamicDiv.classList.add(selectedClass);
@@ -137,22 +178,31 @@
                             });
                         </script>
                     </div>
-                    
 
-                    <div class="col-lg-4">
+
+                    <div class="col-lg-4 pt-3">
                         <label for="" class="form-label">Ubicación:</label>
-                        <input type="text" id="ubicacion" name="ubicacion" class="form-control" required
-                            value="{{ $tour->ubicacion }}">
+                        <input type="text" id="ubicacion" name="ubicacion" class="form-control form-control-sm"
+                            required value="{{ $tour->ubicacion }}">
+                    </div>
+                    <div class="col-lg-8 pt-3">
+                        <label for="mapa" class="form-label">Mapa:</label>
+                        <textarea name="mapa" id="mapa" class="form-control form-control-sm"> {!! Request::old('content', $tour->mapa) !!}</textarea>
+                        @if ($errors->has('mapa'))
+                            <div class="text-danger">
+                                {{ $errors->first('mapa') }}
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-12">
                         <label for="" class="form-label">Keywords:</label>
-                        <input type="text" id="keywords" name="keywords" class="form-control" required
-                            value="{{ $tour->keywords }}">
+                        <input type="text" id="keywords" name="keywords" class="form-control form-control-sm"
+                            required value="{{ $tour->keywords }}">
                     </div>
                     <div class="col-lg-12">
                         <label for="" class="form-label">Slug:</label>
-                        <input type="text" id="slug" name="slug" class="form-control" required
-                            value="{{ $tour->slug }}">
+                        <input type="text" id="slug" name="slug" class="form-control form-control-sm"
+                            required value="{{ $tour->slug }}">
                     </div>
                 </div>
                 <a href="/toursen" class="btn btn-secondary mt-4">Cancelar</a>

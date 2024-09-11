@@ -171,7 +171,7 @@
                 @foreach ($tours->take(8) as $tour)
                     <div class="col-lg-3 col-md-6">
                         <div class="card card-new" style="width: 18rem;">
-                            <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                            <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}">
                                 <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
                                     loading="lazy">
                             </a>
@@ -179,41 +179,24 @@
                                 <h5 class="card-titulo">{{ $tour->nombre }}</h5>
                                 <p class="text-card">{{ $tour->descripcion }}</p>
                                 <div class="enlacesCategoria">
-                                    @if (Str::contains($tour->categoria, 'machuPicchu'))
-                                        <p style="display:none">
-                                            {{ $mapi = 'Machu Picchu' }}
-                                        </p>
-                                        <a class="enlaceMapi" href="{{ route('mapien') }}">{{ $mapi }} </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'caminata'))
-                                        <p style="display:none">
-                                            {{ $hike = 'Hiking' }}
-                                        </p>
-                                        <a class="enlaceHike" href="{{ route('hikes') }}"> {{ $hike }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'around'))
-                                        <p style="display: none">
-                                            {{ $peru = 'Perú' }}
-                                        </p>
-                                        <a class="enlaceAround" href="{{ route('around') }}"> {{ $peru }} </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'luxury'))
-                                        <p style="display:none">
-                                            {{ $luxury = 'Private' }}
-                                        </p>
-                                        <a class="enlaceLuxury" href="{{ route('private') }}"> {{ $luxury }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'fullday'))
-                                        <p style="display:none">
-                                            {{ $fullday = 'Full Day' }}
-                                        </p>
-                                        <a class="enlaceFullday" href="{{ route('fulldayen') }}">
-                                            {{ $fullday }}</a>
-                                    @endif
+                                    @php
+                                        $colors = ['text-primary', 'text-success', 'text-info', 'text-warning', 'text-secondary'];
+                                    @endphp
+                                
+                                    @foreach ($tour->categories as $index => $category)
+                                        <a href="{{ route('category.show', $category) }}"
+                                            class="{{ $colors[$index % count($colors)] }} font-weight-bold text-uppercase"
+                                            title="Ver categoría" style="font-size: 11px;">
+                                            {{ $category->nombre }}
+                                        </a>
+                                    @endforeach
                                 </div>
+                                
+
                                 <div class="row iconos-tours">
                                     <div class="col-6">
-                                        <span class="icon-clock-o" style="float: right"> {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
+                                        <span class="icon-clock-o" style="float: right">
+                                            {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
                                     </div>
                                     <div class="col-6">
                                         <span class="icon-usd" style="float:left">{{ $tour->precio }}.00</span>
@@ -222,8 +205,8 @@
                                         <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
                                     </div>
                                 </div>
-                                <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
-                                    class="boton-card">Más detalles</a>
+                                <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}" class="boton-card">Más
+                                    detalles</a>
                             </div>
                         </div>
                     </div>
@@ -239,28 +222,28 @@
             <div class="oscuro">
                 <h5>Trekking</h5>
                 <p>Excursions with walks through Peru</p>
-                <a href="{{route('hikes')}}">Explore tours</a>
+                <a href="{{ route('hikes') }}">Explore tours</a>
             </div>
         </div>
         <div class="full-img-card dos">
             <div class="oscuro">
                 <h5>Machu Picchu</h5>
                 <p>Tours in Machu Picchu</p>
-                <a href="{{route('mapien')}}">Explore tours</a>
+                <a href="{{ route('mapien') }}">Explore tours</a>
             </div>
         </div>
         <div class="full-img-card tres">
             <div class="oscuro">
                 <h5>Perú</h5>
                 <p>Tours to discover Peru</p>
-                <a href="{{route('around')}}">Explore tours</a>
+                <a href="{{ route('around') }}">Explore tours</a>
             </div>
         </div>
         <div class="full-img-card cuatro">
             <div class="oscuro">
                 <h5>Mountain Lodge</h5>
                 <p>Pacha Mama Spirit Lodge</p>
-                <a href="{{route('lodgen')}}">Explore tours</a>
+                <a href="{{ route('lodgen') }}">Explore tours</a>
             </div>
         </div>
     </div>
@@ -293,43 +276,22 @@
                                     <h5 class="card-titulo">{{ $tour->nombre }}</h5>
                                     <p class="text-card">{{ $tour->descripcion }}</p>
                                     <div class="enlacesCategoria">
-                                        @if (Str::contains($tour->categoria, 'machuPicchu'))
-                                            <p style="display:none">
-                                                {{ $mapi = 'Machu Picchu' }}
-                                            </p>
-                                            <a class="enlaceMapi" href="{{ route('mapien') }}">{{ $mapi }} </a>
-                                        @endif
-                                        @if (Str::contains($tour->categoria, 'caminata'))
-                                            <p style="display:none">
-                                                {{ $hike = 'Hiking' }}
-                                            </p>
-                                            <a class="enlaceHike" href="{{ route('hikes') }}"> {{ $hike }}</a>
-                                        @endif
-                                        @if (Str::contains($tour->categoria, 'around'))
-                                            <p style="display: none">
-                                                {{ $peru = 'Perú' }}
-                                            </p>
-                                            <a class="enlaceAround" href="{{ route('around') }}"> {{ $peru }}
+                                        @php
+                                            $colors = ['text-primary', 'text-success', 'text-info', 'text-warning', 'text-secondary'];
+                                        @endphp
+                                    
+                                        @foreach ($tour->categories as $index => $category)
+                                            <a href="{{ route('category.show', $category) }}"
+                                                class="{{ $colors[$index % count($colors)] }} font-weight-bold text-uppercase"
+                                                title="Ver categoría" style="font-size: 11px;">
+                                                {{ $category->nombre }}
                                             </a>
-                                        @endif
-                                        @if (Str::contains($tour->categoria, 'luxury'))
-                                            <p style="display:none">
-                                                {{ $luxury = 'Private' }}
-                                            </p>
-                                            <a class="enlaceLuxury" href="{{ route('private') }}">
-                                                {{ $luxury }}</a>
-                                        @endif
-                                        @if (Str::contains($tour->categoria, 'fullday'))
-                                            <p style="display:none">
-                                                {{ $fullday = 'Full Day' }}
-                                            </p>
-                                            <a class="enlaceFullday" href="{{ route('fulldayen') }}">
-                                                {{ $fullday }}</a>
-                                        @endif
+                                        @endforeach
                                     </div>
                                     <div class="row iconos-tours">
                                         <div class="col-6">
-                                            <span class="icon-clock-o" style="float: right"> {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
+                                            <span class="icon-clock-o" style="float: right">
+                                                {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
                                         </div>
                                         <div class="col-6">
                                             <span class="icon-usd" style="float:left">{{ $tour->precio }}.00</span>
@@ -349,12 +311,12 @@
             </div>
         </div>
     </section>
-   <!---<section>
-	   <div class="container">
-		   <div class="row">
-	   </div>
-	   </div>
-</section>--->
+    <!---<section>
+     <div class="container">
+      <div class="row">
+     </div>
+     </div>
+    </section>--->
     <section>
         <div class="container mt-3">
             <div class="row">
@@ -424,5 +386,5 @@
                 </div>
             </div>
         </div>
-    </section>  
+    </section>
 @endsection

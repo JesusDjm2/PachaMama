@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EnblogController;
 use App\Http\Controllers\EnlacesCategorias;
 use App\Http\Controllers\EntagController;
@@ -32,6 +33,12 @@ Route::get('caminatas', [EnlacesCategorias::class, 'caminata'])->name('caminata'
 Route::get('alrededor-de-peru', [EnlacesCategorias::class, 'peru'])->name('peru');
 Route::get('privados', [EnlacesCategorias::class, 'luxury'])->name('luxury');
 Route::get('tours-de-un-dia', [EnlacesCategorias::class, 'fullday'])->name('fullday');
+
+//Nuevas Categorias 2024*
+Route::resource('categories', CategoryController::class)->middleware('auth')->names('category');
+/* route::resource('categories', CategoryController::class)->middleware('auth')->names('category'); */
+/* route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show'); */
+route::get('/category/{category:link}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('lodge-pacha-mama-spirit', [EnlacesCategorias::class, 'lodge'])->name('lodges');
 Route::get('nosotros', [EnlacesCategorias::class, 'nosotros'])->name('nosotros');
@@ -108,7 +115,7 @@ Route::get('searchblog', [SearchController::class, 'searchblog'])->name('searchb
 Route::get('tour/{slug}/', [TourController::class, 'show'])->name('tours.show');
 
 //Administrador de tour Ingles
-Route::resource('toursen', ToursenController::class)->middleware('auth');
+Route::resource('toursen', ToursenController::class)->middleware('auth')->names('toursen');
 Route::get('search-en-blog', [SearchenController::class, 'searchblog'])->name('search.blog.en');
 Route::get('/{slug}/', [ToursenController::class, 'show'])->name('toursen.show');
 Route::get('searchen', [SearchenController::class, 'search'])->name('searchen');

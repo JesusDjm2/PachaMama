@@ -18,51 +18,89 @@
                 <div class="row">
                     <div class="col-lg-6 pt-3">
                         <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" required>
+                        <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" required
+                            value="{{ old('nombre', $tour->nombre ?? '') }}">
+                        @error('nombre')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-lg-3 pt-3">
+                        <label for="precio" class="form-label">Precio:</label>
+                        <input type="text" id="precio" name="precio" class="form-control form-control-sm" required
+                            value="{{ old('precio', $tour->precio ?? '') }}">
+                        @error('precio')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-lg-3 pt-3">
-                        <label for="" class="form-label">Precio:</label>
-                        <input type="text" id="precio" name="precio" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-3 pt-3">
-                        <label for="" class="form-label">Días:</label>
-                        <input type="text" id="dias" name="dias" class="form-control form-control-sm" required>
+                        <label for="dias" class="form-label">Días:</label>
+                        <input type="text" id="dias" name="dias" class="form-control form-control-sm" required
+                            value="{{ old('dias', $tour->dias ?? '') }}">
+                        @error('dias')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-lg-12 pt-3">
                         <label for="descripcion" class="form-label">Descripción:</label>
                         <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm"
-                            required>
+                            required value="{{ old('descripcion', $tour->descripcion ?? '') }}">
+                        @error('descripcion')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="col-lg-12 pt-3">
                         <label for="contenido" class="form-label">Contenido:</label>
-                        <textarea class="ckeditor form-control" name="contenido" id="contenido"></textarea>
-                        </textarea>
+                        <textarea class="ckeditor form-control" name="contenido" id="contenido">{{ old('contenido', $tour->contenido ?? '') }}</textarea>
+                        @error('contenido')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-lg-12 pt-3">
                         <label for="resumen" class="form-label">Resumen:</label>
-                        <textarea class="ckeditor form-control" name="resumen" id="resumen" required></textarea>
-                        </textarea>
+                        <textarea class="ckeditor form-control" name="resumen" id="resumen" required>{{ old('resumen', $tour->resumen ?? '') }}</textarea>
+                        @error('resumen')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="col-lg-12 pt-3">Detallado:</label>
-                        <textarea class="ckeditor form-control" name="detallado" id="detallado" required></textarea>
-                        </textarea>
+                    <div class="col-lg-12 pt-3">
+                        <label for="detallado" class="form-label">Detallado:</label>
+                        <textarea class="ckeditor form-control" name="detallado" id="detallado" required>{{ old('detallado', $tour->detallado ?? '') }}</textarea>
+                        @error('detallado')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="incluidos" class="form-label">Incluye: <small>Solo listas</small> </label>
-                        <textarea class="ckeditor form-control form-control-sm" name="incluidos" id="incluidos" required></textarea>
-                        </textarea>
+                    <div class="col-lg-6 pt-3">
+                        <label for="incluidos" class="form-label">Incluye: <small>Solo listas</small></label>
+                        <textarea class="ckeditor form-control form-control-sm" name="incluidos" id="incluidos" required>{{ old('incluidos', $tour->incluidos ?? '') }}</textarea>
+                        @error('incluidos')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-
-                    <div class="col-lg-4 pt-3">
+                    <div class="col-lg-6 pt-3">
                         <label for="importante" class="form-label">Importante: <small>Solo listas</small></label>
-                        <textarea class="ckeditor form-control" name="importante" id="importante"></textarea>
-                        </textarea>
+                        <textarea class="ckeditor form-control" name="importante" id="importante">{{ old('importante', $tour->importante ?? '') }}</textarea>
+                        @error('importante')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <div class="col-lg-4 pt-3">
+                    <div class="col-lg-6 pt-3">
                         <label for="mapa" class="form-label">Mapa:</label>
                         <textarea name="mapa" id="mapa" class="ckeditor"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="tour_id">Seleccionar Tour:</label>
+                        <select name="tour_id" id="tour_id" class="form-control form-control-sm" required>
+                            <option value="">Seleccione un tour</option>
+                            @foreach ($toursDisponibles as $tour)
+                                <option value="{{ $tour->id }}">{{ $tour->nombre }}</option>
+                            @endforeach
+                        </select>
+                        @error('tour_id')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-lg-12 pt-3">
                         <label for="img" class="form-label">Imagen:</label>
@@ -95,25 +133,36 @@
                         </select>
 
                         <!-- Divs para previsualización de imágenes -->
-                        <div style="width: 100%; height:180px; object-fit:cover" id="dynamic-class-div" class="default-class">
+                        <div style="width: 100%; height:180px; object-fit:cover" id="dynamic-class-div"
+                            class="default-class">
                             <!-- Contenido aquí -->
                         </div>
                         <script>
                             document.getElementById('clase').addEventListener('change', function() {
                                 var selectedClass = this.value;
                                 var dynamicDiv = document.getElementById('dynamic-class-div');
-                            
+
                                 // Elimina todas las clases dinámicas anteriores (excepto la clase predeterminada)
                                 dynamicDiv.className = 'default-class';
-                            
+
                                 // Agrega la nueva clase basada en la opción seleccionada
                                 if (selectedClass) {
                                     dynamicDiv.classList.add(selectedClass);
                                 }
                             });
-                            </script>
+                        </script>
                     </div>
-                    <div class="col-lg-4 pt-3">
+                    <!-- En el formulario de creación de Toursen -->
+                    <div class="col-lg-4">
+                        <label for="categoria">Categorías</label>
+                        <select name="categoria[]" id="categoria" class="form-control" multiple>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- <div class="col-lg-4 pt-3">
                         <label for="" class="form-label">Categoría:</label>
                         <select multiple="multiple" name="categoria[]" id="categoria"
                             class="form-control form-control-sm">
@@ -123,7 +172,7 @@
                             <option value="luxury">Luxury</option>
                             <option value="fullday">Full day</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-lg-4 pt-3">
                         <label for="" class="form-label">Ubicación:</label>
                         <input type="text" id="ubicacion" name="ubicacion" class="form-control form-control-sm"

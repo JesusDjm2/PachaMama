@@ -22,14 +22,15 @@
                         <h1 class="h1-destinos">{{ $tour->nombre }}</h1>
                         <div class="col-lg-12 text-center font-weight-bold" style="color: #fff">
                             <span><i class="icon-map-marker"></i> {{ $tour->ubicacion }}</span>&nbsp;&nbsp;
-                            <span><i class="icon-clock-o"></i> {{ $tour->dias }} day{{ $tour->dias == 1 ? '' : 's' }}</span>
+                            <span><i class="icon-clock-o"></i> {{ $tour->dias }}
+                                day{{ $tour->dias == 1 ? '' : 's' }}</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <section>
         <div class="container pt-5">
             <div class="row justify-content-center">
@@ -89,23 +90,24 @@
                         <ul class="nav nav-tabs justify-content-center nav-fill" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                                    type="button" role="tab" aria-controls="home"
-                                    aria-selected="true"><i class="icon-pencil"></i> Overview</button>
+                                    type="button" role="tab" aria-controls="home" aria-selected="true"><i
+                                        class="icon-pencil"></i> Overview</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                    type="button" role="tab" aria-controls="profile" aria-selected="false"><i class="icon-list"></i> Program
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false"><i
+                                        class="icon-list"></i> Program
                                     detailed</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
-                                    type="button" role="tab" aria-controls="contact"
-                                    aria-selected="false"><i class="icon-add_box"></i> Included</button>
+                                    type="button" role="tab" aria-controls="contact" aria-selected="false"><i
+                                        class="icon-add_box"></i> Included</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="mapa-tab" data-bs-toggle="tab" data-bs-target="#mapa"
-                                    type="button" role="tab" aria-controls="mapa"
-                                    aria-selected="false"><i class="icon-map-marker"></i> Mapa</button>
+                                    type="button" role="tab" aria-controls="mapa" aria-selected="false"><i
+                                        class="icon-map-marker"></i> Mapa</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="importante-tab" data-bs-toggle="tab"
@@ -124,6 +126,13 @@
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 {!! $tour->incluidos !!}
                             </div>
+                            {{-- <div class="tab-pane fade" id="mapa" role="tabpanel" aria-labelledby="mapa-tab">
+                                @if (!empty($tour->mapa))
+                                    {!! $tour->mapa !!}
+                                @else
+                                    <p>Map not included</p>
+                                @endif
+                            </div> --}}
                             <div class="tab-pane fade" id="mapa" role="tabpanel" aria-labelledby="mapa-tab">
                                 @if (!empty($tour->mapa))
                                     {!! $tour->mapa !!}
@@ -171,40 +180,42 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Nombre:</label>
-                                    <input type="text" class="form-control form-control-sm" id="nombre" name="nombre"
-                                        placeholder="Inca Pachacutec">
+                                    <input type="text" class="form-control form-control-sm" id="nombre"
+                                        name="nombre" placeholder="Inca Pachacutec">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Email:</label>
-                                    <input type="email" class="form-control form-control-sm" id="email" name="email"
-                                        placeholder="hijo-del-sol@gmail.com">
+                                    <input type="email" class="form-control form-control-sm" id="email"
+                                        name="email" placeholder="hijo-del-sol@gmail.com">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="inputAddress">Adults:</label>
-                                    <input type="number" class="form-control form-control-sm" name="adultos" id="adultos"
-                                        placeholder="Number">
+                                    <input type="number" class="form-control form-control-sm" name="adultos"
+                                        id="adultos" placeholder="Number">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputAddress2" data-title="Children under 3 years old don't pay">Childs:
                                         ⓘ</label>
-                                    <input type="number" class="form-control form-control-sm" name="childs" id="inputAddress2"
-                                        placeholder="Number">
+                                    <input type="number" class="form-control form-control-sm" name="childs"
+                                        id="inputAddress2" placeholder="Number">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">Date arrival in Peru:</label>
-                                    <input type="date" class="form-control form-control-sm" id="date" name="date">
+                                    <input type="date" class="form-control form-control-sm" id="date"
+                                        name="date">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">Phone number: <i class="icon-whatsapp"></i></label>
-                                    <input type="number" class="form-control form-control-sm" id="phone" name="phone">
+                                    <input type="number" class="form-control form-control-sm" id="phone"
+                                        name="phone">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="tour">Tour:</label>
-                                    <input type="text" class="form-control form-control-sm" name="tour" id="tour"
-                                        value="{{ $tour->nombre }}" readonly>
+                                    <input type="text" class="form-control form-control-sm" name="tour"
+                                        id="tour" value="{{ $tour->nombre }}" readonly>
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label for="mensaje">Message:</label>
@@ -236,7 +247,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card card-new" style="width: 18rem;">
                             <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
-                                
+
                                 <img class="card-img-top" src="../{{ $tour->img }}" alt="Camino Inca 4 dias"
                                     loading="lazy">
                             </a>
@@ -283,7 +294,7 @@
                                 <div class="row iconos-tours">
                                     <div class="col-6">
                                         <span class="icon-clock-o" style="float:right"> {{ $tour->dias }}días</span>
-                                    </div>                                    
+                                    </div>
                                     <div class="col-6">
                                         <span class="icon-usd" style="float: left">{{ $tour->precio }}.00</span>
                                     </div>

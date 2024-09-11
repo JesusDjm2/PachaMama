@@ -14,6 +14,7 @@ return new class extends Migration {
     {
         Schema::create('toursens', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tour_id')->nullable()->constrained('tours')->onDelete('cascade');
             $table->string('nombre', 120)->unique();
             $table->string('descripcion', 250);
             $table->text('contenido');
@@ -25,7 +26,8 @@ return new class extends Migration {
             $table->integer('precio');
             $table->integer('dias');
             $table->string('img');
-            $table->string('mapa')->nullable();
+            /* $table->string('mapa')->nullable(); */
+            $table->longText('mapa')->nullable();
             $table->string('categoria');
             $table->string('keywords');
             $table->string('slug')->unique();

@@ -20,8 +20,9 @@ class Tour extends Model
         'categoria',
         'slug'
     ];
-    public function tourEn()
+    public function toursens()
     {
-        return $this->hasOne(TourEn::class);
+        return $this->hasOne(Toursen::class);
     }
+    
 }

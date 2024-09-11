@@ -15,7 +15,7 @@
                 @else
                     <p class="text-center text-white">There are no related tours.</p>
                 @endif
-                <p class="mt-3 text-center text-white">Cantidad de tours: <strong>{{ $category->toursens->count() }}</strong></p>
+                <p class="mt-3 text-center text-white">Number of tours: <strong>{{ $category->toursens->count() }}</strong></p>
             </div>
         </div>
     </div>

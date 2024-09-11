@@ -102,73 +102,6 @@ class ToursenController extends Controller
     }
 
 
-    /* public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-            'resumen' => 'required|string',
-            'detallado' => 'required|string',
-            'contenido' => 'required|string',
-            'incluidos' => 'required|string',
-            'importante' => 'nullable|string',
-            'precio' => 'required|numeric', 
-            'dias' => 'required|integer',  
-            'ubicacion' => 'required|string',
-            'img' => 'nullable|file|image',
-            'mapa' => 'nullable|string',
-            'categoria' => 'required|array', 
-            'categoria.*' => 'string', 
-            'keywords' => 'nullable|string',
-            'slug' => 'required|string|unique:toursens,slug', 
-            'clase' => 'required|string',
-            'tour_id' => 'required|exists:tours,id' 
-        ]);
-
-        $toursen = new Toursen();
-
-        $toursen->nombre = $request->get('nombre');
-        $toursen->descripcion = $request->get('descripcion');
-        $toursen->resumen = $request->get('resumen');
-        $toursen->detallado = $request->get('detallado');
-        $toursen->contenido = $request->get('contenido');
-        $toursen->incluidos = $request->get('incluidos');
-        $toursen->importante = $request->get('importante');
-        $toursen->precio = $request->get('precio');
-        $toursen->dias = $request->get('dias');
-        $toursen->ubicacion = $request->get('ubicacion');
-
-        if ($request->hasFile('img')) {
-            $img = $request->file('img');
-            $rutaImg = public_path("img/buscador/");
-            $imgTour = $img->getClientOriginalName();
-            $img->move($rutaImg, $imgTour);
-            $toursen->img = "img/buscador/$imgTour";
-        }
-
-        $toursen->mapa = $request->get('mapa');
-        $toursen->categoria = implode(', ', $request->get('categoria'));
-        $toursen->keywords = $request->get('keywords');
-        $toursen->slug = $request->get('slug');
-        $toursen->clase = $request->get('clase');
-
-        $toursen->save();
-
-        // Guardar la relación con Tour
-        $tour = Tour::findOrFail($request->get('tour_id'));
-        $tour->toursens()->save($toursen);
-
-        session()->flash('status', 'Tour creado exitosamente!');
-        return redirect('toursen');
-    } */
-
-    /* public function show($slug)
-    {
-        $tour = Toursen::where('slug', $slug)->firstOrFail();
-        $otrosTours = Toursen::where('id', '!=', $tour->id)->get();
-        return view('toursen.show', compact('tour', 'otrosTours'));
-    } */
-
     public function show($slug) 
     {
         /* $tour = Toursen::where('slug', $slug)->firstOrFail(); */
@@ -176,19 +109,6 @@ class ToursenController extends Controller
         $otrosTours = Toursen::where('id', '!=', $tour->id)->get();
         return view('toursen.show', compact('tour', 'otrosTours'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Toursen  $toursen
-     * @return \Illuminate\Http\Response
-     */
-    /* public function edit($id)
-    {
-        $tour = Toursen::find($id);
-        $toursDisponibles = Tour::whereDoesntHave('toursens')->get();
-        return view('toursen.edit', compact('tour', 'toursDisponibles'));
-    } */
 
     public function edit($id)
     {
@@ -199,84 +119,6 @@ class ToursenController extends Controller
         return view('toursen.edit', compact('tour', 'toursDisponibles', 'categorias'));
     }
 
-    /* public function update(Request $request, $id)
-    {
-        $tour = Toursen::find($id);
-
-        $tour->nombre = $request->get('nombre');
-        $tour->descripcion = $request->get('descripcion');
-
-        $tour->mapa = $request->get('mapa');
-
-        $tour->resumen = $request->get('resumen');
-        $tour->detallado = $request->get('detallado');
-        $tour->contenido = $request->get('contenido');
-        $tour->incluidos = $request->get('incluidos');
-        $tour->importante = $request->get('importante');
-
-        $tour->precio = $request->get('precio');
-        $tour->dias = $request->get('dias');
-        $cat = $request->get('categoria');
-        $tour->categoria = implode(',', $cat);
-        $tour->ubicacion = $request->get('ubicacion');
-        $tour->keywords = $request->get('keywords');
-        $tour->clase = $request->get('clase');
-        $tour->slug = $request->get('slug');
-
-        if ($request->hasFile('img')) {
-            $img = $request->file('img');
-            $rutaImg = public_path("img/buscador/");
-            $imgTour = $img->getClientOriginalName();
-            $img->move($rutaImg, $imgTour);
-            $tour->img = "img/buscador/$imgTour";
-        }
-
-        $tour->save();
-        session()->flash('status', 'Tour actualizado exitosamente!');
-        return redirect('/toursen');
-    } */
-    /* public function update(Request $request, $id)
-    {
-        $tour = Toursen::findOrFail($id);
-
-        $request->validate([
-            'nombre' => 'required|string|max:120',
-            'descripcion' => 'required|string|max:250',
-            // Añade las validaciones necesarias para otros campos...
-        ]);
-
-        $tour->nombre = $request->get('nombre');
-        $tour->descripcion = $request->get('descripcion');
-        $tour->mapa = $request->get('mapa');
-        $tour->resumen = $request->get('resumen');
-        $tour->detallado = $request->get('detallado');
-        $tour->contenido = $request->get('contenido');
-        $tour->incluidos = $request->get('incluidos');
-        $tour->importante = $request->get('importante');
-        $tour->precio = $request->get('precio');
-        $tour->dias = $request->get('dias');
-        $tour->categoria = implode(',', $request->get('categoria'));
-        $tour->ubicacion = $request->get('ubicacion');
-        $tour->keywords = $request->get('keywords');
-        $tour->clase = $request->get('clase');
-        $tour->slug = $request->get('slug');
-
-        if ($request->hasFile('img')) {
-            $img = $request->file('img');
-            $rutaImg = public_path("img/buscador/");
-            $imgTour = $img->getClientOriginalName();
-            $img->move($rutaImg, $imgTour);
-            $tour->img = "img/buscador/$imgTour";
-        }
-
-        // Actualizar la relación con el tour seleccionado
-        $tour->tour_id = $request->get('tour_id');
-
-        $tour->save();
-
-        session()->flash('status', 'Tour actualizado exitosamente!');
-        return redirect('/toursen');
-    } */
     public function update(Request $request, $id)
     {
         $tour = Toursen::findOrFail($id);

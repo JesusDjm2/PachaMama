@@ -49,7 +49,6 @@ class ToursenController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
-            'resumen' => 'required|string',
             'detallado' => 'required|string',
             'contenido' => 'required|string',
             'incluidos' => 'required|string',
@@ -70,7 +69,6 @@ class ToursenController extends Controller
 
         $toursen->nombre = $request->get('nombre');
         $toursen->descripcion = $request->get('descripcion');
-        $toursen->resumen = $request->get('resumen');
         $toursen->detallado = $request->get('detallado');
         $toursen->contenido = $request->get('contenido');
         $toursen->incluidos = $request->get('incluidos');
@@ -132,7 +130,6 @@ class ToursenController extends Controller
         $tour->nombre = $request->get('nombre');
         $tour->descripcion = $request->get('descripcion');
         $tour->mapa = $request->get('mapa');
-        $tour->resumen = $request->get('resumen');
         $tour->detallado = $request->get('detallado');
         $tour->contenido = $request->get('contenido');
         $tour->incluidos = $request->get('incluidos');

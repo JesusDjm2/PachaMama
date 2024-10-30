@@ -46,7 +46,7 @@ class TourController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         $tours = new tour();
 
         $tours->id = $request->get('id');
@@ -54,7 +54,6 @@ class TourController extends Controller
         $tours->descripcion = $request->get('descripcion');
 
         $tours->contenido = $request->get('contenido');
-        $tours->resumen = $request->get('resumen');
         $tours->detallado = $request->get('detallado');
         $tours->incluidos = $request->get('incluidos');
         $tours->importante = $request->get('importante');
@@ -121,7 +120,6 @@ class TourController extends Controller
         $tour->nombre = $request->get('nombre');
         $tour->descripcion = $request->get('descripcion');
         $tour->contenido = $request->get('contenido');
-        $tour->resumen = $request->get('resumen');
         $tour->detallado = $request->get('detallado');
         $tour->incluidos = $request->get('incluidos');
         $tour->importante = $request->get('importante');

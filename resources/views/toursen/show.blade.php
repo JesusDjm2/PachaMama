@@ -46,37 +46,14 @@
                         <div class="location">
                             <p><a href="{{ route('inicio') }}">Inicio</a> /
                                 <a id="cat">
-                                    {{ $tour->categoria }}
-                                    <script>
-                                        const cat = document.getElementById("cat");
-                                        const categorias = "<?php echo $tour->categoria; ?>".split(","); // dividimos la cadena en un array
-                                        const tourCategoria = categorias[0]; // obtenemos la primera categoría
-                                        switch (tourCategoria) {
-                                            case "machuPicchu":
-                                                cat.textContent = "Tours Machu Picchu";
-                                                cat.href = "{{ route('mapien') }}";
-                                                break;
-                                            case "around":
-                                                cat.textContent = "Around Perú";
-                                                cat.href = '{{ route('around') }}';
-                                                break;
-                                            case "caminata":
-                                                cat.textContent = "Treks";
-                                                cat.href = '{{ route('hikes') }}';
-                                                break;
-                                            case "luxury":
-                                                cat.textContent = "Luxury";
-                                                cat.href = '{{ route('private') }}';
-                                                break;
-                                            case "fullday":
-                                                cat.textContent = "Full Day";
-                                                cat.href = '{{ route('fulldayen') }}';
-                                                break;
-                                            default:
-                                                cat.textContent = tourCategoria;
-                                                break;
-                                        }
-                                    </script>
+                                    @foreach ($tour->categories as $index => $category)
+                                        <a href="{{ route('category.show', $category) }}">
+                                            {{ $category->nombre }}
+                                        </a>
+                                        @if (!$loop->last)
+                                            -
+                                        @endif
+                                    @endforeach
                                 </a>
                                 / {{ $tour->nombre }}
                             </p>
@@ -91,13 +68,8 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                                     type="button" role="tab" aria-controls="home" aria-selected="true"><i
-                                        class="icon-pencil"></i> Overview</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                                    type="button" role="tab" aria-controls="profile" aria-selected="false"><i
-                                        class="icon-list"></i> Program
-                                    detailed</button>
+                                        class="icon-pencil"></i> Program
+                                        detailed</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
@@ -115,24 +87,21 @@
                                     aria-selected="false"><i class="icon-sim_card_alert"></i> Important</button>
                             </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-content" id="myTabContent" style="text-align: justify">
                             <div class="tab-pane fade show active" id="home" role="tabpanel"
                                 aria-labelledby="home-tab">
-                                {!! $tour->resumen !!}
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 {!! $tour->detallado !!}
                             </div>
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 {!! $tour->incluidos !!}
                             </div>
-                            {{-- <div class="tab-pane fade" id="mapa" role="tabpanel" aria-labelledby="mapa-tab">
+                            <div class="tab-pane fade" id="mapa" role="tabpanel" aria-labelledby="mapa-tab">
                                 @if (!empty($tour->mapa))
                                     {!! $tour->mapa !!}
                                 @else
                                     <p>Map not included</p>
                                 @endif
-                            </div> --}}
+                            </div>
                             <div class="tab-pane fade" id="mapa" role="tabpanel" aria-labelledby="mapa-tab">
                                 @if (!empty($tour->mapa))
                                     {!! $tour->mapa !!}
@@ -228,7 +197,7 @@
                             </div>
                         </form>
                         <div class="card align-items-center">
-                            <div class="card-bod">
+                            <div class="card-bod mt-3 mb-3">
                                 <h4 class="text-center">Customer Support:</h4>
                                 <p class="text-center"><i class="icon-whatsapp">
                                     </i> +51 921 136 755<br>
@@ -243,68 +212,54 @@
                 <div class="col-lg-12">
                     <h2 class="h2-tierras">Popular tours:</h2>
                 </div>
-                @foreach ($otrosTours->take(4) as $tour)
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card card-new" style="width: 18rem;">
+                @foreach ($otrosTours->random(4) as $tour)
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card card-new" style="width: 100%;">
                             <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
-
-                                <img class="card-img-top" src="../{{ $tour->img }}" alt="Camino Inca 4 dias"
+                                <img class="card-img-top" src="../{{ $tour->img }}" alt="{{ $tour->nombre }}"
                                     loading="lazy">
                             </a>
                             <div class="card-body text-center">
                                 <h5 class="card-titulo">{{ $tour->nombre }}</h5>
                                 <p class="text-card">{{ $tour->descripcion }}</p>
                                 <div class="enlacesCategoria">
-                                    @if (Str::contains($tour->categoria, 'machupicchu'))
-                                        <p style="display:none">
-                                            {{ $mapi = 'Machu Picchu' }}
-                                        </p>
-                                        <a class="enlaceMapi" href="{{ route('mapi') }}">{{ $mapi }}
-                                        </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'hikes'))
-                                        <p style="display:none">
-                                            {{ $hike = 'Caminata' }}
-                                        </p>
-                                        <a class="enlaceHike" href="{{ route('caminata') }}">
-                                            {{ $hike }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'around'))
-                                        <p style="display: none">
-                                            {{ $peru = 'Perú' }}
-                                        </p>
-                                        <a class="enlaceAround" href="{{ route('peru') }}">
-                                            {{ $peru }}
-                                        </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'luxury'))
-                                        <p style="display:none">
-                                            {{ $luxury = 'Privado' }}
-                                        </p>
-                                        <a class="enlaceLuxury" href="{{ route('luxury') }}"> {{ $luxury }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'fullday'))
-                                        <p style="display:none">
-                                            {{ $fullday = 'Full Day' }}
-                                        </p>
-                                        <a class="enlaceFullday" href="{{ route('fullday') }}"> {{ $fullday }}</a>
-                                    @endif
-                                </div>
+                                    @php
+                                        $colors = [
+                                            'text-primary',
+                                            'text-success',
+                                            'text-info',
+                                            'text-warning',
+                                            'text-secondary',
+                                        ];
+                                    @endphp
 
-                                <div class="row iconos-tours">
+                                    @foreach ($tour->categories as $index => $category)
+                                        <a href="{{ route('category.show', $category) }}"
+                                            class="{{ $colors[$index % count($colors)] }} font-weight-bold text-uppercase"
+                                            title="Ver categoría" style="font-size: 11px;">
+                                            {{ $category->nombre }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                                <div class="row iconos-tours mt-3">
                                     <div class="col-6">
-                                        <span class="icon-clock-o" style="float:right"> {{ $tour->dias }}días</span>
+                                        <span class="icon-clock-o" style="float: right">
+                                            {{ $tour->dias }} day{{ $tour->dias == 1 ? '' : 's' }}
+                                        </span>
                                     </div>
                                     <div class="col-6">
-                                        <span class="icon-usd" style="float: left">{{ $tour->precio }}.00</span>
+                                        <span class="icon-usd" style="float: left">
+                                            {{ $tour->precio }}.00
+                                        </span>
                                     </div>
-                                    <div class="col-12 pt-2">
-                                        <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
+                                    <div class="col-12 mt-2">
+                                        <span class="icon-map-marker">
+                                            {{ $tour->ubicacion }}
+                                        </span>
                                     </div>
                                 </div>
                                 <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
                                     class="boton-card">Más detalles</a>
-
                             </div>
                         </div>
                     </div>

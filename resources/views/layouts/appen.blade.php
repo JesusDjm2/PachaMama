@@ -55,12 +55,12 @@
                     </div>
                     <div class="col-6 text-right">
                         <div class="mr-auto">
-                            <a href="https://twitter.com/PachaSpirit" target="_blank" rel="no-follow"
-                                class="p-2 pl-0"><span class="icon-twitter"></span></a>
+                            {{-- <a href="https://twitter.com/PachaSpirit" target="_blank" rel="no-follow"
+                                class="p-2 pl-0"><span class="icon-twitter"></span></a> --}}
                             <a href="https://www.facebook.com/PachaMamaSpiritMountain" rel="no-follow" target="_blank"
                                 class="p-2 pl-0"><span class="icon-facebook"></span></a>
-                            <a href="https://www.pinterest.com/spiritpachamama/_saved/" rel="no-follow" target="_blank"
-                                class="p-2 pl-0"><span class="icon-pinterest"></span></a>
+                            {{-- <a href="https://www.pinterest.com/spiritpachamama/_saved/" rel="no-follow" target="_blank"
+                                class="p-2 pl-0"><span class="icon-pinterest"></span></a> --}}
                             <a href="https://www.instagram.com/pachamamaspiritmountain/" rel="no-follow" target="_blank"
                                 class="p-2 pl-0"><span class="icon-instagram"></span></a>
                             <a href="#" target="_blank" rel="no-follow" class="p-2 pl-0"><span
@@ -121,7 +121,7 @@
                                                     Maldonado</a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li> 
                                     <li>
                                         <a href="{{ route('hikes') }}" class="nav-link">Do you like hikes?</a>
                                     </li>
@@ -199,7 +199,7 @@
                     <div class="col-lg-4 text-center">
                         <h4 class="h4-foot">Query</h4>
                         <div class="linea-foot"></div>
-                        <a class="a-foot" href=""> About Us</a>
+                        <a class="a-foot" href="{{route('about')}}"> About Us</a>
                         <a class="a-foot" href=""> Terms & Conditions</a>
                         <a class="a-foot" href=""> Faqs</a>
                         <a class="a-foot" href=""> Reviews</a>
@@ -215,12 +215,12 @@
                         <h4 class="h4-foot">Social</h4>
                         <div class="linea-foot"></div>
                         <div class="text-center social-foot">
-                            <a href="https://twitter.com/PachaSpirit" target="_blank" rel="no-follow"
-                                class="p-2 pl-0"><span class="icon-twitter"></span></a>
+                            {{-- <a href="https://twitter.com/PachaSpirit" target="_blank" rel="no-follow"
+                                class="p-2 pl-0"><span class="icon-twitter"></span></a> --}}
                             <a href="https://www.facebook.com/PachaMamaSpiritMountain" rel="no-follow"
                                 target="_blank" class="p-2 pl-0"><span class="icon-facebook"></span></a>
-                            <a href="https://www.pinterest.com/spiritpachamama/_saved/" rel="no-follow"
-                                target="_blank" class="p-2 pl-0"><span class="icon-pinterest"></span></a>
+                            {{-- <a href="https://www.pinterest.com/spiritpachamama/_saved/" rel="no-follow"
+                                target="_blank" class="p-2 pl-0"><span class="icon-pinterest"></span></a> --}}
                             <a href="https://www.instagram.com/pachamamaspiritmountain/" rel="no-follow"
                                 target="_blank" class="p-2 pl-0"><span class="icon-instagram"></span></a>
                             <a href="#" target="_blank" rel="no-follow" class="p-2 pl-0"><span

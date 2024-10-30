@@ -59,13 +59,6 @@
                         @enderror
                     </div>
                     <div class="col-lg-12 pt-3">
-                        <label for="resumen" class="form-label">Resumen:</label>
-                        <textarea class="ckeditor form-control" name="resumen" id="resumen" required>{{ old('resumen', $tour->resumen ?? '') }}</textarea>
-                        @error('resumen')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-lg-12 pt-3">
                         <label for="detallado" class="form-label">Detallado:</label>
                         <textarea class="ckeditor form-control" name="detallado" id="detallado" required>{{ old('detallado', $tour->detallado ?? '') }}</textarea>
                         @error('detallado')

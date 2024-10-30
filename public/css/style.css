@@ -64,12 +64,25 @@ a:hover {
 .hero {
     height: 100vh;
     width: 100%;
-    background-image:url(../img/panoramico/inti-punku-puerta-del-sol.webp);
+    background-image: url(../img/panoramico/inti-punku-puerta-del-sol.webp);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    position: relative; 
 }
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
+
 
 .back-menu {
     height: 132px;
@@ -78,21 +91,41 @@ a:hover {
 }
 
 .destinos {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/los-mejores-destinos-para-peru.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.destinos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25%; 
+    background: linear-gradient(to bottom, rgb(0 0 0 / 76%), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .aventuras {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/camino-inca-reserva.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+.aventuras::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
 }
 
 .imperdible {
@@ -103,6 +136,16 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
+.imperdible::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .machu {
     height: 100vh;
@@ -112,122 +155,262 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
+.machu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .ollantaytambo {
-    height: 60vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/ollantaytambo-streets-from-Cusco.webp');
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
 }
+.ollantaytammbo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .pachamamalodge {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/Luxury-lodge-Pacha-Mama-Spirit.webp');
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
 }
+.pachamamalodge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .santuaryLodge {
-    height: 60vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/belmond-sanctuary-lodge-hotel.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.santuaryLodge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .paquetes {
-    height: 60vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/paquetes-peru-tierras-vivas.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.paquetes::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .blog {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/blog/camino-inca-temas-de-blog-from-Peru.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.blog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .terminos {
-    height: 60vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/terminos-y-condiciones-pacha-Mama-Spirit-Travel-agency.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.terminos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .preguntas {
-    height: 50vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/preguntas-frecuentes-para-viajar-a-Peru-Pacha-mama-Spirit.webp');
     background-size: cover;
     background-position: initial;
     background-repeat: no-repeat;
 }
+.preguntas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .blog-temas {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/caminatas-trekking-peru.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.blog-temas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .puno {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/viajar-a-puno.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.puno::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .valle {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image:url('../img/panoramico/sacred-valley-cusco-valle-sagrado.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.valle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .selva {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/tambopata-jungle-Pacha-mama.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.selva::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .caminata {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/Inca-Trail-pacha-mama-Peru.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.caminata::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .nazca {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/Lineas-de-nazca-peru-ica.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+.nazca::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
 }
 
 .lima {
@@ -238,50 +421,110 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
+.lima::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .arequipa {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/la-ciudad-blanca-de-arequipa.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.arequipa::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .cusco {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/cusco-ciudad-imperial.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.cusco::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .ollanta {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/ollantaytambo-tour-cusco-tierras-vivas.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.ollanta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .huchuy {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/huchuy-qosqo-tour-cusco.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.huchuy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .choque {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/guia-de-viajes-choquequirao.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+.choque::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
 }
 
 .humantay {
@@ -291,6 +534,16 @@ a:hover {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+.humantay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
 }
 
 .vinicunca {
@@ -302,18 +555,38 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
+.vinicunca::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .ica {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/huacachina-ica-peru-tour.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.ica::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .pisco {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/pisco-city-tourism.webp');
     background-size: cover;
@@ -322,16 +595,26 @@ a:hover {
 }
 
 .puerto {
-    height: 90vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/tambopata-jungle-Pacha-mama.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.puerto::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .salkantay {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image: url('../img/panoramico/Salkantay-cusco-Peru-Tierras-Vivas.webp');
     background-size: cover;
@@ -340,18 +623,38 @@ a:hover {
 }
 
 .manu {
-    height: 80vh;
+    height: 100vh;
     width: 100%;
     background-image:url('../img/galeria/Lugares-turísticos-de-Puerto-Maldonado-Reserva-Tambopata-Candamo.webp');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
 }
+.manu::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
+}
 
 .temasBlogs {
     height: 300px;
     width: 100%;
     background: #343434;
+}
+.temasBlogs::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; 
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
+    z-index: 1; 
 }
 
 .temasBlogs h1 {

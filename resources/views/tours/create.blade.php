@@ -39,11 +39,6 @@
                         </textarea>
                     </div>
                     <div class="col-lg-12 pt-3">
-                        <label for="resumen" class="form-label">Resumen:</label>
-                        <textarea class="ckeditor form-control" name="resumen" id="resumen"></textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-12 pt-3">
                         <label for="detallado" class="form-label">Detalle del tour:</label>
                         <textarea class="ckeditor form-control" name="detallado" id="detallado"></textarea>
                         </textarea>

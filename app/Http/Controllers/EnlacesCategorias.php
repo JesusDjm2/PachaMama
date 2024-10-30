@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Tour;
 use App\Models\Toursen;
 
@@ -9,7 +10,8 @@ use Illuminate\Http\Request;
 
 class EnlacesCategorias extends Controller
 {
-    public function contactenos(){
+    public function contactenos()
+    {
         $tours = Tour::all();
         return view('contactenos', compact('tours'));
     }
@@ -56,29 +58,49 @@ class EnlacesCategorias extends Controller
     {
         return view('preguntas-frecuentes');
     }
-    public function landing(){
+    public function landing()
+    {
         return view('landing');
     }
 
 
     //Categorias ingles
-    public function contact(){
-        $tours=Toursen::all();
+    public function about()
+    {
+        $tours = Toursen::all();
+        return view('about-us', compact('tours'));
+    }
+
+    public function contact()
+    {
+        $tours = Toursen::all();
         return view('contact', compact('tours'));
     }
     public function mapien()
     {
-        $tours = Toursen::all();
+        /* $tours = Toursen::all(); */
+        $tours = Toursen::whereHas('categories', function ($query) {
+            $query->whereRaw('LOWER(nombre) = ?', ['machu']);
+        })->get();
         return view('en.machu-picchu', compact('tours'));
     }
     public function hikes()
     {
-        $tours = Toursen::all();
-        return view('en.hikes', compact('tours'));
+        $category = Category::whereRaw('LOWER(nombre) LIKE ?', ['%machu%'])->first();
+        dd();
+        return redirect()->route('category.show', $category);
+        /* $tours = Toursen::all(); */
+        /* $tours = Toursen::whereHas('categories', function ($query) {
+            $query->whereRaw('LOWER(nombre) = ?', ['trekking']);
+        })->get();
+        return view('en.hikes', compact('tours')); */
     }
     public function around()
     {
-        $tours = Toursen::all();
+        /* $tours = Toursen::all(); */
+        $tours = Toursen::whereHas('categories', function ($query) {
+            $query->whereRaw('LOWER(nombre) = ?', ['around']);
+        })->get();
         return view('en.around-peru', compact('tours'));
     }
     public function private()

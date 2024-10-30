@@ -464,8 +464,19 @@ html {
 }
 
 h2 {
-  color: #0dadad;
-  font-size: 1.4em !important;
+  color: #1e4b89;
+  font-size: 1.2em !important;
+  font-weight: bold;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: #1e4b89;
+  margin-top: 5px;
 }
 
 .boton-acordion {

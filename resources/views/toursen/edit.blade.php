@@ -57,11 +57,6 @@
                         </textarea>
                     </div>
                     <div class="col-lg-12 mt-3">
-                        <label for="resumen" class="form-label">Resumen del tour:</label>
-                        <textarea class="ckeditor form-control" name="resumen" id="resumen">{!! Request::old('content', $tour->resumen) !!}</textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-12 mt-3">
                         <label for="detallado" class="form-label">Detalle del tour:</label>
                         <textarea class="ckeditor form-control" name="detallado" id="detallado">{!! Request::old('content', $tour->detallado) !!}</textarea>
                         </textarea>

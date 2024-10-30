@@ -147,8 +147,8 @@ html {
         padding: 0.7em;
         margin-left: 0.8em;
         border-radius: 40px;
-    width: 50px;
-    height: 50px;
+        width: 50px;
+        height: 50px;
         display: inline-block;
         text-align: center;
         border: solid 1px $color;
@@ -320,14 +320,16 @@ html {
     width: 100%;
     height: 180px;
 }
-.card{
-    .card-titulo{
+
+.card {
+    .card-titulo {
         margin-bottom: 0.8rem;
-    font-weight: 600;
-    color: #343434;
-    font-size: 1em;
-    position: relative;
-    &::after{
+        font-weight: 600;
+        color: #343434;
+        font-size: 1em;
+        position: relative;
+
+        &::after {
             content: '';
             display: block;
             width: 25px;
@@ -335,7 +337,7 @@ html {
             background: #000;
             position: absolute;
             bottom: -7px;
-            left: 50%; 
+            left: 50%;
             transform: translateX(-50%);
         }
     }
@@ -484,8 +486,19 @@ html {
 }
 
 h2 {
-    color: #0dadad;
-    font-size: 1.4em !important;
+    color: #1e4b89;
+    font-size: 1.2em !important;
+    font-weight: bold;
+    position: relative;
+}
+
+h2::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #1e4b89;
+    margin-top: 5px;
 }
 
 .boton-acordion {
@@ -704,14 +717,15 @@ strong {
     margin-bottom: 0.3em;
     text-shadow: 3px 3px 4px rgb(30 53 52);
     font-family: "Playwrite HU", cursive;
-        &::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 4px;
-            background:$color; // Reemplaza con tu color secundario
-            margin: 0.1em auto 0; // Espacio entre el texto y la línea, ajusta si es necesario
-        }
+
+    &::after {
+        content: '';
+        display: block;
+        width: 40px;
+        height: 4px;
+        background: $color; // Reemplaza con tu color secundario
+        margin: 0.1em auto 0; // Espacio entre el texto y la línea, ajusta si es necesario
+    }
 }
 
 h3 {

@@ -88,14 +88,14 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                                     type="button" role="tab" aria-controls="home" aria-selected="true"><i
-                                        class="icon-pencil"></i> Resumen</button>
+                                        class="icon-pencil"></i> Programa detallado</button>
                             </li>
-                            <li class="nav-item loadingImgs" role="presentation">
+                            {{-- <li class="nav-item loadingImgs" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
                                     type="button" role="tab" aria-controls="profile" aria-selected="false"><i
                                         class="icon-list"></i> Programa
                                     detallado</button>
-                            </li>
+                            </li> --}}
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                                     type="button" role="tab" aria-controls="contact" aria-selected="false"><i
@@ -112,14 +112,12 @@
                                     aria-selected="false"><i class="icon-sim_card_alert"></i> Importante</button>
                             </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-content" id="myTabContent" style="text-align: justify">
                             <div class="tab-pane fade show active" id="home" role="tabpanel"
                                 aria-labelledby="home-tab">
-                                {!! $tour->resumen !!}
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 {!! $tour->detallado !!}
                             </div>
+                            
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 {!! $tour->incluidos !!}
                             </div>
@@ -244,7 +242,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{ $tour->nombre }}</h5>
                                 <p class="text-card">{{ $tour->descripcion }}</p>
-                                <div class="enlacesCategoria">
+                                {{-- <div class="enlacesCategoria">
                                     @if (Str::contains($tour->categoria, 'machupicchu'))
                                         <p style="display:none">
                                             {{ $mapi = 'Machu Picchu' }}
@@ -279,7 +277,7 @@
                                         </p>
                                         <a class="enlaceFullday" href="{{ route('fullday') }}"> {{ $fullday }}</a>
                                     @endif
-                                </div>
+                                </div> --}}
 
                                 <div class="row iconos-tours">
                                     <div class="col-6">

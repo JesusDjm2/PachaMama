@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('nombre', 120)->unique();
             $table->string('descripcion', 250);
             $table->text('contenido');
-            $table->text('resumen');
+            $table->text('resumen')->nullable();
             $table->text('detallado');
             $table->text('incluidos');
             $table->text('importante')->nullable();

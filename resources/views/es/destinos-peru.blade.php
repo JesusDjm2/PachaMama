@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @php $titulo="Encuentra los mejores destinos turísticos en Perú" @endphp
-@php $descripcion="Perú tiene muchos lugares tur´siticos para conocer en su territorio, descubreos en esta sección." @endphp
+@php $descripcion="Perú tiene muchos lugares turísticos para conocer en su territorio, descúbrelos en esta sección." @endphp
 @php $keywords="Camino inca, Machu Picchu tour, viajar a Peru, Conocer Peru" @endphp
 @php $img="https://pachamamaspirit.com/img/panoramico/trekking-peru.webp" @endphp
 @section('titulo', $titulo)
@@ -17,11 +17,10 @@
             </div>
         </div>
     </div>
-    </div>
-    <section>
+    <section class="destinations-peru-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 destinations-prose">
                     <br><br>
                     <h2>Perú como destino turístico</h2>
                     <i>Perú. País de tradiciones. País mestizo. País fuerte</i><br><br>
@@ -62,9 +61,11 @@
                         al aire libre hasta las visitas a sitios culturales y naturales, sin duda un destino imperdible.
                         A continuación una lista con los 7 principales lugares turísticos del Perú.</p>
                 </div>
+            </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+            <div class="row g-4 pt-2 results-cards-grid destinations-cards-grid">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('cusco-ombligo-del-mundo') }}">
                             <img class="card-img-top"
                                 src="{{ asset('img/thumb/City-Tour-en-Sacsayhuaman-Cusco-Peru.webp') }}"
@@ -77,8 +78,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('lima-ciudad-de-reyes') }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/ceviche-peruano-gastronomy.webp') }}"
                                 alt="Ceviche peruano" loading="lazy">
@@ -90,8 +91,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('arequipa-la-ciudad-blanca') }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/arequipa-ciudad-blanca-pacha-mama.webp') }}"
                                 alt="Arequipa ciudad blanca" loading="lazy">
@@ -103,8 +104,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('la-ciudad-de-puno') }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/lago-titicaca.webp') }}"
                                 alt="lago Titicaca Puno" loading="lazy">
@@ -116,8 +117,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('ciudad-de-ica') }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/Lineas-de-Nazca.webp') }}"
                                 alt="Ciudad de Ica, Nazca" loading="lazy">
@@ -125,12 +126,12 @@
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Ica</h5>
                             <p class="text-card text-center">La ciudad del eterno sol</p>
-                            <a href="{{route('ciudad-de-ica')}}" class="boton-card">Más detalles</a>
+                            <a href="{{ route('ciudad-de-ica') }}" class="boton-card">Más detalles</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('ciudad-de-pisco') }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/leon-marino.webp') }}"
                                 alt="Leon marino Ica - Paracas" loading="lazy">
@@ -142,8 +143,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
                         <a href="{{ route('puerto-maldonado') }}">
                             <img class="card-img-top"
                                 src="{{ asset('img/thumb/rio-amazonas-selva-de-peru-pacha-mama-spirit.webp') }}"

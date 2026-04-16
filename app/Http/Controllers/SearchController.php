@@ -10,8 +10,11 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
+        $nombre = trim((string) $request->input('name', ''));
+        if ($nombre === '') {
+            return view('es.noresults', ['nombre' => '']);
+        }
         $name = $request->all();
-        $nombre = $name['name'];
         $respuesta = Tour::where('nombre', 'LIKE',  "%$nombre%")->get();
         if (count($respuesta) != 0) {
             $respuestas = [
@@ -26,8 +29,10 @@ class SearchController extends Controller
     }
     public function searchblog(Request $request)
     {
-        $name = $request->all();
-        $nombre = $name['name'];
+        $nombre = trim((string) $request->input('name', ''));
+        if ($nombre === '') {
+            return view('blogs.es.blogs.noresults', ['nombre' => '']);
+        }
         $blog = Blog::where('nombre', 'LIKE',  "%$nombre%")->get();
         if (count($blog) != 0) {
             $blogs = [

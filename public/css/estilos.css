@@ -1,12 +1,63 @@
 @charset "UTF-8";
+
+/* ============================================
+   PACHA MAMA SPIRIT — Design System
+   ============================================
+   Primary teal:    #2aa8a8
+   Dark navy:       #1a2e45
+   Accent gold:     #d4a843
+   Light bg:        #f7f8fa
+   Text dark:       #1e1e1e
+   Text muted:      #6b7280
+   ============================================ */
+
+/* ---------- Base ---------- */
 html {
   scroll-behavior: smooth;
 }
 
-.logo {
-  width: 232px;
-  padding-bottom: 0.8em;
-  margin-left: -3em;
+/* ---------- Typography scale ---------- */
+h2 {
+  color: #1a2e45;
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  position: relative;
+  letter-spacing: -0.01em;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, #2aa8a8, #d4a843);
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+/* h2 centrados: el ::after global queda al inicio del bloque; centramos la raya bajo el título */
+h2.h1-index::after,
+h2.h1-responsive::after,
+h2.text-center::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1a2e45;
+}
+
+strong {
+  font-weight: 700;
+}
+
+/* ---------- Layout helpers ---------- */
+.space {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 100%;
 }
 
 .share {
@@ -14,35 +65,1162 @@ html {
   margin-top: 2em;
 }
 
-.formTransparent input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid grey;
+/* ---------- Navbar top bar ---------- */
+.site-navbar-top {
+  background: #343434;
+  border-bottom: none;
 }
-.formTransparent textarea {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid grey;
+
+.site-navbar-top a {
+  color: rgba(255,255,255,0.85) !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  transition: color 0.25s ease;
 }
+
+.site-navbar-top a:hover {
+  color: #2aa8a8 !important;
+}
+
+.site-navbar-top .icon-facebook,
+.site-navbar-top .icon-instagram,
+.site-navbar-top .icon-tripadvisor,
+.site-navbar-top .icon-youtube-play {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.site-navbar-top .icon-facebook:hover,
+.site-navbar-top .icon-instagram:hover,
+.site-navbar-top .icon-tripadvisor:hover,
+.site-navbar-top .icon-youtube-play:hover {
+  color: #2aa8a8;
+  transform: translateY(-2px);
+}
+
+/* ---------- Main navbar ---------- */
+
+/* Transparente por defecto (sobre el hero), oscuro al hacer scroll (sticky) */
+.site-navbar {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: none;
+  padding: 0;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Barra principal fija: jquery.sticky pone .is-sticky en .sticky-wrapper (no en .js-sticky-header) */
+.sticky-wrapper.is-sticky .site-navbar {
+  box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+
+.logo {
+  max-width: 200px;
+  width: auto;
+  height: auto;
+  max-height: 56px;
+  object-fit: contain;
+  object-position: left center;
+  display: block;
+  padding-bottom: 0.6em;
+  margin-left: -1.5em;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.85;
+}
+
+/* Menú con barra fija: tipografía/padding/capitalize los define style.css (.sticky-wrapper.is-sticky …).
+   No redeclarar aquí el bloque .nav-link para no pisar el layout al hacer scroll. */
+
+/* Language button */
+.castellano-es {
+  font-weight: 700;
+  background: #2aa8a8;
+  padding: 5px 14px;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.castellano-es:hover {
+  background: #1a2e45;
+  transform: translateY(-1px);
+}
+
+.castellano-es:focus {
+  outline: none;
+}
+
+/* Búsqueda: inline-block como el resto de <li> (style.css); evita desalinear la fila */
+.site-menu.main-menu > li.nav-item-search {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Misma zona clic que los enlaces del template; más compacto cuando la barra está fija */
+.site-menu.main-menu > li.nav-item-search .botonsearch {
+  line-height: 1;
+  padding: 20px 10px;
+}
+
+.sticky-wrapper.is-sticky .site-menu.main-menu > li.nav-item-search .botonsearch {
+  padding: 10px 10px;
+}
+
+/* Search icon */
+.botonsearch {
+  background: transparent;
+  cursor: pointer;
+  color: rgba(255,255,255,0.88);
+  border: none;
+  font-size: 1.1rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.botonsearch:hover {
+  color: #2aa8a8;
+  transform: scale(1.1);
+}
+
+.row-menu {
+  width: 100%;
+}
+
+/* Menú móvil: flecha como <button> (Bootstrap 5 collapse) */
+.site-mobile-menu .site-nav-wrap button.arrow-collapse {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+  touch-action: manipulation;
+}
+
+/* ---------- Menú móvil (off-canvas): panel, buscador y enlaces ---------- */
+.site-mobile-menu {
+  width: min(340px, calc(100vw - 40px));
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(165deg, #f0f4f8 0%, #ffffff 38%, #fafbfc 100%);
+  box-shadow: -14px 0 48px rgba(26, 46, 69, 0.22);
+  border-left: 1px solid rgba(42, 168, 168, 0.2);
+}
+
+.site-mobile-menu .site-mobile-menu-header {
+  float: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px 12px;
+  margin: 0;
+  border-bottom: 1px solid rgba(26, 46, 69, 0.08);
+  flex-shrink: 0;
+}
+
+.site-mobile-menu-title {
+  margin: 0;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1a2e45;
+}
+
+.site-mobile-menu-close-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: rgba(26, 46, 69, 0.06);
+  color: #1a2e45;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  touch-action: manipulation;
+}
+
+.site-mobile-menu-close-btn:hover {
+  background: rgba(42, 168, 168, 0.15);
+  color: #1a2e45;
+}
+
+.site-mobile-menu-close-btn:active {
+  transform: scale(0.96);
+}
+
+.site-mobile-menu-close-btn .icon-close2 {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.site-mobile-menu-search {
+  flex-shrink: 0;
+  padding: 16px 18px 4px;
+}
+
+.mobile-menu-search-form {
+  margin: 0;
+}
+
+.mobile-menu-search-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.mobile-menu-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu-search-field__icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #2aa8a8;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mobile-menu-search-input.form-control {
+  height: auto;
+  padding: 12px 14px 12px 42px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(26, 46, 69, 0.12);
+  background: #fff;
+  font-size: 0.95rem;
+  color: #1a2e45;
+  box-shadow: 0 2px 12px rgba(26, 46, 69, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-menu-search-input.form-control::placeholder {
+  color: #9ca3af;
+}
+
+.mobile-menu-search-input.form-control:focus {
+  border-color: #2aa8a8;
+  box-shadow: 0 0 0 3px rgba(42, 168, 168, 0.22);
+  outline: none;
+}
+
+.mobile-menu-search-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: linear-gradient(135deg, #2aa8a8 0%, #238f8f 100%);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(42, 168, 168, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  touch-action: manipulation;
+}
+
+.mobile-menu-search-submit:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 20px rgba(42, 168, 168, 0.4);
+}
+
+.mobile-menu-search-submit:active {
+  transform: translateY(1px);
+}
+
+.mobile-menu-search-submit__icon {
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.site-mobile-menu .site-mobile-menu-body {
+  float: none;
+  flex: 1;
+  min-height: 0;
+  height: auto !important;
+  padding: 8px 12px 28px 12px;
+  margin: 10px 6px 0;
+  border-top: 1px solid rgba(26, 46, 69, 0.06);
+}
+
+/* Ocultar el ícono de búsqueda clonado del menú desktop (ya hay formulario arriba) */
+.site-mobile-menu .site-nav-wrap > li.nav-item-search {
+  display: none !important;
+}
+
+/* Botón de idioma dentro del panel */
+.site-mobile-menu .site-nav-wrap > li > .castellano-es {
+  margin: 10px 20px 14px;
+}
+
+.site-mobile-menu .site-nav-wrap > li > a {
+  font-weight: 600;
+  font-size: 1rem !important;
+  padding: 12px 16px !important;
+  border-radius: 12px;
+  color: #1a2e45 !important;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.site-mobile-menu .site-nav-wrap > li > ul > li > a {
+  font-size: 0.95rem !important;
+  padding: 10px 16px 10px 36px !important;
+  font-weight: 500;
+  color: #374151 !important;
+}
+
+.site-mobile-menu .site-nav-wrap a.active,
+.site-mobile-menu .site-nav-wrap a:hover {
+  color: #2aa8a8 !important;
+  background: rgba(42, 168, 168, 0.1);
+}
+
+.site-mobile-menu .site-nav-wrap li.active > a {
+  color: #2aa8a8 !important;
+}
+
+.site-mobile-menu .site-nav-wrap .arrow-collapse {
+  top: 8px;
+  right: 6px;
+  background: rgba(26, 46, 69, 0.04);
+}
+
+.site-mobile-menu .site-nav-wrap .arrow-collapse:hover {
+  background: rgba(42, 168, 168, 0.12);
+}
+
+/* ---------- Hero ---------- */
+.form-index {
+  margin-top: 22%;
+}
+
+.contenidoindex {
+  text-align: center;
+}
+
+.contenidoindex h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.contenidoindex p {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92) !important;
+  text-shadow: 1px 2px 8px rgba(0,0,0,0.5);
+  margin-bottom: 1.8rem;
+}
+
+.contenidoindex a {
+  display: inline-block;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0.3em 0.4em;
+  padding: 0.55em 1.2em;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  letter-spacing: 0.07em;
+  border: 1.5px solid rgba(255,255,255,0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(255,255,255,0.1);
+  text-shadow: none;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.contenidoindex a:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  transform: translateY(-2px);
+}
+
+/* Scroll indicator */
+.circulo {
+  margin: 2.5em auto 0;
+  text-align: center;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 50px;
+  width: 32px;
+  height: 48px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: border-color 0.3s ease;
+}
+
+.circulo:hover {
+  border-color: #2aa8a8;
+}
+
+.circulo i {
+  color: #fff;
+  position: absolute;
+  margin-top: 8px;
+  transition: 0.5s;
+}
+
+.circulo:hover i {
+  margin-top: 14px;
+  color: #2aa8a8;
+}
+
+.circulo .desvanecer {
+  color: rgba(255,255,255,0.7);
+  position: absolute;
+  margin-top: 8px;
+  transition: 0.5s;
+}
+
+.circulo:hover .desvanecer {
+  opacity: 0;
+  margin-top: 20px;
+  transition: 2.2s;
+}
+
+/* ---------- Section titles ---------- */
+.h1-index {
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4em;
+  color: #1a2e45;
+  letter-spacing: -0.02em;
+}
+
+.h2-tierras {
+  color: #1a2e45;
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.h2-tierras::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: linear-gradient(90deg, #2aa8a8, #d4a843);
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+.h1-destinos {
+  color: #fff;
+  font-size: 3.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 0.4em;
+  text-shadow: 2px 3px 12px rgba(0,0,0,0.6);
+  font-family: "Josefin Sans", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.h1-destinos::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #2aa8a8;
+  border-radius: 2px;
+  margin: 0.3em auto 0;
+}
+
+/* Portadas full-viewport: el ::before del tema puede quedar encima del texto sin z-index */
+.destinos,
+.aventuras,
+.imperdible,
+.blog,
+.blog-temas,
+.machu,
+.caminata,
+.cusco,
+.lima,
+.arequipa,
+.puno,
+.valle,
+.selva,
+.nazca,
+.ica,
+.pisco,
+.puerto,
+.salkantay,
+.manu,
+.ollanta,
+.huchuy,
+.choque,
+.humantay,
+.vinicunca,
+.paquetes,
+.terminos,
+.preguntas,
+.pachamamalodge,
+.santuaryLodge {
+  position: relative;
+}
+
+.hero > .container,
+.hero > .container-fluid,
+.destinos > .container,
+.destinos > .container-fluid,
+.aventuras > .container,
+.aventuras > .container-fluid,
+.imperdible > .container,
+.imperdible > .container-fluid,
+.blog > .container,
+.blog > .container-fluid,
+.blog-temas > .container,
+.blog-temas > .container-fluid,
+.machu > .container,
+.machu > .container-fluid,
+.caminata > .container,
+.caminata > .container-fluid,
+.cusco > .container,
+.cusco > .container-fluid,
+.lima > .container,
+.lima > .container-fluid,
+.arequipa > .container,
+.arequipa > .container-fluid,
+.puno > .container,
+.puno > .container-fluid,
+.valle > .container,
+.valle > .container-fluid,
+.selva > .container,
+.selva > .container-fluid,
+.nazca > .container,
+.nazca > .container-fluid,
+.ica > .container,
+.ica > .container-fluid,
+.pisco > .container,
+.pisco > .container-fluid,
+.puerto > .container,
+.puerto > .container-fluid,
+.salkantay > .container,
+.salkantay > .container-fluid,
+.manu > .container,
+.manu > .container-fluid,
+.ollanta > .container,
+.ollanta > .container-fluid,
+.huchuy > .container,
+.huchuy > .container-fluid,
+.choque > .container,
+.choque > .container-fluid,
+.humantay > .container,
+.humantay > .container-fluid,
+.vinicunca > .container,
+.vinicunca > .container-fluid,
+.paquetes > .container,
+.paquetes > .container-fluid,
+.terminos > .container,
+.terminos > .container-fluid,
+.preguntas > .container,
+.preguntas > .container-fluid,
+.pachamamalodge > .container,
+.pachamamalodge > .container-fluid,
+.santuaryLodge > .container,
+.santuaryLodge > .container-fluid {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ficha tour: el wrapper #blog cambia de clase por JS (hikes, machupicchu, etc.) */
+#blog > .container,
+#blog > .container-fluid {
+  position: relative;
+  z-index: 2;
+}
+
+/* <p> junto a .h1-destinos: el p global es gris (#3a3a3a) y justify — se “pierde” sobre la foto */
+.hero .h1-destinos + p,
+.destinos .h1-destinos + p,
+.aventuras .h1-destinos + p,
+.imperdible .h1-destinos + p,
+.blog .h1-destinos + p,
+.blog-temas .h1-destinos + p,
+.machu .h1-destinos + p,
+.caminata .h1-destinos + p,
+.cusco .h1-destinos + p,
+.lima .h1-destinos + p,
+.arequipa .h1-destinos + p,
+.puno .h1-destinos + p,
+.valle .h1-destinos + p,
+.selva .h1-destinos + p,
+.nazca .h1-destinos + p,
+.ica .h1-destinos + p,
+.pisco .h1-destinos + p,
+.puerto .h1-destinos + p,
+.salkantay .h1-destinos + p,
+.manu .h1-destinos + p,
+.ollanta .h1-destinos + p,
+.huchuy .h1-destinos + p,
+.choque .h1-destinos + p,
+.humantay .h1-destinos + p,
+.vinicunca .h1-destinos + p,
+.paquetes .h1-destinos + p,
+.terminos .h1-destinos + p,
+.preguntas .h1-destinos + p,
+.pachamamalodge .h1-destinos + p,
+.santuaryLodge .h1-destinos + p {
+  color: rgba(255, 255, 255, 0.96);
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.35rem;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65), 0 0 1px rgba(0, 0, 0, 0.75);
+}
+
+#blog .h1-destinos + p {
+  color: rgba(255, 255, 255, 0.96);
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.35rem;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65), 0 0 1px rgba(0, 0, 0, 0.75);
+}
+
+.h3-banner {
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 2.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.p-banner {
+  color: rgba(255,255,255,0.92);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.p-banner a {
+  color: #fff;
+  background: #2aa8a8;
+  padding: 10px 24px;
+  border-radius: 30px;
+  transition: background 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
+}
+
+.p-banner a:hover {
+  background: #1a2e45;
+  transform: translateY(-2px);
+}
+
+.h1-index-book {
+  color: #fff;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 700;
+  padding-bottom: 0.8em;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+/* ---------- Divider lines ---------- */
+.linea {
+  margin: 0 auto 1.5em;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #2aa8a8, #d4a843);
+  border-radius: 2px;
+}
+
+/* Oculto: la línea decorativa pasa a ser solo .h2-tierras::after */
+.linea2-blogs {
+  display: none;
+}
+
+.linea-blogs {
+  width: 60px;
+  height: 3px;
+  background: #2aa8a8;
+  border-radius: 2px;
+  margin: 0 auto 1.5em;
+}
+
+.linea-tours {
+  width: 60px;
+  height: 3px;
+  background: #2aa8a8;
+  border-radius: 2px;
+  margin: 0 auto 1.5em;
+}
+
+.linea-precio {
+  width: 50px;
+  height: 2px;
+  margin: 0 auto 1.2em;
+  background: #1a2e45;
+  border-radius: 2px;
+}
+
+.linea-foot {
+  height: 2px;
+  width: 40px;
+  background: #2aa8a8;
+  border-radius: 2px;
+  margin: 0 auto 1.5em;
+}
+
+/* ---------- Feature cards (homepage "Lo que ofrecemos") ---------- */
+.feature-card {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.07);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  height: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card:hover {
+  box-shadow: 0 8px 32px rgba(42, 168, 168, 0.15), 0 2px 8px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+
+.feature-card img {
+  height: 72px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.feature-card p.feature-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1a2e45;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p.feature-desc {
+  font-size: 0.83rem;
+  color: #6b7280;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- Tour cards ---------- */
+.card-new {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  margin-bottom: 2rem;
+  background: #fff;
+}
+
+.card-new:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+}
+
+.card-img-top {
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card-new:hover .card-img-top {
+  transform: scale(1.04);
+}
+
+/* Search & listing grids: cards centered on narrow viewports */
+.results-cards-grid {
+  justify-content: center;
+}
+
+.results-cards-grid > .col-results-card {
+  display: flex;
+  justify-content: center;
+}
+
+.results-cards-grid .card.card-new {
+  width: 100%;
+  max-width: 18rem;
+  margin-bottom: 0;
+}
+
+/* Destinos Perú (ES/EN): mismo layout de cards y tipografía del bloque texto */
+.destinations-peru-section {
+  padding-bottom: 2.5rem;
+}
+
+.destinations-prose h2 {
+  color: #1a2e45;
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.destinations-prose h3 {
+  color: #1a2e45;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-top: 1.25rem;
+}
+
+.destinations-prose p,
+.destinations-prose i {
+  color: #475569;
+  line-height: 1.65;
+}
+
+.destinations-prose i {
+  font-style: italic;
+}
+
+.destinations-cards-grid .card.destinations-card .card-body {
+  padding: 1.2rem 1rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 10rem;
+}
+
+.destinations-cards-grid .card.destinations-card .text-card {
+  flex: 1 1 auto;
+  margin-bottom: 0.65rem;
+  max-width: 100%;
+}
+
+.destinations-cards-grid .card.destinations-card .boton-card {
+  flex-shrink: 0;
+}
+
+.card .card-titulo {
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+  color: #1a2e45;
+  font-size: 0.95rem;
+  position: relative;
+  letter-spacing: -0.01em;
+}
+
+.card .card-titulo::after {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: #2aa8a8;
+  border-radius: 1px;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.text-card {
+  color: #6b7280;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin-top: 0.8rem;
+}
+
+.enlacesCategoria {
+  width: 100%;
+  padding: 0.5em 0;
+}
+
+.iconos-tours {
+  padding-bottom: 1.5rem;
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+/* Tour badge links */
+.enlaceMapi  { color: #27a057; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.enlaceHike  { color: #e05555; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.enlaceLuxury { color: #8a6e3d; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.enlaceFullday { color: #8b34a0; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.enlaceAround  { color: #2f62d0; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.enlaceMapi:hover  { color: #1e8045; }
+.enlaceHike:hover  { color: #b83c3c; }
+.enlaceLuxury:hover{ color: #6b5230; }
+.enlaceFullday:hover{ color: #6d2880; }
+.enlaceAround:hover { color: #1d4ba0; }
+
+/* ---------- Buttons ---------- */
+.boton-card {
+  display: inline-block;
+  background: #2aa8a8;
+  padding: 9px 22px;
+  border-radius: 30px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.boton-card:hover {
+  background: #1a2e45;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.boton-index {
+  background: #2aa8a8;
+  border: none;
+  padding: 11px 28px;
+  color: #fff;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.boton-index:hover {
+  background: #1a2e45;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.boton-blog-search {
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.15);
+  padding: 7px 18px;
+  color: #1a2e45;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  transition: all 0.3s ease;
+}
+
+.boton-blog-search:hover {
+  color: #fff;
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+}
+
+.btn-pacha {
+  background: #2aa8a8;
+  border: none;
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* ---------- Full-image category section ---------- */
+.full-img {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.full-img-card {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 320px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.oscuro {
+  background: rgba(0,0,0,0.15);
+  transition: background 0.5s ease;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.75rem;
+  box-sizing: border-box;
+}
+
+.uno:hover .oscuro,
+.dos:hover .oscuro,
+.tres:hover .oscuro,
+.cuatro:hover .oscuro {
+  background: rgba(26, 46, 69, 0.72);
+  transition: background 0.5s ease;
+}
+
+.uno  { background: url("../img/thumb/salkantay-trek.webp") center center / cover no-repeat; }
+.dos  { background: url("../img/thumb/machu-picchu-travel-tour.webp") center center / cover no-repeat; }
+.tres { background: url("../img/thumb/turismo-en-peru.webp") center center / cover no-repeat; }
+.cuatro { background: url("../img/thumb/tejedora-chinchero.webp") center center / cover no-repeat; }
+
+.full-img h5 {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 2px 8px rgba(0,0,0,0.5);
+  transition: transform 0.4s ease;
+  margin: 0;
+}
+
+/* Móvil / tablet: texto y CTA siempre visibles (sin depender de :hover) */
+.full-img p {
+  margin: 0.35rem 0 0;
+  transition: margin 0.5s ease, opacity 0.5s ease;
+  color: rgba(255,255,255,0.95);
+  font-size: 0.88rem;
+  opacity: 1;
+  padding: 0 1rem;
+  text-align: center;
+  max-width: 22rem;
+}
+
+.full-img a {
+  display: inline-block;
+  margin-top: 0.65rem;
+  color: #fff;
+  background: transparent;
+  padding: 8px 22px;
+  border: 1.5px solid rgba(255,255,255,0.8);
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease, opacity 0.5s ease, margin 0.5s ease;
+  opacity: 1;
+}
+
+.full-img a:hover,
+.full-img a:focus {
+  color: #fff;
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+}
+
+/* Escritorio ancho: revelar párrafo y botón al pasar el ratón */
+@media (min-width: 992px) {
+  .full-img p {
+    margin-left: -60em;
+    opacity: 0;
+    max-width: none;
+  }
+
+  .full-img a {
+    margin-right: -60em;
+    opacity: 0;
+  }
+
+  .uno:hover p,
+  .dos:hover p,
+  .tres:hover p,
+  .cuatro:hover p {
+    margin-left: 0;
+    opacity: 1;
+  }
+
+  .uno:hover a,
+  .dos:hover a,
+  .tres:hover a,
+  .cuatro:hover a {
+    margin-right: 0;
+    opacity: 1;
+    color: #fff;
+  }
+}
+
+/* ---------- Contact form ---------- */
+.formTransparent input,
+.formTransparent textarea,
 .formTransparent select {
   background: transparent;
   border: none;
-  border-bottom: 1px solid grey;
+  border-bottom: 1.5px solid rgba(0,0,0,0.2);
+  border-radius: 0;
+  padding-left: 0;
+  transition: border-color 0.3s ease;
 }
+
+.formTransparent input:focus,
+.formTransparent textarea:focus,
+.formTransparent select:focus {
+  background: transparent;
+  border-color: #2aa8a8;
+  box-shadow: none;
+  outline: none;
+}
+
 .formTransparent .btnTransparent {
   background: transparent;
-  margin-top: 3em;
-  border: none;
-  border-bottom: 1px solid rgb(67, 207, 207);
-  border-radius: 10%;
+  margin-top: 2rem;
+  border: 1.5px solid #2aa8a8;
+  border-radius: 30px;
+  padding: 10px 36px;
+  color: #1a2e45;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   position: relative;
   overflow: hidden;
-  color: #000000;
+  isolation: isolate;       /* crea stacking context propio */
+  transition: color 0.35s ease;
 }
-.formTransparent .btnTransparent:hover {
-  color: #fff;
-  transition: 0.4 ease-in-out;
-}
+
 .formTransparent .btnTransparent::before {
   content: "";
   position: absolute;
@@ -50,958 +1228,127 @@ html {
   bottom: 0;
   width: 100%;
   height: 0;
-  background-color: rgb(67, 207, 207);
-  transition: height 0.3s ease-in-out;
-  z-index: -1;
-  /* Ajustar el valor del índice z para colocar el pseudo-elemento detrás del texto */
+  background: #2aa8a8;
+  transition: height 0.35s ease;
+  z-index: -1;              /* queda detrás del texto, visible por isolation */
 }
+
+.formTransparent .btnTransparent:hover {
+  color: #fff;
+}
+
 .formTransparent .btnTransparent:hover::before {
   height: 100%;
-  transition: 0.4s ease-in-out;
-}
-
-.tab-content {
-  background: #c3c3c3 !important;
-}
-
-.nav {
-  background: #d8d8d8;
-}
-.nav .nav-item {
-  border: 1px solid rgba(114, 114, 114, 0.4392156863);
-}
-
-.tags {
-  margin-bottom: 1.5em;
-}
-.tags a {
-  color: rgb(44, 173, 173) !important;
-  transition: 0.6s;
-  cursor: pointer;
-  margin-left: 0.5em;
-}
-.tags a:hover {
-  color: #343434 !important;
-  transition: 0.6s;
-}
-
-.boton-blog-search {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.168627451);
-  padding: 5px 10px 5px 10px;
-  color: #000;
-  border-radius: 6px;
-  transition: 0.5s;
-}
-.boton-blog-search:hover {
-  color: #fff;
-  background: rgb(67, 207, 207);
-  transition: 0.5s;
-  border-color: rgb(67, 207, 207);
 }
 
 .form-control:focus {
-  border-color: #43cfcf !important;
-  box-shadow: 0 0 0 0.25rem rgba(67, 207, 207, 0.034) !important;
+  border-color: #2aa8a8 !important;
+  box-shadow: 0 0 0 0.2rem rgba(42, 168, 168, 0.12) !important;
 }
 
-.precio {
-  font-size: 35px;
-  text-align: center;
-}
-
-.linea-precio {
-  width: 60px;
-  height: 2px;
-  margin: auto;
-  background: #283950;
-  margin-bottom: 1.2em;
-}
-
-.linea2-blogs {
-  border-bottom: 5px solid rgb(67, 207, 207);
-  margin-bottom: 1em;
-  width: 30px;
-  border-radius: 5px;
-}
-
-.compartir a {
-  background: rgb(67, 207, 207);
-  color: #fff;
-  padding: 0.7em;
-  margin-left: 0.8em;
-  border-radius: 40px;
-  width: 50px;
-  height: 50px;
-  display: inline-block;
-  text-align: center;
-  border: solid 1px rgb(67, 207, 207);
-  font-size: 20px;
-  transition: 0.6s;
-}
-.compartir a:hover {
-  background: #fff;
-  color: #43cfcf;
-  border: 1px solid #43cfcf;
-  transition: 0.6s;
-}
-.compartir a i {
-  line-height: 20px;
-}
-
-.menupacha {
-  margin-left: 3em;
-}
-
-.menupacha li {
-  margin-left: 1em;
-  font-size: 13px;
-  font-weight: 400;
-  text-transform: uppercase;
-  font-family: sans-serif;
-}
-
-.circulo {
-  margin: auto;
-  text-align: center;
-  border-style: solid;
-  border-color: #fff;
-  border-radius: 72px;
-  width: 30.8px;
-  height: 46px;
-  margin-top: 2em;
-}
-
-.circulo i {
-  color: #fff;
-  position: absolute;
-  text-align: center;
-  margin: -8px;
-  padding-top: 1em;
-  transition: 0.5s;
-}
-
-.circulo:hover i {
-  padding-top: 1.6em;
-  transition: 0.5s;
-  color: #3ebdbd;
-}
-
-.circulo .desvanecer {
-  color: #fff;
-  position: absolute;
-  text-align: center;
-  margin: -8px;
-  padding-top: 1em;
-  transition: 0.5s;
-}
-
-.circulo:hover .desvanecer {
-  opacity: 0;
-  transition: 2.2s;
-  padding-top: 2em;
-}
-
-.contenidoindex {
-  text-align: center;
-}
-
-.contenidoindex p {
-  text-align: center;
-  font-weight: bold;
-  text-shadow: 4px 1px rgba(32, 32, 32, 0.6509803922);
-}
-
-.contenidoindex a {
-  color: #fff;
-  font-weight: bold;
-  text-transform: uppercase;
-  margin-left: 1em;
-  text-align: center;
-  padding: 0.3em 0.5em;
-  border-radius: 5px;
-  font-size: 14px;
-  border-bottom: 1px solid #43cfcf;
-  text-shadow: 3px 3px 4px rgb(30, 53, 52);
-}
-
-.contenidoindex a:hover {
-  background: #43cfcf;
-  color: #fff;
-  transition: 0.6s ease;
-}
-
-.linea {
-  margin: auto;
-  margin-bottom: 1em;
-  width: 90px;
-  height: 2px;
-  background: #43cfcf;
-}
-
-.dashboard {
+/* ---------- Banners ---------- */
+.banner {
+  height: 420px;
   width: 100%;
-  height: 90px;
-  background: #1f6a7b;
-  margin-bottom: 2em;
-  align-items: center;
-  display: flex;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+              url(../img/panoramico/lares-trek.webp) center center / cover no-repeat;
+  background-attachment: fixed;
 }
 
-.dashboard ul {
-  list-style: none;
-  overflow: hidden;
-}
-
-.dashboard ul li {
-  float: left;
-  padding-right: 2em;
-  color: #fff;
-  text-transform: uppercase;
-  font-family: revert;
-  font-size: 12px;
-  transition: 0.5s;
-}
-
-.dashboard ul li a {
-  color: #fff;
-  transition: 0.5s;
-}
-
-.dashboard ul li a:hover {
-  transition: 0.5s;
-  color: #f1f1f1;
-}
-
-.botonsearch {
-  background: transparent;
-  cursor: pointer;
-  color: #fff;
-  border-style: none;
-  transition: 0.6s;
-}
-
-.botonsearch:hover {
-  color: #00a9a9;
-  transition: 0.6s;
-}
-
-#traslate {
-  margin-left: 2em;
-  background: #43cfcf;
-  padding: 4px 11px;
-  color: #000;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 12px;
-  text-align: center;
-}
-
-.img-card {
+.banner-destinos {
+  height: 420px;
   width: 100%;
-  height: 180px;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+              url(../img/panoramico/los-mejores-destinos-para-peru.webp) center center / cover no-repeat;
+  background-attachment: fixed;
 }
 
-.card .card-titulo {
-  margin-bottom: 0.8rem;
-  font-weight: 600;
-  color: #343434;
-  font-size: 1em;
-  position: relative;
-}
-.card .card-titulo::after {
-  content: "";
-  display: block;
-  width: 25px;
-  height: 1px;
-  background: #000;
-  position: absolute;
-  bottom: -7px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-}
-
-.enlacesCategoria {
+.banner-imperdible {
+  height: 500px;
   width: 100%;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.18)),
+              url(../img/panoramico/cusco-imperdible-tierras-vivas.webp) center center / cover no-repeat;
+  background-attachment: fixed;
 }
 
-.djmFormShow {
-  padding: 1.8em;
-  background: #283950;
-  color: #fff;
-  border-radius: 10px;
+.banner-aventuras {
+  height: 500px;
+  width: 100%;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+              url(../img/panoramico/camino-inca-reserva.webp) center center / cover no-repeat;
+  background-attachment: fixed;
 }
 
-.enlaceMapi {
-  color: #4db91e;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  transform: 0.6s;
+.banner-container {
+  margin: auto;
+  width: 50%;
 }
 
-.enlaceMapi:hover {
-  font-size: 13px;
-  color: #4db91e;
-  transform: 0.6s;
-}
-
-.enlaceHike {
-  color: #e85f5f;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  transform: 0.6s;
-}
-
-.enlaceHike:hover {
-  font-size: 13px;
-  color: #e85f5f;
-  transform: 0.6s;
-}
-
-.enlaceLuxury {
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #777777;
-  transform: 0.6s;
-}
-
-.enlaceLuxury:hover {
-  color: #777777;
-  transform: 0.6s;
-  font-size: 13px;
-}
-
-.enlaceFullday {
-  color: #940da0;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  transform: 0.6s;
-}
-
-.enlaceFullday:hover {
-  color: #940da0;
-  transform: 0.6s;
-  font-size: 13px;
-}
-
-.enlaceAround {
-  color: #3f5dd3;
-  font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  transform: 0.6s;
-}
-
-.enlaceAround:hover {
-  color: #3f5dd3;
-  font-size: 13px;
-  transform: 0.6s;
-}
-
-#traslate:hover {
-  background: #fff;
-  color: #000;
-}
-
-.h1-index-book {
-  color: #fff;
-  font-size: 3.5em;
-  text-align: center;
-  font-weight: bold;
-  padding-bottom: 0.8em;
-}
-
-.texto-blog {
-  color: #000;
-  text-align: justify;
-}
-
-.relacionado-medio {
-  text-align: center;
-  border-bottom-style: solid;
-  border-top-style: solid;
-  border-width: 1px;
-  border-color: #000;
-  display: flex;
-  align-items: center;
-  padding: 10px 60px;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.relacionado-medio a {
-  color: #000;
-  font-style: italic;
-}
-
-.relacionado-medio:hover a {
-  color: #0d8c79;
-}
-
-.btn-whatsapp {
-  display: block;
-  width: 70px;
-  height: 70px;
-  color: #fff;
-  position: fixed;
-  right: 20px;
-  bottom: 30px;
-  border-radius: 50%;
-  line-height: 80px;
-  text-align: center;
-  z-index: 999;
-}
-
-h2 {
-  color: #1e4b89;
-  font-size: 1.2em !important;
-  font-weight: bold;
+/* ---------- Blog listing hero (blog-peru / peru-blog) ---------- */
+.blog {
   position: relative;
 }
 
-h2::after {
-  content: "";
-  display: block;
-  width: 30px;
-  height: 3px;
-  background-color: #1e4b89;
-  margin-top: 5px;
+.blog .container,
+.blog .container-fluid {
+  position: relative;
+  z-index: 2;
 }
 
-.boton-acordion {
-  border-style: none;
-  font-size: 16px;
-  text-align: left;
-}
-
-.boton-acordion:focus {
-  border-style: none;
-  outline: 0px;
-  outline: 0px auto;
-}
-
-.boton-acordion:hover {
-  font-weight: bold;
-}
-
-.linea-tours {
-  width: 200px;
-  height: 2px;
-  background: #767676;
-  margin: auto;
-  margin-bottom: 1.5em;
-  margin-top: 1em;
-}
-
-.linea-blogs {
-  width: 200px;
-  height: 2px;
-  background: #3ebdbd;
-  margin: auto;
-  margin-bottom: 1.5em;
-  margin-top: 1em;
-}
-
-beige {
-  color: #3ebdbd;
-}
-
-.tours-blog {
-  text-align: justify;
-}
-
-.tours-blog h4 {
-  border-bottom-style: dotted;
-  border-width: 2px;
-  margin-bottom: 0.5em;
-}
-
-.tours-blog .a {
-  color: #0c9287;
-  font-size: 20px;
-  padding-right: 0.4em;
-}
-
-.tours-blog .a:hover {
-  color: #006cff;
-}
-
-.tours-blog .b {
-  color: #375a5f;
-  font-size: 18px;
-  padding-right: 0.4em;
-}
-
-.tours-blog .b:hover {
-  color: #006cff;
-}
-
-.enlaces-tours {
-  font-weight: bold;
-  color: #0a9b9b;
-}
-
-.enlaces-blog {
-  display: block;
-  color: #000;
-  font-size: 18px;
-}
-
-.enlaces-blog:hover {
-  color: #0c9287;
-}
-
-.details {
-  width: 100%;
-  margin-top: 2em;
-  margin-bottom: 3em;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.details a {
-  font-size: 12px;
+.blog-hero-subtitle {
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1.05rem;
   font-weight: 500;
-  text-transform: uppercase;
-  color: #283950;
-  letter-spacing: 0.1em;
-}
-.details a:hover {
-  color: #2fa69b;
-}
-.details p {
-  font-weight: 500 !important;
-}
-
-.sticky {
-  position: sticky;
-  top: 4em;
-}
-
-.book-tours {
-  background: #364757;
-  padding: 10px 30px;
-}
-
-.book-tours h4 {
-  color: #fff;
+  line-height: 1.55;
+  max-width: 42rem;
+  margin: 0.5rem auto 0;
   text-align: center;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65), 0 0 1px rgba(0, 0, 0, 0.75);
 }
 
-.book-tours label {
-  color: #fff;
+.blog-listing-section .blog-listing-lead {
+  color: #2c3e50;
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 48rem;
+  margin: 0 0 1rem;
 }
 
-.book-tours button {
-  margin-top: 1em;
+.blog-listing-section .blog-listing-lead a {
+  color: #2aa8a8;
 }
 
-strong {
+.blog-listing-section h2 {
+  color: #1a2e45;
+  font-size: 1.75rem;
   font-weight: 700;
+  margin-bottom: 0.75rem;
 }
 
-.form-index {
-  margin-top: 25%;
-}
-
-.boton-index {
-  background: #00a9a9;
-  border-style: none;
-  padding: 10px 20px 10px 20px;
-  color: #fff;
-  border-radius: 6px;
-  transition: 0.6s;
-}
-
-.titulosTours {
-  text-align: center;
-  color: #fff;
-}
-
-.div-form-tours {
-  position: sticky;
-  top: 3.5em;
-  margin: 1em;
-}
-
-.boton-index:hover {
-  background: #fff;
-  color: #000;
-  font-weight: 500;
-  transition: 0.6s;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.row-menu {
-  width: 100%;
-}
-
-.icon-menu {
-  float: left;
-}
-
-.h1-index {
-  text-align: center;
-  margin-top: 2em;
-  font-size: 3em;
-  margin-bottom: 0.6em;
-}
-
-.h2-tierras {
-  color: #000;
-  font-weight: 400;
-  margin-bottom: 1em;
-}
-
-.iconos-tours {
-  padding-bottom: 2em;
-}
-
-.p-banner a {
-  color: #fff;
-  background: #2fa69b;
-  padding: 10px 10px 10px 10px;
-  border-radius: 3px;
-  transition: 0.5s;
-}
-
-.p-banner a:hover {
-  background: #003fa7;
-  color: #fff;
-  transition: 0.5s;
-}
-
-.h1-destinos {
-  color: #fff;
-  font-size: 3em;
+.blog-listing-no-results {
   font-weight: 600;
-  text-align: center;
-  margin: auto;
-  margin-bottom: 0.3em;
-  text-shadow: 3px 3px 4px rgb(30, 53, 52);
-  font-family: "Playwrite HU", cursive;
-}
-.h1-destinos::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 4px;
-  background: rgb(67, 207, 207);
-  margin: 0.1em auto 0;
+  color: #1a2e45;
 }
 
-h3 {
-  font-size: 1.2em;
-  font-weight: 500;
+.blog-listing-section {
+  padding-bottom: 0.25rem;
 }
 
-.paneles li {
-  list-style: none;
-}
-
-.h3-book-pop-up {
-  margin-top: 2em;
-  text-align: center;
-  margin-bottom: 1em;
-  text-transform: uppercase;
-}
-
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.1s ease 0.5s;
-  visibility: visible;
-  width: 150px;
-}
-
-[data-title]:after {
-  content: attr(data-title);
-  background-color: #333;
-  color: #fff;
-  font-weight: 800;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 14px;
-  position: absolute;
-  text-align: left;
-  padding: 5px 20px;
-  bottom: -1.6em;
-  left: 100%;
-  opacity: 0;
-  z-index: 99999;
-  visibility: hidden;
-  border-radius: 6px;
-}
-
-[data-title] {
-  position: relative;
-}
-
-.space {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  width: 100%;
-}
-
-.full-img {
-  width: 100%;
-  text-align: center;
-  overflow: hidden;
-}
-
-.full-img-card {
-  width: 25%;
-  height: 300px;
-  background: grey;
-  display: block;
-  float: left;
-}
-
-.oscuro {
-  background: transparent;
-  transition: 1s;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.uno:hover .oscuro {
-  background: rgba(0, 0, 0, 0.5294117647);
-  transition: 1s;
-}
-
-.uno {
-  background: url("../img/thumb/salkantay-trek.webp");
-  background-size: cover;
-  background-position: center center;
-}
-
-.dos {
-  background: url("../img/thumb/machu-picchu-travel-tour.webp");
-  background-size: cover;
-  background-position: center center;
-}
-
-.tres {
-  background: url("../img/thumb/turismo-en-peru.webp");
-  background-size: cover;
-  background-position: center center;
-}
-
-.cuatro {
-  background: url("../img/thumb/tejedora-chinchero.webp");
-  background-size: cover;
-  background-position: center center;
-}
-
-.dos:hover .oscuro {
-  background: rgba(0, 0, 0, 0.5294117647);
-  transition: 1s;
-}
-
-.tres:hover .oscuro {
-  background: rgba(0, 0, 0, 0.5294117647);
-  transition: 1s;
-}
-
-.cuatro:hover .oscuro {
-  background: rgba(0, 0, 0, 0.5294117647);
-  transition: 1s;
-}
-
-.full-img h5 {
-  color: #fff;
-  text-align: center;
-  padding-top: 5em;
-  font-size: 1.4em;
-  font-weight: 700;
-}
-
-.full-img p {
-  margin-left: -40em;
-  transition: 1s;
-  color: #fff;
-}
-
-.uno:hover p {
-  margin-left: 0em;
-  text-align: center;
-  transition: 1s;
-}
-
-.dos:hover p {
-  margin-left: 0em;
-  text-align: center;
-  transition: 1s;
-}
-
-.tres:hover p {
-  margin-left: 0em;
-  text-align: center;
-  transition: 1s;
-}
-
-.cuatro:hover p {
-  margin-left: 0em;
-  text-align: center;
-  transition: 1s;
-}
-
-.full-img a {
-  margin-right: -40em;
-  text-align: center;
-  color: #fff;
-  background: transparent;
-  padding: 10px 15px;
-  border-style: solid;
-  border-color: #fff;
-  border-width: 1px;
-  border-radius: 4px;
-  transition: 1s;
-}
-
-.oscuro a:hover {
-  margin-right: 0em;
-  transition: 1s;
-  color: #fff;
-}
-
-.uno:hover a {
-  margin-right: 0em;
-  transition: 1s;
-}
-
-.dos:hover a {
-  margin-right: 0em;
-  transition: 1s;
-}
-
-.tres:hover a {
-  margin-right: 0em;
-  transition: 1s;
-}
-
-.cuatro:hover a {
-  margin-right: 0em;
-  transition: 1s;
-}
-
-.full-img a:hover {
-  background: #2fa69b;
-  border-style: none;
-}
-
-.card-new {
-  transition: 0.6s;
-  margin: auto;
-  margin-bottom: 2em;
-  background: #fff;
-}
-
-.card-new:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: 0.6s;
-  background: #fff;
-}
-
-.blogs {
-  -webkit-box-flex: 0;
-  width: 25%;
-  border-style: none;
-  height: 250px;
-  overflow: hidden;
-  text-align: center;
-  color: #fff;
-}
-.blogs .black {
-  background: transparent;
-  transition: 1s;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.blogs:hover .black {
-  background: rgba(0, 0, 0, 0.5019607843);
-}
-.blogs:hover p {
-  margin-left: 0em;
-  font-size: 13px;
-  transition: 0.6s;
-}
-.blogs:hover h2 {
-  opacity: 1;
-}
-.blogs h2 {
-  color: #fff;
-  font-size: 18px !important;
-  padding-top: 40px;
-  opacity: 0.9;
-  transition: 1s;
-}
-.blogs p {
-  text-align: center;
-  font-size: 0px;
-  margin-left: -50em;
-  color: #fff;
-  padding: 1.2em;
-  transition: 0.6s;
-}
-.blogs .fecha {
-  margin-right: -50em;
-  transition: 1s;
-}
-.blogs:hover .fecha {
-  margin-right: 0%;
-}
-.blogs a {
-  text-align: center;
-  color: #fff;
-  background: transparent;
-  padding: 10px 15px;
-  border-style: solid;
-  border-color: #fff;
-  font-size: 12px;
-  border-width: 1px;
-  border-radius: 4px;
-  display: none;
-  transition: 1s;
-}
-.blogs a:hover {
-  background: #2fa69b;
-  border-style: none;
-  color: #fff;
-  transition: 0.8s;
-}
-.blogs:hover a {
-  margin-right: 0em;
-  display: inline;
-  transition: 1s;
-}
-
-.blogimg {
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-}
-
+/* ---------- Blog cards ---------- */
 .blogSpace {
-  transition: 0.5s;
-  margin-bottom: 1em;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
 }
+
 .blogSpace:hover {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  transition: 0.5s;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+  transform: translateY(-4px);
 }
+
 .blogSpace p {
   text-align: left;
 }
@@ -1010,49 +1357,458 @@ h3 {
   width: 100%;
   height: 80px;
   object-fit: cover;
-  position: initial;
 }
 
-.boton-card {
-  background: #2fa69b;
-  padding: 10px 10px 10px 10px;
-  border-radius: 4px;
+.blogs {
+  width: 25%;
+  border: none;
+  height: 260px;
+  overflow: hidden;
+  text-align: center;
   color: #fff;
-  transition: 0.6s;
-  border-style: none;
-  font-size: 12px;
 }
 
-.boton-card:hover {
-  background: #0a877b;
+.blogs .black {
+  background: transparent;
+  transition: background 0.5s ease;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.blogs:hover .black {
+  background: rgba(0,0,0,0.52);
+}
+
+.blogs:hover p {
+  margin-left: 0;
+  font-size: 13px;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.blogs:hover h2 { opacity: 1; }
+
+.blogs h2 {
   color: #fff;
-  transition: 0.6s;
+  font-size: 1.05rem !important;
+  padding-top: 50px;
+  opacity: 0.92;
+  transition: opacity 0.5s ease;
 }
 
-.btn-pacha {
-  background: #6e6e6e;
-  border-style: none;
+.blogs h2::after { display: none; }
+
+.blogs p {
+  text-align: center;
+  font-size: 0;
+  margin-left: -50em;
+  opacity: 0;
   color: #fff;
-  padding: 4px 14px;
-  border-radius: 5px;
+  padding: 1em;
+  transition: 0.5s;
 }
 
-.text-card {
-  color: #2f2f2f;
+.blogs .fecha {
+  margin-right: -50em;
+  transition: 0.5s;
+}
+
+.blogs:hover .fecha {
+  margin-right: 0;
+}
+
+.blogs a {
+  text-align: center;
+  color: #fff;
+  background: transparent;
+  padding: 8px 18px;
+  border: 1.5px solid #fff;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: none;
+  transition: all 0.4s ease;
+}
+
+.blogs a:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+}
+
+.blogs:hover a {
+  display: inline;
+}
+
+.blogimg {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
+
+.enlaces-blog {
+  display: block;
+  color: #1a2e45;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: color 0.25s ease;
+}
+
+.enlaces-blog:hover {
+  color: #2aa8a8;
+}
+
+.texto-blog {
+  color: #3a3a3a;
   text-align: justify;
-  font-size: 14px;
 }
+
+.relacionado-medio {
+  text-align: center;
+  border-top: 1px solid rgba(0,0,0,0.12);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  padding: 12px 40px;
+  margin: 1.5em 0;
+  transition: background 0.3s ease;
+}
+
+.relacionado-medio a {
+  color: #1a2e45;
+  font-style: italic;
+  transition: color 0.25s ease;
+}
+
+.relacionado-medio:hover {
+  background: rgba(42, 168, 168, 0.04);
+}
+
+.relacionado-medio:hover a {
+  color: #2aa8a8;
+}
+
+/* ---------- Tour detail page ---------- */
+.details {
+  width: 100%;
+  margin-top: 2em;
+  margin-bottom: 3em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.details a {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #1a2e45;
+  letter-spacing: 0.1em;
+  transition: color 0.25s ease;
+}
+
+.details a:hover {
+  color: #2aa8a8;
+}
+
+.details p {
+  font-weight: 500;
+  color: #1a2e45;
+}
+
+.sticky { position: sticky; top: 4.5em; }
+
+.book-tours {
+  background: linear-gradient(135deg, #1a2e45 0%, #22404e 100%);
+  padding: 1.5rem 1.8rem;
+  border-radius: 12px;
+}
+
+.book-tours h4 {
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.book-tours label {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+}
+
+.book-tours button { margin-top: 1em; }
+
+.djmFormShow {
+  padding: 1.8em;
+  background: linear-gradient(135deg, #1a2e45, #22404e);
+  color: #fff;
+  border-radius: 12px;
+}
+
+.precio {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #1a2e45;
+}
+
+.tours-blog { text-align: justify; }
+
+.tours-blog h4 {
+  border-bottom: 1.5px dotted rgba(0,0,0,0.2);
+  border-width: 2px;
+  margin-bottom: 0.5em;
+}
+
+.tours-blog .a {
+  color: #2aa8a8;
+  font-size: 1.2rem;
+  padding-right: 0.4em;
+  transition: color 0.25s ease;
+}
+
+.tours-blog .a:hover { color: #1a2e45; }
+
+.tours-blog .b {
+  color: #375a5f;
+  font-size: 1.1rem;
+  padding-right: 0.4em;
+  transition: color 0.25s ease;
+}
+
+.tours-blog .b:hover { color: #1a2e45; }
+
+.enlaces-tours { font-weight: 700; color: #2aa8a8; }
+
+.paneles li { list-style: none; }
+
+/* ---------- Tags ---------- */
+.tags { margin-bottom: 1.5em; }
+
+.tags a {
+  color: #2aa8a8 !important;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  margin-left: 0.5em;
+  font-size: 0.85rem;
+}
+
+.tags a:hover {
+  color: #1a2e45 !important;
+}
+
+/* ---------- Navigation tabs ---------- */
+.tab-content {
+  background: #f0f2f5 !important;
+  border-radius: 0 0 8px 8px;
+}
+
+/* Contenido enriquecido (CMS) dentro de pestañas: sin pseudo‑subrayado en h2 (evita líneas sueltas al justificar texto) */
+.tab-content h2::after,
+.tab-pane h2::after {
+  display: none;
+}
+
+/* ---------- EN Destinies Perú: acordeón (Bootstrap) sin subrayado global en <h2> ---------- */
+.accordion-destiny.accordion-flush {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(26, 46, 69, 0.12);
+  box-shadow: 0 10px 36px rgba(26, 46, 69, 0.08);
+  background: #fff;
+}
+
+.accordion-destiny .accordion-item {
+  border: none;
+  border-bottom: 1px solid rgba(26, 46, 69, 0.08);
+}
+
+.accordion-destiny .accordion-item:last-of-type {
+  border-bottom: none;
+}
+
+.accordion-destiny .accordion-item h2::after {
+  display: none !important;
+}
+
+.accordion-destiny .accordion-button {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1a2e45;
+  padding: 1rem 1.2rem;
+  background: #f7f8fa;
+  box-shadow: none;
+}
+
+.accordion-destiny .accordion-button:not(.collapsed) {
+  background: rgba(42, 168, 168, 0.14);
+  color: #1a2e45;
+  box-shadow: none;
+}
+
+.accordion-destiny .accordion-button:focus {
+  box-shadow: 0 0 0 2px rgba(42, 168, 168, 0.35);
+  border-color: transparent;
+}
+
+.accordion-destiny .accordion-body {
+  padding: 1.25rem 1.35rem 1.5rem;
+  line-height: 1.65;
+  color: #374151;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+/* Tours sugeridos bajo el acordeón (páginas EN destinies) */
+.destiny-tours-en {
+  margin-top: 0.5rem;
+}
+
+.destiny-tours-en__title {
+  margin-bottom: 0.35rem;
+}
+
+.destiny-tours-en__intro {
+  color: #6b7280;
+  font-size: 0.9rem;
+  max-width: 36rem;
+  margin: 0 auto 1.75rem;
+}
+
+.destiny-tour-card {
+  border: 1px solid rgba(26, 46, 69, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.destiny-tour-card:hover {
+  box-shadow: 0 12px 32px rgba(26, 46, 69, 0.12);
+  transform: translateY(-2px);
+}
+
+.destiny-tour-card .card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.nav { background: #e8eaed; }
+
+.nav .nav-item {
+  border: 1px solid rgba(114,114,114,0.3);
+}
+
+/* ---------- Accordion ---------- */
+.boton-acordion {
+  border: none;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #1a2e45;
+  transition: color 0.25s ease;
+}
+
+.boton-acordion:focus {
+  outline: none;
+}
+
+.boton-acordion:hover { color: #2aa8a8; }
+
+/* ---------- Search modal ---------- */
+.h3-book-pop-up {
+  margin-top: 1.5em;
+  text-align: center;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #1a2e45;
+}
+
+/* ---------- Tooltip ---------- */
+[data-title] { position: relative; }
+
+[data-title]:hover::after {
+  opacity: 1;
+  transition: all 0.15s ease 0.4s;
+  visibility: visible;
+}
+
+[data-title]::after {
+  content: attr(data-title);
+  background: #1a2e45;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  position: absolute;
+  padding: 5px 14px;
+  bottom: -1.6em;
+  left: 100%;
+  opacity: 0;
+  z-index: 99999;
+  visibility: hidden;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* ---------- WhatsApp floating button ---------- */
+.btn-whatsapp {
+  display: block;
+  width: 62px;
+  height: 62px;
+  position: fixed;
+  right: 22px;
+  bottom: 28px;
+  z-index: 999;
+  filter: drop-shadow(0 4px 12px rgba(37, 211, 102, 0.45));
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.btn-whatsapp a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-whatsapp a:hover {
+  color: #fff;
+  background: #1ebe5a;
+}
+
+.btn-whatsapp__icon {
+  font-size: 2.05rem;
+  line-height: 1;
+}
+
+.btn-whatsapp:hover {
+  transform: scale(1.08) translateY(-2px);
+  filter: drop-shadow(0 8px 18px rgba(37, 211, 102, 0.55));
+}
+
+/* ---------- Footer ---------- */
+.display-foot   { display: block; }
+.display-foot-2 { display: none; }
 
 footer {
   width: 100%;
   background: #343434;
-  font-size: 15px;
+  font-size: 0.92rem;
+  padding-top: 1rem;
 }
 
 footer p {
-  color: #fff;
+  color: rgba(255,255,255,0.75);
   text-align: center;
-  margin-bottom: 0em;
+  margin-bottom: 0.3em;
+  font-size: 0.88rem;
 }
 
 .h4-foot {
@@ -1060,222 +1816,244 @@ footer p {
   text-align: center;
   text-transform: uppercase;
   margin-top: 3em;
-}
-
-.linea-foot {
-  height: 3px;
-  width: 15%;
-  background: #2fa69b;
-  margin: auto;
-  margin-bottom: 2em;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
 }
 
 .a-foot {
-  color: #fff;
+  color: rgba(255,255,255,0.72);
   display: block;
-  font-size: 15px;
+  font-size: 0.88rem;
+  text-align: center;
+  margin-bottom: 0.3em;
+  transition: color 0.25s ease;
 }
 
-.a-foot:hover {
-  color: #34e8d7;
-}
+.a-foot:hover { color: #2aa8a8; }
 
 .social-foot a {
-  color: #fff;
-  font-size: 20px;
+  color: rgba(255,255,255,0.72);
+  font-size: 1.3rem;
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+  margin: 0 0.3em;
 }
 
 .social-foot a:hover {
-  color: #34e8d7;
-}
-
-.banner {
-  height: 400px;
-  width: 100%;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/panoramico/lares-trek.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.banner-destinos {
-  height: 400px;
-  width: 100%;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/panoramico/los-mejores-destinos-para-peru.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.banner-imperdible {
-  height: 500px;
-  width: 100%;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.2117647059), rgba(0, 0, 0, 0.1490196078)), url(../img/panoramico/cusco-imperdible-tierras-vivas.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.banner-aventuras {
-  height: 500px;
-  width: 100%;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/panoramico/camino-inca-reserva.webp);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-}
-
-.banner-container {
-  margin: auto;
-  width: 45%;
-}
-
-.h3-banner {
-  color: #fff;
-  font-size: 1.8em;
-  text-align: center;
-  padding-top: 2.2em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.p-banner {
-  color: #fff;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 30px;
+  color: #2aa8a8;
+  transform: translateY(-3px);
 }
 
 .copy {
   text-align: center;
-  color: #fff;
+  color: rgba(255,255,255,0.45);
   margin-top: 2em;
-  padding-top: 2em;
-  border-top-style: solid;
-  border-width: 0.1px;
-  padding-bottom: 2em;
-  border-top-color: rgba(255, 255, 255, 0.3411764706);
+  padding: 1.5em 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
 .copy h5 {
-  font-size: 15px;
+  font-size: 0.82rem;
   font-weight: 400;
 }
 
 .copy .djm2 {
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.copy .djm2:hover { color: #2aa8a8; }
+
+/* ---------- Dashboard (admin) ---------- */
+.dashboard {
+  width: 100%;
+  height: 90px;
+  background: #1a2e45;
+  margin-bottom: 2em;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard ul {
+  list-style: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard ul li {
+  float: left;
+  padding-right: 2em;
   color: #fff;
-  font-weight: 400;
-}
-
-.copy .djm2:hover {
-  color: #00ffe1;
-}
-
-.castellano-es {
-  font-weight: 600;
-  background: #43cfcf;
-  padding: 4px 10px;
-  color: #000;
-  border-style: none;
-  border-radius: 5px;
-  font-size: 12px;
-  transition: 0.8s;
   text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
-.castellano-es .castellano-es:hover {
+
+.dashboard ul li a {
+  color: rgba(255,255,255,0.8);
+  transition: color 0.25s ease;
+}
+
+.dashboard ul li a:hover { color: #2aa8a8; }
+
+/* ---------- Misc ---------- */
+.share { text-align: center; margin-top: 2em; }
+
+.compartir a {
+  background: #2aa8a8;
+  color: #fff;
+  padding: 0.65em;
+  margin-left: 0.6em;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #2aa8a8;
+  font-size: 1.1rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.compartir a:hover {
   background: #fff;
-  color: #000;
-  transition: 0.8s;
-}
-.castellano-es .castellano-es:focus {
-  outline: none;
+  color: #2aa8a8;
 }
 
-.display-foot {
-  display: block;
+.back-menu {
+  height: 132px;
+  width: 100%;
+  background: #1a2e45;
 }
 
-.display-foot-2 {
-  display: none;
+#traslate {
+  margin-left: 1.5em;
+  background: #2aa8a8;
+  padding: 5px 14px;
+  color: #fff;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+  transition: background 0.3s ease;
 }
 
+#traslate:hover { background: #1a2e45; }
+
+.div-form-tours {
+  position: sticky;
+  top: 3.5em;
+  margin: 1em;
+}
+
+.titulosTours {
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ---------- Responsive ---------- */
 @media (min-width: 768px) and (max-width: 1199px) {
-  .logo {
-    margin-left: -1.5em;
+  .logo { margin-left: -1em; }
+  .h1-destinos { margin-top: 7em; font-size: 2rem; }
+}
+
+/* Full-img: por debajo de lg las 4 columnas se aplastan; apilar y reforzar overlay */
+@media (max-width: 991.98px) {
+  .full-img {
+    flex-direction: column;
+    flex-wrap: nowrap;
   }
-  .h1-destinos {
-    margin-top: 7em;
-    font-size: 30px;
+
+  .full-img-card {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 220px;
+    height: min(52vw, 280px);
+  }
+
+  .full-img .oscuro {
+    background: rgba(26, 46, 69, 0.5);
+    padding: 1.5rem 1rem;
+  }
+
+  .uno:hover .oscuro,
+  .dos:hover .oscuro,
+  .tres:hover .oscuro,
+  .cuatro:hover .oscuro {
+    background: rgba(26, 46, 69, 0.65);
+  }
+
+  .full-img h5 {
+    font-size: 1.35rem;
+  }
+
+  .full-img p {
+    font-size: 0.9rem;
+    max-width: 26rem;
   }
 }
+
 @media (max-width: 912px) {
   .castellano-es {
-    margin-top: 2em;
-    margin-left: 5em;
-    font-size: 14px;
+    margin-top: 1.5em;
+    margin-left: 4em;
   }
-  .display-foot {
-    display: none;
-  }
-  .display-foot-2 {
-    display: inline;
-  }
-  .logo {
-    margin-left: 0em;
-  }
-  .form-index {
-    margin-top: 55%;
-  }
-  .row-menu {
-    width: 100%;
-  }
-  .icon-menu {
-    float: right;
-  }
-  .h1-index-book {
-    font-size: 1.6em;
-  }
-  .full-img-card {
-    width: 100%;
-  }
-  .h1-destinos {
-    font-size: 1.8em;
-    margin-top: 8em;
-  }
-  .banner-container {
-    width: 90%;
-  }
-  .h3-banner {
-    font-size: 2.4em;
-  }
+
+  .display-foot   { display: none; }
+  .display-foot-2 { display: inline; }
+
+  .logo { margin-left: 0; }
+
+  .form-index { margin-top: 50%; }
+
+  .contenidoindex h1 { font-size: 1.9rem; }
+
+  .row-menu { width: 100%; }
+  .icon-menu { float: right; }
+
+  .h1-index-book { font-size: 1.6rem; }
+
+  .h1-destinos { font-size: 1.7rem; margin-top: 7em; }
+
+  .banner-container { width: 92%; }
+
+  .h3-banner { font-size: 1.8rem; padding-top: 1.5em; }
+
   .banner {
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/responsive/reservas-camino-inca-peru.webp);
-    background-repeat: no-repeat;
-    background-position: center;
-    align-content: center;
-    background-size: cover;
-    height: 600px;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+                url(../img/responsive/reservas-camino-inca-peru.webp) center / cover no-repeat;
+    height: 400px;
   }
+
   .banner-destinos {
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/responsive/los-mejores-destinos-para-peru.webp);
-    background-repeat: no-repeat;
-    background-position: center;
-    align-content: center;
-    background-size: cover;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+                url(../img/responsive/los-mejores-destinos-para-peru.webp) center / cover no-repeat;
   }
+
   .banner-aventuras {
-    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.6588235294), rgba(0, 0, 0, 0.4588235294)), url(../img/responsive/camino-inca-reserva.webp);
-    background-repeat: no-repeat;
-    background-position: center;
-    align-content: center;
-    background-size: cover;
+    background: linear-gradient(to bottom right, rgba(0,0,0,0.62), rgba(0,0,0,0.42)),
+                url(../img/responsive/camino-inca-reserva.webp) center / cover no-repeat;
   }
+
+  .blogs { width: 100%; height: 220px; }
 }
 
-/*# sourceMappingURL=estilos.css.map */
+@media (max-width: 576px) {
+  .contenidoindex a { display: block; margin: 0.4em auto; max-width: 180px; }
+  .h1-index { font-size: 1.8rem; }
+  .h1-destinos { font-size: 1.5rem; }
+
+  .full-img-card {
+    min-height: 200px;
+    height: min(58vw, 260px);
+  }
+
+  .full-img h5 { font-size: 1.2rem; }
+  .full-img p { font-size: 0.85rem; }
+}

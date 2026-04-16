@@ -10,31 +10,33 @@ class SearchenController extends Controller
 {
     public function search(Request $request)
     {
-        $name=$request->all();
-        $nombre = $name['name'];
+        $nombre = trim((string) $request->input('name', ''));
+        if ($nombre === '') {
+            return view('en.noresults', ['nombre' => '']);
+        }
         $respuesta = Toursen::where('nombre', 'LIKE',  "%$nombre%")->get();
-        if(count($respuesta) != 0){
-            $respuestas = [
+        if (count($respuesta) != 0) {
+            return view('en.search', [
                 'respuestas' => $respuesta,
-            ];
-    
-            return view('en.search', $respuestas);
+                'name' => $nombre,
+            ]);
         }
-        else{
-            return view('en.noresults');
-        }
+
+        return view('en.noresults', compact('nombre'));
     }
     public function searchblog(Request $request)
     {
-        $name=$request->all();
-        $nombre = $name['name'];
+        $nombre = trim((string) $request->input('name', ''));
+        if ($nombre === '') {
+            return view('blogs.en.blogs.noresults', ['nombre' => '']);
+        }
         $blog = Enblog::where('nombre', 'LIKE',  "%$nombre%")->get();
         if(count($blog) != 0){
             $blogs = [
                 'respuestas' => $blog,
             ];
     
-            return view('blogs.en..blogs.search', ['blogs' => $blog])
+            return view('blogs.en.blogs.search', ['blogs' => $blog])
             ->with('nombre', $nombre);
         }
         else{

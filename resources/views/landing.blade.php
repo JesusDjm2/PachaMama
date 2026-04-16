@@ -22,8 +22,8 @@
 
 <body>
     <div class="btn-whatsapp">
-        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank">
-            <img src="{{ asset('img/whatsapp.png') }}" alt="WhatsaApp de Pacha Mama Spirit" width="80%">
+        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank" rel="noopener" aria-label="WhatsApp Pacha Mama Spirit">
+            <span class="btn-whatsapp__icon icon-whatsapp" aria-hidden="true"></span>
         </a>
     </div>
 

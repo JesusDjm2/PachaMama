@@ -1,10 +1,44 @@
 @extends('layouts.app')
-@php $titulo="Preguntas frecuentes para viajar a Perú" @endphp
-@php $descripcion="Sobre la agencia de viajes Pacha Mama Spirit, viajes a Perú, reserva tu viaje a Perú" @endphp
-@php $keywords="preguntas frecuentes para viajar a Perú, preguntas frecuentes peru, precio de dolar en peru, como viajar por peru, viajar por peru, que debes saber para viajar a perú" @endphp
+@php $titulo="Preguntas Frecuentes para Viajar a Perú | Pacha Mama Spirit" @endphp
+@php $descripcion="Resuelve todas tus dudas antes de viajar a Perú: seguridad, idioma, clima, vacunas, moneda y más. Guía completa de la agencia Pacha Mama Spirit." @endphp
+@php $keywords="preguntas frecuentes para viajar a Perú, preguntas frecuentes Peru, como viajar a Peru, que llevar a Peru, seguridad Peru, moneda Peru, clima Peru" @endphp
 @php $img="https://pachamamaspirit.com/img/panoramico/trekking-peru.webp" @endphp
 @section('titulo', $titulo)
 @include('layouts.metasblogs')
+@push('page_metas')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Es necesario hablar español para viajar por Perú?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En Perú el idioma oficial es el español y lo habla el 82% de la población. Si viaja con una agencia de viajes, contará con guías en su idioma. Los idiomas más comunes son inglés, francés, chino, alemán e italiano."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tan seguro es viajar por Perú?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Perú es un país tranquilo en sus zonas turísticas. Se recomienda conocer la ciudad a la que viaja, no transitar por zonas desoladas, mostrarse discreto y tener el número de la policía turística. La forma más segura es viajar con una agencia de viajes que lo guíe en todo momento."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es caro viajar a Perú?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Perú ofrece mucha variedad económica para los viajeros. En general, tiene productos muy accesibles si sabe dónde buscar, aunque también existen opciones de lujo y exclusividad."
+      }
+    }
+  ]
+}
+</script>
+@endpush
 @section('content')
     @include('layouts.menu')
     <div class="preguntas">

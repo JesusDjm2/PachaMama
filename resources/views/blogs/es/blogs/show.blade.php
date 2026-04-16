@@ -1,17 +1,39 @@
 @extends('layouts.app')
-@section('titulo', $blog->nombre)
+@section('titulo', $blog->nombre . ' | Pacha Mama Spirit')
 @section('metas')
     <meta name="description" content="{{ $blog->descripcion }}" />
     <meta name="keywords" content="{{ $blog->keywords }}" />
     <link rel="canonical" href="{{ request()->fullUrl() }}" />
-    <meta property="og:title" content="{{ $blog->nombre }}">
-    <meta property="og:description" content="{{ $blog->escripcion }}">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:title" content="{{ $blog->nombre }} | Pacha Mama Spirit">
+    <meta property="og:description" content="{{ $blog->descripcion }}">
     <meta property="og:url" content="{{ request()->fullUrl() }}">
-    <meta name="twitter:card" content="summary">
-    <meta name="robots" content="index,follow">
-    <meta name="og:image" content="{{ $blog->img }}" />
-    <meta name="og:secureImage" content="{{ $blog->img }}" />
     <meta property="og:image" content="{{ $blog->img }}">
+    <meta property="og:image:secure_url" content="{{ $blog->img }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $blog->nombre }} | Pacha Mama Spirit">
+    <meta name="twitter:description" content="{{ $blog->descripcion }}">
+    <meta name="twitter:image" content="{{ $blog->img }}">
+    <meta name="robots" content="index,follow">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "{{ addslashes($blog->nombre) }}",
+      "description": "{{ addslashes($blog->descripcion) }}",
+      "image": "{{ $blog->img }}",
+      "url": "{{ request()->fullUrl() }}",
+      "datePublished": "{{ $blog->created_at->toIso8601String() }}",
+      "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
+      "author": { "@id": "https://pachamamaspirit.com/#organization" },
+      "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
+      "inLanguage": "es-PE",
+      "isPartOf": { "@id": "https://pachamamaspirit.com/#website" }
+    }
+    </script>
 @endsection
 @section('content')
     <div class="temasBlogs">

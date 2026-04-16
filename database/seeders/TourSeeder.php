@@ -2,18 +2,162 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TourSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        //
+        $tours = [
+            [
+                'nombre' => 'Camino Inca Clásico 4 Días',
+                'descripcion' => 'La ruta más icónica de Sudamérica hasta Machu Picchu.',
+                'contenido' => '<p>Recorre el legendario Camino Inca de 42 km cruzando bosques nubosos, ruinas incas y paisajes de los Andes.</p>',
+                'resumen' => 'Trek de 4 días por el Camino Inca clásico hasta Machu Picchu.',
+                'detallado' => '<p><b>Día 1:</b> Cusco - Km 82 - Wayllabamba<br><b>Día 2:</b> Wayllabamba - Pacaymayu<br><b>Día 3:</b> Pacaymayu - Wiñay Wayna<br><b>Día 4:</b> Puerta del Sol - Machu Picchu</p>',
+                'incluidos' => '<ul><li>Guía profesional</li><li>Cocinero y porteadores</li><li>Carpa y sleeping bag</li><li>Todas las comidas en ruta</li><li>Bus de bajada Machu Picchu</li></ul>',
+                'importante' => 'Se requiere buena condición física. Mínimo 2 personas.',
+                'ubicacion' => 'Cusco, Perú',
+                'precio' => 650,
+                'dias' => 4,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'hikes,machupicchu',
+                'keywords' => 'camino inca, inca trail, machu picchu, trekking peru',
+                'slug' => 'camino-inca-clasico-4-dias',
+                'clase' => 'hikes',
+            ],
+            [
+                'nombre' => 'Tour Machu Picchu 1 Día',
+                'descripcion' => 'Visita la ciudadela inca más famosa del mundo en un día.',
+                'contenido' => '<p>Viaja en tren desde Cusco u Ollantaytambo hasta Aguas Calientes y sube a Machu Picchu con guía experto.</p>',
+                'resumen' => 'Excursión de un día completo a Machu Picchu desde Cusco.',
+                'detallado' => '<p>Salida en tren desde Ollantaytambo, llegada a Aguas Calientes, bus a la ciudadela, visita guiada de 2 horas y tiempo libre.</p>',
+                'incluidos' => '<ul><li>Tren ida y vuelta</li><li>Bus Aguas Calientes - Machu Picchu</li><li>Entrada a Machu Picchu</li><li>Guía bilingüe</li></ul>',
+                'importante' => 'Reservar con al menos 2 semanas de anticipación.',
+                'ubicacion' => 'Machu Picchu, Cusco',
+                'precio' => 280,
+                'dias' => 1,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'machupicchu',
+                'keywords' => 'machu picchu tour, visita machu picchu, ciudadela inca',
+                'slug' => 'tour-machu-picchu-1-dia',
+                'clase' => 'machupicchu',
+            ],
+            [
+                'nombre' => 'Rainbow Mountain Día Completo',
+                'descripcion' => 'Trekking a la majestuosa Montaña de 7 Colores (Vinicunca).',
+                'contenido' => '<p>Sube a 5,200 msnm para contemplar los colores minerales únicos de Vinicunca, una de las maravillas naturales del Perú.</p>',
+                'resumen' => 'Caminata de día completo a la Montaña de los 7 Colores desde Cusco.',
+                'detallado' => '<p>Salida a las 4am desde Cusco, desayuno en ruta, caminata de 6km de subida, panorama 360° en la cima, retorno a Cusco.</p>',
+                'incluidos' => '<ul><li>Transporte privado</li><li>Desayuno y almuerzo</li><li>Guía local</li><li>Bastones de trekking</li></ul>',
+                'importante' => 'Alta altitud. Se recomienda aclimatación previa de 2 días en Cusco.',
+                'ubicacion' => 'Cusco, Perú',
+                'precio' => 65,
+                'dias' => 1,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'hikes',
+                'keywords' => 'rainbow mountain, montaña de colores, vinicunca, trekking cusco',
+                'slug' => 'rainbow-mountain-dia-completo',
+                'clase' => 'hikes',
+            ],
+            [
+                'nombre' => 'Lago Humantay',
+                'descripcion' => 'Caminata a la laguna turquesa escondida en los Andes.',
+                'contenido' => '<p>Humantay Lake es una joya turquesa a 4,200 msnm, rodeada de glaciares. Una de las caminatas más bellas cerca de Cusco.</p>',
+                'resumen' => 'Full day a la laguna Humantay, turquesa glaciar en los Andes.',
+                'detallado' => '<p>Salida desde Cusco, desayuno en Soraypampa, caminata de 2 horas hasta la laguna, tiempo libre, almuerzo buffet y retorno.</p>',
+                'incluidos' => '<ul><li>Transporte ida y vuelta</li><li>Desayuno y almuerzo buffet</li><li>Guía certificado</li></ul>',
+                'importante' => 'Nivel moderado. Llevar ropa de abrigo.',
+                'ubicacion' => 'Cusco, Perú',
+                'precio' => 45,
+                'dias' => 1,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'hikes',
+                'keywords' => 'humantay lake, laguna humantay, caminata cusco, laguna glaciar',
+                'slug' => 'lago-humantay',
+                'clase' => 'hikes',
+            ],
+            [
+                'nombre' => 'Tour Valle Sagrado Completo',
+                'descripcion' => 'Ollantaytambo, Pisac, salineras y el mercado artesanal.',
+                'contenido' => '<p>Recorre el Valle Sagrado de los Incas visitando los mercados de Pisac, las terrazas de Ollantaytambo y las Salineras de Maras.</p>',
+                'resumen' => 'Un día recorriendo los sitios incas más importantes del Valle Sagrado.',
+                'detallado' => '<p>Pisac (mercado + ruinas), almuerzo buffet, Salineras de Maras, Moray y Ollantaytambo.</p>',
+                'incluidos' => '<ul><li>Transporte privado</li><li>Almuerzo buffet</li><li>Guía bilingüe</li><li>Entradas arqueológicas</li></ul>',
+                'importante' => 'Tour sale a las 7:30am desde Cusco.',
+                'ubicacion' => 'Valle Sagrado, Cusco',
+                'precio' => 55,
+                'dias' => 1,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'around,fullday',
+                'keywords' => 'valle sagrado, ollantaytambo, pisac, salineras maras',
+                'slug' => 'tour-valle-sagrado-completo',
+                'clase' => 'around',
+            ],
+            [
+                'nombre' => 'City Tour Cusco',
+                'descripcion' => 'Catedral, Qorikancha, Sacsayhuamán y los sitios arqueológicos.',
+                'contenido' => '<p>Descubre Cusco, la antigua capital del Tahuantinsuyo. Visita la Catedral, el templo del Sol Qorikancha y la fortaleza de Sacsayhuamán.</p>',
+                'resumen' => 'Tour por los principales atractivos históricos de la ciudad del Cusco.',
+                'detallado' => '<p>Plaza de Armas, Catedral, Qorikancha, Sacsayhuamán, Q\'enqo, Puca Pucara y Tambomachay.</p>',
+                'incluidos' => '<ul><li>Guía bilingüe</li><li>Transporte turístico</li><li>Boleto turístico parcial</li></ul>',
+                'importante' => 'Duración aproximada 8 horas.',
+                'ubicacion' => 'Cusco, Perú',
+                'precio' => 30,
+                'dias' => 1,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'around,fullday',
+                'keywords' => 'city tour cusco, qorikancha, sacsayhuaman, catedral cusco',
+                'slug' => 'city-tour-cusco',
+                'clase' => 'around',
+            ],
+            [
+                'nombre' => 'Perú Clásico 7 Días',
+                'descripcion' => 'Lima, Cusco, Valle Sagrado y Machu Picchu en una semana.',
+                'contenido' => '<p>El circuito más popular del Perú: combina la modernidad de Lima con la historia inca de Cusco y la magia de Machu Picchu.</p>',
+                'resumen' => 'Recorrido completo por Lima, Cusco, Valle Sagrado y Machu Picchu.',
+                'detallado' => '<p>Día 1-2: Lima. Día 3-4: Cusco city tour y Valle Sagrado. Día 5: Machu Picchu. Día 6: Día libre Cusco. Día 7: Retorno.</p>',
+                'incluidos' => '<ul><li>Vuelos internos Lima-Cusco-Lima</li><li>6 noches de hotel</li><li>Desayunos diarios</li><li>Todos los tours mencionados</li><li>Traslados</li></ul>',
+                'importante' => 'Precio por persona en habitación doble.',
+                'ubicacion' => 'Lima - Cusco - Machu Picchu',
+                'precio' => 1200,
+                'dias' => 7,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'around',
+                'keywords' => 'peru clasico, tour peru 7 dias, lima cusco machu picchu, paquete peru',
+                'slug' => 'peru-clasico-7-dias',
+                'clase' => 'around',
+            ],
+            [
+                'nombre' => 'Gran Ruta Perú 14 Días',
+                'descripcion' => 'Lima, Ica, Arequipa, Puno, Titicaca, Cusco y Machu Picchu.',
+                'contenido' => '<p>El tour más completo para conocer lo mejor del Perú: desiertos, cañones, el lago más alto del mundo y las ruinas incas.</p>',
+                'resumen' => 'Recorrido completo del sur del Perú en 14 días con todos los destinos icónicos.',
+                'detallado' => '<p>Lima → Ica (Nazca, Huacachina) → Arequipa (Cañón del Colca) → Puno (Lago Titicaca) → Cusco (Valle Sagrado) → Machu Picchu → Lima.</p>',
+                'incluidos' => '<ul><li>Vuelos internos</li><li>13 noches de hotel</li><li>Desayunos incluidos</li><li>Guías locales especializados</li><li>Todos los traslados</li></ul>',
+                'importante' => 'Precio por persona en habitación doble. Mínimo 2 personas.',
+                'ubicacion' => 'Lima, Ica, Arequipa, Puno, Cusco',
+                'precio' => 1545,
+                'dias' => 14,
+                'img' => '/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp',
+                'mapa' => null,
+                'categoria' => 'around,luxury',
+                'keywords' => 'gran tour peru, peru 14 dias, arequipa puno cusco, ruta completa peru',
+                'slug' => 'gran-ruta-peru-14-dias',
+                'clase' => 'luxury',
+            ],
+        ];
+
+        foreach ($tours as $tour) {
+            DB::table('tours')->updateOrInsert(['slug' => $tour['slug']], $tour);
+        }
     }
 }

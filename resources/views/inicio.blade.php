@@ -1,22 +1,42 @@
 @extends('layouts.app')
-@section('titulo', 'Pacha Mama Spirit || Agencia de viaje para Perú')
+@section('titulo', 'Tours a Perú — Machu Picchu, Cusco, Camino Inca | Pacha Mama Spirit')
 @section('metas')
-    <meta name="keywords"
-        content="Book Peru, Book Machu Picchu, machu Picchu, Travel peru, Travel to Machu Picchu, Inca Trail, Ica trail to Machu Picchu">
+    <meta name="description" content="Agencia de viajes en Perú especializada en tours a Machu Picchu, Camino Inca, Cusco y aventuras únicas. Más de 20 años de experiencia. Reserva hoy con Pacha Mama Spirit.">
+    <meta name="keywords" content="tours Peru, tours Machu Picchu, Camino Inca, agencia de viajes Peru, tours Cusco, viajes Peru, Pacha Mama Spirit, trekking Peru, tour operador Peru">
     <link rel="canonical" href="https://pachamamaspirit.com/inicio">
-    <meta name="description"
-        content="Pacha Mama Spirit It's a travel agency to visit and do tourism in Peru. Travel around Peru and get to know its culture, gastronomy and History">
-    <meta name="image_src" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-
-    <meta name="og_image" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-    <meta name="og_secureImage" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-
-    <meta property="og:title" content="Pacha Mama Spirit | Travel Agency Perú">
-    <meta property="og:description"
-        content="Pacha Mama Spirit It's a travel agency to visit and do tourism in Peru. Travel around Peru and get to know its culture, gastronomy and History">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:title" content="Tours a Perú — Machu Picchu, Cusco, Camino Inca | Pacha Mama Spirit">
+    <meta property="og:description" content="Agencia de viajes en Perú especializada en tours a Machu Picchu, Camino Inca, Cusco y aventuras únicas. Más de 20 años de experiencia.">
     <meta property="og:url" content="https://pachamamaspirit.com/inicio">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
+    <meta property="og:image:secure_url" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tours a Perú — Machu Picchu, Cusco, Camino Inca | Pacha Mama Spirit">
+    <meta name="twitter:description" content="Agencia de viajes en Perú especializada en tours a Machu Picchu, Camino Inca, Cusco y aventuras únicas.">
+    <meta name="twitter:image" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
     <meta name="robots" content="index,follow">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "https://pachamamaspirit.com/inicio",
+      "url": "https://pachamamaspirit.com/inicio",
+      "name": "Tours a Perú — Machu Picchu, Cusco, Camino Inca | Pacha Mama Spirit",
+      "description": "Agencia de viajes en Perú especializada en tours a Machu Picchu, Camino Inca, Cusco y aventuras únicas.",
+      "inLanguage": "es-PE",
+      "isPartOf": { "@id": "https://pachamamaspirit.com/#website" },
+      "about": { "@id": "https://pachamamaspirit.com/#organization" },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://pachamamaspirit.com/inicio" }
+        ]
+      }
+    }
+    </script>
 @endsection
 @section('content')
     <div class="hero">
@@ -30,9 +50,9 @@
                                 lugares mas impresionantes que tiene
                                 Perú
                             </h1>
-                            <p style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">Walks,
-                                gastronomy, archaeological sites, nature
-                                reserves, customs, traditions, landscapes and much more...
+                            <p style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">Caminatas,
+                                gastronomía, sitios arqueológicos, reservas naturales,
+                                costumbres, tradiciones, paisajes y mucho más...
                             </p>
                             <a href="{{ route('caminata') }}">Caminatas</a>
                             <a href="{{ route('luxury') }}">Lujo</a>
@@ -54,10 +74,11 @@
     <section>
         <div class="container" id="pachamama">
             <div class="row justify-content-center">
-                <div class="col-lg-12">
+                <div class="col-lg-12 text-center">
                     <h1 class="h1-index">
-                        <beige>Pacha Mama Spirit</beige>
+                        <span style="color:#2aa8a8;">Pacha Mama Spirit</span>
                     </h1>
+                    <div class="linea mb-4"></div>
                     <p>
                         <strong>Pacha Mama Spirit</strong> es una agencia de viajes peruana y nacida en Cusco, que se le
                         conoce como el ombligo del mundo, antigua capital del imperio Inca.
@@ -80,74 +101,57 @@
                     </p>
                 </div>
                 <div class="col-lg-12 mt-3">
-                    <div class="col-lg-12 mb-3">
-                        <h3 class="text-center">Lo que Pacha Mama Spirit ofrece:</h3>
-                        <div class="linea mb-4 mt-3"></div>
+                    <div class="col-lg-12 mb-3 text-center">
+                        <h3>Lo que Pacha Mama Spirit ofrece:</h3>
+                        <div class="linea mb-4 mt-2"></div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/local-tour-guide-in-Peru.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
-                                <p class="font-weight-bold mt-3">Guías locales</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Guías locales expertos y conocedores de
-                                    la riqueza del pasado de la cultura Inca.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/local-tour-guide-in-Peru.png') }}" alt="Guías locales" loading="lazy">
+                                <p class="feature-title">Guías locales</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Guías locales expertos y conocedores de la riqueza del pasado de la cultura Inca.</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/eco-friendly-company.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
-                                <p class="font-weight-bold mt-3">Turismo sostenible</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Estamos orgullosos de ofrecer
-                                    experiencias que combinan lo natural con prácticas responsables que respetan el medio
-                                    ambiente y las comunidades locales.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/eco-friendly-company.png') }}" alt="Turismo sostenible" loading="lazy">
+                                <p class="feature-title">Turismo sostenible</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Experiencias que combinan lo natural con prácticas responsables que respetan el medioambiente y las comunidades locales.</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/small-groups.png') }}" height="100px" alt="Local Tour guide"
-                                    loading="lazy">
-                                <p class="font-weight-bold mt-3">Grupos pequeños</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Puedes pasar más tiempo con el guía y
-                                    escuchar todo lo que tiene que decir. Un recorrido personalizado.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/small-groups.png') }}" alt="Grupos pequeños" loading="lazy">
+                                <p class="feature-title">Grupos pequeños</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Más tiempo con el guía y una atención personalizada en cada recorrido.</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/food-on-trail.png') }}" height="100px" alt="Local Tour guide"
-                                    loading="lazy">
-                                <p class="font-weight-bold mt-3">Comida en caminatas</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Delight your taste buds with our
-                                    delicious trail food.We ensure
-                                    you have flavorful sustenance during your adventures.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/food-on-trail.png') }}" alt="Comida en caminatas" loading="lazy">
+                                <p class="feature-title">Comida en caminatas</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Deliciosa comida en ruta, sabrosa y nutritiva durante todas tus aventuras.</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/legally-licensed.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
-                                <p class="font-weight-bold mt-3">Licencia registrada</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Nuestra agencia de viajes en Perú
-                                    cuenta con licencia y permisos en regla, brindando servicios turísticos confiables y de
-                                    calidad.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/legally-licensed.png') }}" alt="Licencia registrada" loading="lazy">
+                                <p class="feature-title">Licencia registrada</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Agencia con licencia y permisos en regla, brindando servicios turísticos confiables y de calidad.</p>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new"
-                                style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/camping-equipment.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
-                                <p class="font-weight-bold mt-3">Equipo de campamento</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Ofrecemos una amplia selección de
-                                    equipos de campamento de alta calidad para garantizar una experiencia cómoda y segura en
-                                    la naturaleza.</p>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="feature-card">
+                                <img src="{{ asset('img/thumb/camping-equipment.png') }}" alt="Equipo de campamento" loading="lazy">
+                                <p class="feature-title">Equipo de campamento</p>
+                                <div class="linea2-blogs"></div>
+                                <p class="feature-desc">Equipos de alta calidad para garantizar una experiencia cómoda y segura en la naturaleza.</p>
                             </div>
                         </div>
                     </div>
@@ -160,7 +164,7 @@
                 <!-----Prueba--->
                 @foreach ($tours->take(8) as $tour)
                     <div class="col-lg-3 col-md-6">
-                        <div class="card card-new" style="width: 18rem;">
+                        <div class="card card-new">
                             <a href="{{ route('tours.show', $tour->slug) }}">
                                 <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
                                     loading="lazy">
@@ -278,7 +282,7 @@
             })->take(4) as $tour)
                     @if (Str::contains($tour->categoria, 'hikes'))
                         <div class="col-lg-3 col-md-6">
-                            <div class="card card-new" style="width: 18rem;">
+                            <div class="card card-new">
                                 <a href="{{ route('tours.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
                                     <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
                                         loading="lazy">
@@ -349,72 +353,71 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="container mt-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="h1-responsive font-weight-bold text-center my-4">Contact Pacha Mama Spirit team</h2>
-                    <p class="text-center w-responsive mx-auto mb-5">
-                        ¿Tiene usted alguna pregunta? Por favor, no dude en contáctenos directamente, nuestro equipo le
-                        responderá en la mayor brevedad posible para poder ayudarle.
-                    </p>
-                    <form id="contact-form" name="contact-form" action="{{ route('mensajeIndex') }}" method="POST">
-                        @csrf
-                        <div class="row formTransparent">
-                            <div class="col-md-6">
-                                <div class="md-form mb-4">
-                                    <input type="text" id="name" name="name" class="form-control"
-                                        placeholder="Nombre:" required>
+    <section style="background: #f7f8fa; padding: 4rem 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h2>Contáctanos</h2>
+                    <p class="mt-3" style="text-align:left;">¿Tienes alguna pregunta o quieres planear tu viaje? Nuestro equipo te responderá en pocas horas.</p>
+                    <div class="mt-4">
+                        <p style="text-align:left;"><span class="icon-whatsapp mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> +51 921 136 755</p>
+                        <p style="text-align:left;"><span class="icon-envelope mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> info@pachamamaspirit.com</p>
+                        <p style="text-align:left;"><span class="icon-map-marker mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> Cusco, Perú</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div style="background:#fff; border-radius:14px; padding:2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.07);">
+                        <form id="contact-form" name="contact-form" action="{{ route('mensajeIndex') }}" method="POST">
+                            @csrf
+                            <div class="row formTransparent">
+                                <div class="col-md-6">
+                                    <div class="md-form mb-4">
+                                        <input type="text" id="name" name="name" class="form-control" placeholder="Nombre:" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="md-form mb-4">
+                                        <input type="text" id="email" name="email" class="form-control" placeholder="Email:" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-4">
+                                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Teléfono:" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-4">
+                                        <input type="text" id="country" name="country" class="form-control" placeholder="Nacionalidad:">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-4">
+                                        <input type="number" id="adults" name="adults" class="form-control" placeholder="N.º de adultos:">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="md-form mb-4">
+                                        <select name="tipo" id="tipo" class="form-control">
+                                            <option selected>Tipo de viaje:</option>
+                                            <option value="familia">En familia</option>
+                                            <option value="pareja">En pareja</option>
+                                            <option value="amigos">Con amigos</option>
+                                            <option value="grupo">En grupo</option>
+                                            <option value="privado">Viaje privado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <div class="md-form">
+                                        <textarea placeholder="Tu mensaje..." id="message" name="message" rows="3" class="form-control" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mt-3 text-center">
+                                    <button class="btnTransparent" type="submit">Enviar mensaje</button>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="md-form mb-4">
-                                    <input type="text" id="email" name="email" class="form-control"
-                                        placeholder="Email:" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="md-form mb-4">
-                                    <input type="text" id="phone" name="phone" class="form-control"
-                                        placeholder="Teléfono:" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="md-form mb-4">
-                                    <input type="text" id="country" name="country" class="form-control"
-                                        placeholder="Nacionalidad:">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="md-form mb-4">
-                                    <input type="number" id="adults" name="adults" class="form-control"
-                                        placeholder="Adultos:">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="md-form mb-4">
-                                    <select name="tipo" id="tipo" class="form-control md">
-                                        <option selected>Opciones de viaje:</option>
-                                        <option value="familia">Viaje en familia</option>
-                                        <option value="pareja">Viaje en pareja</option>
-                                        <option value="amigos">Con amigos</option>
-                                        <option value="grupo">Viaje en grupo</option>
-                                        <option value="privado">Viaje privado</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <div class="md-form">
-                                    <textarea type="text" placeholder="Escriba acá su mensaje..." id="message" name="message" rows="2"
-                                        class="form-control md-textarea" required></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-2">
-                                <div class="text-center">
-                                    <button class="btnTransparent" type="submit">Enviar</button>
-                                </div>
-                            </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

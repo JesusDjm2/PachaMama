@@ -1,13 +1,13 @@
 body {
     font-family: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    background-color: #ebebeb;
-    height: 200vh;
+    background-color: #ffffff;
+    min-height: 100vh;
     position: relative;
 }
 
 body:before {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -18,20 +18,23 @@ body:before {
     transition: .3s all ease;
     opacity: 0;
     visibility: hidden;
-    z-index: 1;
+    z-index: -1;
+    pointer-events: none;
 }
 
 body.offcanvas-menu:before {
     opacity: 1;
     z-index: 1002;
     visibility: visible;
+    pointer-events: auto;
 }
 
 p {
-    color: #282828;
+    color: #3a3a3a;
     text-align: justify;
-    font-family: system-ui;
+    font-family: system-ui, -apple-system, sans-serif;
     font-weight: 400;
+    line-height: 1.75;
 }
 
 h1,
@@ -326,17 +329,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.puno::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .valle {
     height: 100vh;
     width: 100%;
@@ -421,17 +413,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.lima::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .arequipa {
     height: 100vh;
     width: 100%;
@@ -440,17 +421,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.arequipa::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .cusco {
     height: 100vh;
     width: 100%;
@@ -459,17 +429,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.cusco::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .ollanta {
     height: 100vh;
     width: 100%;
@@ -574,17 +533,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.ica::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .pisco {
     height: 100vh;
     width: 100%;
@@ -602,17 +550,6 @@ a:hover {
     background-position: center center;
     background-repeat: no-repeat;
 }
-.puerto::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 20%; 
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
-}
-
 .salkantay {
     height: 100vh;
     width: 100%;

@@ -18,10 +18,10 @@
         </div>
     </div>
 
-    <section>
+    <section class="destinations-peru-section">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 destinations-prose">
                     <br><br>
                     <h2>Peru as a tourist destination</h2>
                     <i>Peru, country of traditions, mixed country, strong country</i><br><br>
@@ -60,10 +60,12 @@
                         list of the 7 main tourist places in Peru.
                     </p>
                 </div>
+            </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('cusco-navel-of-the-world') }}">
+            <div class="row g-4 pt-2 results-cards-grid destinations-cards-grid">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'cusco-navel-of-the-world']) }}">
                             <img class="card-img-top"
                                 src="{{ asset('img/thumb/City-Tour-en-Sacsayhuaman-Cusco-Peru.webp') }}"
                                 alt="Ciudad del Cusco" loading="lazy">
@@ -71,78 +73,78 @@
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Cusco</h5>
                             <p class="text-card text-center">Navel of the world</p>
-                            <a href="{{ route('cusco-navel-of-the-world') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'cusco-navel-of-the-world']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('lima-city-of-kings') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'lima-city-of-kings']) }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/ceviche-peruano-gastronomy.webp') }}"
                                 alt="Ceviche peruano" loading="lazy">
                         </a>
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Lima</h5>
                             <p class="text-card text-center">The city of kings</p>
-                            <a href="{{ route('lima-city-of-kings') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'lima-city-of-kings']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('arequipa-the-white-city') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'arequipa-the-white-city']) }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/arequipa-ciudad-blanca-pacha-mama.webp') }}"
                                 alt="Arequipa ciudad blanca" loading="lazy">
                         </a>
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Arequipa</h5>
                             <p class="text-card text-center">The white city</p>
-                            <a href="{{ route('arequipa-the-white-city') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'arequipa-the-white-city']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('puno-city') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'puno-city']) }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/lago-titicaca.webp') }}"
                                 alt="lago Titicaca Puno" loading="lazy">
                         </a>
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Puno</h5>
                             <p class="text-card text-center">Capital of folklore</p>
-                            <a href="{{ route('puno-city') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'puno-city']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('ica-city') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'ica-city']) }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/Lineas-de-Nazca.webp') }}"
                                 alt="Ica city, Nazca" loading="lazy">
                         </a>
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Ica</h5>
                             <p class="text-card text-center">The city of the eternal sun</p>
-                            <a href="{{ route('ica-city') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'ica-city']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('pisco-city') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'pisco-city']) }}">
                             <img class="card-img-top" src="{{ asset('img/thumb/leon-marino.webp') }}"
                                 alt="Leon marino Ica - Paracas" loading="lazy">
                         </a>
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Pisco</h5>
                             <p class="text-card text-center">City that gave birth to its homonymous drink</p>
-                            <a href="{{ route('pisco-city') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'pisco-city']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card card-new" style="width: 18rem;">
-                        <a href="{{ route('puerto-maldonado-en') }}">
+                <div class="col-12 col-sm-6 col-lg-3 col-results-card">
+                    <div class="card card-new destinations-card">
+                        <a href="{{ route('destinies-peru.destination', ['slug' => 'puerto-maldonado']) }}">
                             <img class="card-img-top"
                                 src="{{ asset('img/thumb/rio-amazonas-selva-de-peru-pacha-mama-spirit.webp') }}"
                                 alt="Amazonas river - Puerto Maldonado" loading="lazy">
@@ -150,7 +152,7 @@
                         <div class="card-body text-center">
                             <h5 class="card-titulo">Puerto Maldonado</h5>
                             <p class="text-card text-center">The exotic Peruvian jungle</p>
-                            <a href="{{ route('puerto-maldonado-en') }}" class="boton-card">More details</a>
+                            <a href="{{ route('destinies-peru.destination', ['slug' => 'puerto-maldonado']) }}" class="boton-card">More details</a>
                         </div>
                     </div>
                 </div>

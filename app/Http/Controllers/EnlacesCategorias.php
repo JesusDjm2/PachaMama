@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Tour;
 use App\Models\Toursen;
-
-use Illuminate\Http\Request;
 
 class EnlacesCategorias extends Controller
 {
@@ -78,7 +75,6 @@ class EnlacesCategorias extends Controller
     }
     public function mapien()
     {
-        /* $tours = Toursen::all(); */
         $tours = Toursen::whereHas('categories', function ($query) {
             $query->whereRaw('LOWER(nombre) = ?', ['machu']);
         })->get();
@@ -86,18 +82,13 @@ class EnlacesCategorias extends Controller
     }
     public function hikes()
     {
-        $category = Category::whereRaw('LOWER(nombre) LIKE ?', ['%machu%'])->first();
-        dd();
-        return redirect()->route('category.show', $category);
-        /* $tours = Toursen::all(); */
-        /* $tours = Toursen::whereHas('categories', function ($query) {
+        $tours = Toursen::whereHas('categories', function ($query) {
             $query->whereRaw('LOWER(nombre) = ?', ['trekking']);
         })->get();
-        return view('en.hikes', compact('tours')); */
+        return view('en.hikes', compact('tours'));
     }
     public function around()
     {
-        /* $tours = Toursen::all(); */
         $tours = Toursen::whereHas('categories', function ($query) {
             $query->whereRaw('LOWER(nombre) = ?', ['around']);
         })->get();
@@ -106,7 +97,7 @@ class EnlacesCategorias extends Controller
     public function private()
     {
         $tours = Toursen::all();
-        return view('en.private-and-exclusive-tours', compact('tours'));
+        return view('en.pacha-mama-spirit-lodge', compact('tours'));
     }
     public function fulldayen()
     {

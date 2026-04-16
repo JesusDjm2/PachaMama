@@ -15,21 +15,37 @@
     <link rel="stylesheet" href="{{ asset('css/estilos.css') }}" type="text/css" defer>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos-bootstrap.css') }}">
+    @stack('page_metas')
     @yield('metas')
 </head>
 
 <body>
     <div class="btn-whatsapp">
-        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank">
-            <img src="{{ asset('img/whatsapp.png') }}" alt="WhatsaApp de Pacha Mama Spirit" width="80%"
-                title="Whatsapp Pacha Mama Spirit">
+        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+            <span class="btn-whatsapp__icon icon-whatsapp" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu site-navbar-target" aria-hidden="true">
         <div class="site-mobile-menu-header">
-            <div class="site-mobile-menu-close mt-3">
-                <span class="icon-close2 js-menu-toggle"></span>
-            </div>
+            <span class="site-mobile-menu-title">Menu</span>
+            <button type="button" class="site-mobile-menu-close-btn js-menu-toggle" aria-label="Close menu">
+                <span class="icon-close2" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="site-mobile-menu-search" role="search" aria-label="Search Peru tours">
+            <form class="mobile-menu-search-form" action="{{ route('searchen') }}" method="GET">
+                <label class="mobile-menu-search-label" for="mobile-menu-search-input-en">Find a destination</label>
+                <div class="mobile-menu-search-field">
+                    <span class="mobile-menu-search-field__icon icon-search" aria-hidden="true"></span>
+                    <input type="search" id="mobile-menu-search-input-en" name="name"
+                        class="form-control mobile-menu-search-input js-mobile-menu-search-input"
+                        placeholder="Where do you want to go?" autocomplete="off" enterkeyhint="search">
+                </div>
+                <button type="submit" class="mobile-menu-search-submit">
+                    <span class="icon-search mobile-menu-search-submit__icon" aria-hidden="true"></span>
+                    Search tours
+                </button>
+            </form>
         </div>
         <div class="site-mobile-menu-body"></div>
     </div> <!-- .site-mobile-menu -->
@@ -87,8 +103,8 @@
                         <nav class="site-navigation" role="navigation">
                             <div class="container">
                                 <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3" style="float: right">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white">
-                                        <span class="icon-menu h3"></span>
+                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Open menu">
+                                        <span class="icon-menu h3" aria-hidden="true"></span>
                                     </a>
                                 </div>
                                 <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
@@ -97,27 +113,27 @@
                                             @if (request()->is('destinies')) id="active" @endif>Destinies</a>
                                         <ul class="dropdown arrow-top">
                                             <li>
-                                                <a href="{{ route('cusco-navel-of-the-world') }}"
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'cusco-navel-of-the-world']) }}"
                                                     class="nav-link">Cusco</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('lima-city-of-kings') }}" class="nav-link">Lima</a>
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'lima-city-of-kings']) }}" class="nav-link">Lima</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('arequipa-the-white-city') }}"
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'arequipa-the-white-city']) }}"
                                                     class="nav-link">Arequipa</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('puno-city') }}" class="nav-link">Puno</a>
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'puno-city']) }}" class="nav-link">Puno</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('ica-city') }}" class="nav-link">Ica</a>
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'ica-city']) }}" class="nav-link">Ica</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('pisco-city') }}" class="nav-link">Pisco</a>
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'pisco-city']) }}" class="nav-link">Pisco</a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('puerto-maldonado-en') }}" class="nav-link">Puerto
+                                                <a href="{{ route('destinies-peru.destination', ['slug' => 'puerto-maldonado']) }}" class="nav-link">Puerto
                                                     Maldonado</a>
                                             </li>
                                         </ul>
@@ -135,19 +151,15 @@
                                         <a href="{{ route('lodgen') }}" class="nav-link">Luxury Lodge</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('enlistado') }}" class="nav-link">Blog</a>
+                                        <a href="{{ route('enlistado') }}" class="nav-link">Blogs</a>
                                     </li>
                                     <li>
                                         <button type="button" onclick="window.location='{{ URL::route('inicio') }}'"
                                             class="castellano-es">Español</button>
                                     </li>
-                                    <li>
-                                        <div class="row">
-                                            <div class="col">
-                                                <i class="icon-search botonsearch" data-toggle="modal"
-                                                    data-target="#exampleModal"></i>
-                                            </div>
-                                        </div>
+                                    <li class="nav-item-search">
+                                        <i class="icon-search botonsearch" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" role="button" tabindex="0" aria-label="Search tours"></i>
                                     </li>
                                 </ul>
                             </div>
@@ -241,11 +253,10 @@
         </footer>
     </section>
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.sticky.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}" defer></script>
 
 </body>
 

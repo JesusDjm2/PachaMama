@@ -15,12 +15,12 @@
                     <h1 class="h1-destinos">
                         Blogs sobre Perú
                     </h1>
-                    <p class="text-center text-white">Encuentra temas de interés de viajes en Perú, tips, historia y más</p>
+                    <p class="blog-hero-subtitle">Encuentra temas de interés de viajes en Perú, tips, historia y más</p>
                 </div>
             </div>
         </div>
     </div>
-    <section>
+    <section class="blog-listing-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -31,9 +31,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col lg-12 mb-2">
-                    <h2>BLogs sobre sobre Perú</h2>
-                    <p>
+                <div class="col-lg-12 mb-2">
+                    <h2>Blogs sobre Perú</h2>
+                    <p class="blog-listing-lead">
                         ¡Bienvenid@ a nuestra sección de blogs! Aquí encontrarás temas interesantes sobre Perú, desde tips
                         útiles para viajar hasta información sobre la historia, costumbres, lugares turísticos y mucho más.
                         Explora nuestras publicaciones y descubre todo lo que este hermoso país tiene para ofrecer.</p>
@@ -42,7 +42,7 @@
                     <div class="input-group mb-2">
                         <input type="text" class="form-control" id="buscador" placeholder="Buscar blog">
                     </div>
-                    <div id="no-results" style="display: none; font-weight:bold">No se encontraron resultados para tu
+                    <div id="no-results" class="blog-listing-no-results" style="display: none;">No se encontraron resultados para tu
                         búsqueda.</div>
                 </div>
                 <script>

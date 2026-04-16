@@ -12,13 +12,14 @@
             <div class="row w-100">
                 <div class="col-lg-12 text-center">
                     <h1 class="h1-destinos">
-                        Peru Blog Topics
+                        Blogs about Peru
                     </h1>
+                    <p class="blog-hero-subtitle">Travel tips, history, culture, destinations and more — explore our articles</p>
                 </div>
             </div>
         </div>
     </div>
-    <section>
+    <section class="blog-listing-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -29,9 +30,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col lg-12 mb-2">
-                    <h2>BLogs abouts Perú</h2>
-                    <p>
+                <div class="col-lg-12 mb-2">
+                    <h2>Blogs about Peru</h2>
+                    <p class="blog-listing-lead">
                         Welcome to our blog section! Here you will find interesting topics about Peru, from useful tips for
                         traveling to information about history, customs, tourist spots, and much more. Explore our
                         publications and discover everything this beautiful country has to offer.
@@ -41,7 +42,7 @@
                     <div class="input-group mb-2">
                         <input type="text" class="form-control" id="buscador" placeholder="Search topic">
                     </div>
-                    <div id="no-results" style="display: none; font-weight:bold">
+                    <div id="no-results" class="blog-listing-no-results" style="display: none;">
                         No results found for your search.
                     </div>
                 </div>
@@ -99,7 +100,7 @@
                             <div class="fecha"><i class="icon-calendar"></i><span>
                                     {{ $blog->created_at->format('d/m/Y') }}</span></div>
                             <p>{{ $blog->descripcion }}</p>
-                            <a href="{{ route('enblog', $blog->slug) }}">Leer artículo</a>
+                            <a href="{{ route('enblog', $blog->slug) }}">Read article</a>
                         </div>
                     </div>
                 @endforeach

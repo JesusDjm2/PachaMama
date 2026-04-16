@@ -13,7 +13,6 @@
             </div>
         </div>
     </div>
-    </div>
     <section>
         <div class="container">
             <div class="row justify-content-center">
@@ -29,7 +28,7 @@
                 </div>
                 <div class="col-lg-10">
                     <h2 class="text-center">"Cusco"</h2>
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion accordion-flush accordion-destiny" id="accordionFlushExample">
                         <div class="accordion-item">
                             <h2>
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -645,6 +644,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('en.destinies-peru._tours-by-location')
                 </div>
                 <div class="space"></div>
             </div>

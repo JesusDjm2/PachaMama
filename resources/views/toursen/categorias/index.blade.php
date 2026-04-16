@@ -39,7 +39,7 @@
                                 {{-- <a href="{{ route('category.show', $category->id) }}" class="btn btn-info btn-sm" title="Ver">
                                     <i class="fa fa-eye"></i>
                                 </a> --}}
-                                <a href="{{ route('category.show', $category) }}" class="btn btn-info btn-sm" title="Ver">
+                                <a href="{{ route('category.admin.show', $category) }}" class="btn btn-info btn-sm" title="Ver">
                                     <i class="fa fa-eye"></i>
                                 </a>
                                 

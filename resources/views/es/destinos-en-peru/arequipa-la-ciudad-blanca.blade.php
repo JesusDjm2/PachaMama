@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <section>
+    <section class="destinations-peru-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
@@ -27,13 +27,14 @@
                 </div>
                 <div class="col-lg-10">
                     <h2 class="text-center">"Arequipa"</h2>
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion accordion-flush accordion-destiny" id="accordionFlushExample">
                         <div class="accordion-item">
-                            <h2>
+                            <h2 class="accordion-header" id="flush-headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#flush-collapseOne" aria-expanded="false"
                                     aria-controls="flush-collapseOne">
                                     ¿Por qué se le llama la ciudad blanca?
+                                </button>
                             </h2>
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -316,6 +317,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('es.destinos-en-peru._tours-by-location')
                 </div>
                 <div class="space"></div>
             </div>

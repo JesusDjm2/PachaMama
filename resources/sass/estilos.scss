@@ -134,10 +134,7 @@ html {
 }
 
 .linea2-blogs {
-    border-bottom: 5px solid $color;
-    margin-bottom: 1em;
-    width: 30px;
-    border-radius: 5px;
+    display: none;
 }
 
 .compartir {
@@ -606,7 +603,57 @@ beige {
 
     p {
         font-weight: 500 !important;
+        color: $secundario;
     }
+}
+
+/* Blog listing hero (blog-peru / peru-blog) */
+.blog {
+    position: relative;
+}
+
+.blog .container,
+.blog .container-fluid {
+    position: relative;
+    z-index: 2;
+}
+
+.blog-hero-subtitle {
+    color: rgba(255, 255, 255, 0.96);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.55;
+    max-width: 42rem;
+    margin: 0.5rem auto 0;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+}
+
+.blog-listing-section .blog-listing-lead {
+    color: #2c3e50;
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 48rem;
+    margin: 0 0 1rem;
+
+    a {
+        color: #2fa69b;
+    }
+}
+
+.blog-listing-section h2 {
+    color: #1a2e45;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.blog-listing-no-results {
+    font-weight: 600;
+    color: #1a2e45;
+}
+
+.blog-listing-section {
+    padding-bottom: 0.25rem;
 }
 
 .sticky {
@@ -905,24 +952,30 @@ h3 {
 .uno:hover a {
     margin-right: 0em;
     transition: 1s;
+    color: #fff;
 }
 
 .dos:hover a {
     margin-right: 0em;
     transition: 1s;
+    color: #fff;
 }
 
 .tres:hover a {
     margin-right: 0em;
     transition: 1s;
+    color: #fff;
 }
 
 .cuatro:hover a {
     margin-right: 0em;
     transition: 1s;
+    color: #fff;
 }
 
-.full-img a:hover {
+.full-img a:hover,
+.full-img a:focus {
+    color: #fff;
     background: #2fa69b;
     border-style: none;
 }
@@ -938,6 +991,65 @@ h3 {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: 0.6s;
     background: #fff;
+}
+
+/* Search & listing grids: cards centered on narrow viewports */
+.results-cards-grid {
+    justify-content: center;
+}
+
+.results-cards-grid > .col-results-card {
+    display: flex;
+    justify-content: center;
+}
+
+.results-cards-grid .card.card-new {
+    width: 100%;
+    max-width: 18rem;
+    margin-bottom: 0;
+}
+
+.destinations-peru-section {
+    padding-bottom: 2.5rem;
+}
+
+.destinations-prose h2 {
+    color: #1a2e45;
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-top: 0.5rem;
+}
+
+.destinations-prose h3 {
+    color: #1a2e45;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 1.25rem;
+}
+
+.destinations-prose p,
+.destinations-prose i {
+    color: #475569;
+    line-height: 1.65;
+}
+
+.destinations-cards-grid .card.destinations-card .card-body {
+    padding: 1.2rem 1rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 10rem;
+}
+
+.destinations-cards-grid .card.destinations-card .text-card {
+    flex: 1 1 auto;
+    margin-bottom: 0.65rem;
+    max-width: 100%;
+}
+
+.destinations-cards-grid .card.destinations-card .boton-card {
+    flex-shrink: 0;
 }
 
 .blogs {
@@ -1078,9 +1190,10 @@ h3 {
 }
 
 .text-card {
-    color: #2f2f2f;
-    text-align: justify;
-    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    font-size: 0.82rem;
+    line-height: 1.55;
 }
 
 footer {

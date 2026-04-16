@@ -1,9 +1,5 @@
-<li>
-    <div class="row">
-        <div class="col">
-            <i class="icon-search botonsearch" data-toggle="modal" data-target="#exampleModal"></i>
-        </div>
-    </div>
+<li class="nav-item-search">
+    <i class="icon-search botonsearch" data-bs-toggle="modal" data-bs-target="#exampleModal" role="button" tabindex="0" aria-label="Buscar"></i>
 </li>
 </ul>
 </div>

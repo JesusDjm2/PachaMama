@@ -80,6 +80,22 @@
                 value="{{ old('slug', $blog->slug) }}" placeholder="Slug" onkeyup="replaceSpaces(this)">
             {!! $errors->first('slug', '<div class="invalid-feedback">:message</div>') !!}
         </div>
+        @isset($blogsEs)
+        <div class="form-group">
+            <label for="blog_id">Artículo en español vinculado <small class="text-muted">(opcional, 1:1)</small></label>
+            <select name="blog_id" id="blog_id" class="form-control {{ $errors->has('blog_id') ? 'is-invalid' : '' }}">
+                <option value="">— Sin vincular —</option>
+                @foreach ($blogsEs as $b)
+                    <option value="{{ $b->id }}" {{ (string) old('blog_id', $blog->blog_id) === (string) $b->id ? 'selected' : '' }}>
+                        {{ $b->nombre }}
+                    </option>
+                @endforeach
+            </select>
+            @if ($errors->has('blog_id'))
+                <div class="invalid-feedback d-block">{{ $errors->first('blog_id') }}</div>
+            @endif
+        </div>
+        @endisset
         <script>
             function replaceSpaces(input) {
                 var value = input.value;

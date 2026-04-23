@@ -6,7 +6,7 @@
 @section('titulo', $titulo)
 @include('layouts.metasblogs')
 @section('content')
-    <div class="destinos">
+    <div class="destinos destinos-around-peru">
         <div class="container h-100 d-flex align-items-center">
             <div class="row w-100">
                 <div class="col-lg-12 text-center">

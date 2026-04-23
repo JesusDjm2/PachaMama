@@ -80,7 +80,7 @@ class BlogController extends Controller
      */
     public function show($slug)
     {
-        $blog = Blog::where('slug', $slug)->firstOrFail();
+        $blog = Blog::query()->with('enblog')->where('slug', $slug)->firstOrFail();
         $blogses = Blog::where('id', '!=', $blog->id)->latest()->take(3)->get();
         $tours = Tour::latest()->take(4)->get();
         return view('blogs.es.blogs.show', compact('blog', 'blogses','tours'));
@@ -94,7 +94,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::with('tags')->findOrFail($id);
+        $blog = Blog::with(['tags', 'enblog'])->findOrFail($id);
         $tags = Tag::query()->pluck('nombre', 'id');
         return view('blogs.es.blogs.edit', compact('blog', 'tags'));
     }

@@ -30,7 +30,7 @@ class SearchenController extends Controller
         if ($nombre === '') {
             return view('blogs.en.blogs.noresults', ['nombre' => '']);
         }
-        $blog = Enblog::where('nombre', 'LIKE',  "%$nombre%")->get();
+        $blog = Enblog::with('entags')->where('nombre', 'LIKE', "%$nombre%")->get();
         if(count($blog) != 0){
             $blogs = [
                 'respuestas' => $blog,

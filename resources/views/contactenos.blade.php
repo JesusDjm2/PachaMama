@@ -40,10 +40,11 @@
 @endsection
 @section('content')
     <div class="blog">
-        <div class="container">
-            <div class="row">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="row w-100">
                 <div class="col-lg-12 text-center">
-                    <h1 style="padding-top: 250px;color:#fff" class="h1web">Contácte con Pacha Mama Spirit por ayuda</h1>
+                    <h1 class="h1-destinos">Contacte a Pacha Mama Spirit</h1>
+                    <p>Estamos aquí para ayudarte a planear el viaje de tu vida. Respondemos por WhatsApp en menos de una hora.</p>
                 </div>
             </div>
         </div>
@@ -53,7 +54,6 @@
             <div class="row">
                 <div class="col-lg-12 text-center mb-4">
                     <h2 class="text-center">Contácte al equipo de Pacha Mama</h2>
-                    <div class="linea mb-3"></div>
                     <p class="mx-auto" style="max-width:540px; text-align:center;">
                         Estamos aquí para ayudarte. Nuestro equipo se comunicará contigo en cuestión de horas.
                     </p>

@@ -14,5 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(TourSeeder::class);
+        $this->call(EnglishCategorySeeder::class);
+        $this->call(CategoryToursenPivotSeeder::class);
     }
 }

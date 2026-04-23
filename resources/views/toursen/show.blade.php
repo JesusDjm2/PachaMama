@@ -1,6 +1,13 @@
 @extends('layouts.appen')
 @section('titulo', $tour->nombre)
 @include('layouts.metas')
+@push('locale_page_switcher')
+    @if ($tour->tour)
+        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
+            <a href="{{ route('tours.show', $tour->tour->slug) }}" hreflang="es" class="font-weight-bold">Ver este tour en español →</a>
+        </div>
+    @endif
+@endpush
 @section('content')
     @include('layouts.menu')
     <div class="contenedor-fondo">

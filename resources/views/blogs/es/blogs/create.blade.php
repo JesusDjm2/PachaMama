@@ -1,27 +1,26 @@
 @extends('layouts.admin')
-@section('titulo', 'Blogs español')
+@section('titulo', 'Crear Blog en Español')
+
 @section('contenido')
-<section class="content container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-
-            @includeif('partials.errors')
-
-            <div class="card card-default">
-                <div class="card-header">
-                    <span class="card-title">Create Djmblog</span>
-                    <a style="float: right" class="btn btn-primary" href="{{route('blogs.index')}}">Volver</a>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('blogs.store') }}"  role="form" enctype="multipart/form-data">
-                        @csrf
-
-                        @include('blogs.es.blogs.form')
-
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="pm-page-header">
+    <div>
+        <h1>Crear Blog en Español</h1>
+        <small>Nuevo artículo para el blog en español</small>
     </div>
-</section>
+    <a href="{{ route('blogs.index') }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left mr-1"></i> Volver
+    </a>
+</div>
+
+<div class="card pm-card">
+    <div class="card-header pm-card-header">
+        <h6>Contenido del artículo</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('blogs.store') }}" enctype="multipart/form-data">
+            @csrf
+            @include('blogs.es.blogs.form')
+        </form>
+    </div>
+</div>
 @endsection

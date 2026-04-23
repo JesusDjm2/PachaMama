@@ -125,4 +125,71 @@ $(function() {
   };
   siteMenuClone();
 
+  /**
+   * Filtros de tours en inicio / index: respuesta parcial por AJAX (sin recarga),
+   * desplazamiento suave a la rejilla de resultados y URL actualizada.
+   */
+  var initHomeTourFiltersAjax = function() {
+    var $results = $('#home-tours-results');
+    if (!$results.length) {
+      return;
+    }
+
+    var fetchGrid = function(url) {
+      var $section = $('#home-tours-section');
+      $results.addClass('home-tours-results--loading');
+      $results.attr('aria-busy', 'true');
+      fetch(url, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Accept': 'text/html'
+        },
+        credentials: 'same-origin'
+      })
+        .then(function(res) {
+          if (!res.ok) {
+            throw new Error('Bad response');
+          }
+          return res.text();
+        })
+        .then(function(html) {
+          $results.html(html);
+          if (history.replaceState) {
+            history.replaceState(null, '', url);
+          }
+          var el = document.getElementById('home-tours-results');
+          if (el && typeof el.scrollIntoView === 'function') {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        })
+        .catch(function() {
+          window.location.href = url;
+        })
+        .finally(function() {
+          $results.removeClass('home-tours-results--loading');
+          $results.attr('aria-busy', 'false');
+        });
+    };
+
+    $(document).on('submit', 'form.js-home-tour-filters', function(e) {
+      e.preventDefault();
+      var action = $(this).attr('action') || window.location.pathname;
+      var qs = $(this).serialize();
+      var url = qs ? (action + (action.indexOf('?') >= 0 ? '&' : '?') + qs) : action;
+      fetchGrid(url);
+    });
+
+    $(document).on('click', 'a.js-home-tour-filters-clear', function(e) {
+      e.preventDefault();
+      var href = $(this).attr('href') || '/';
+      var $form = $(this).closest('form.js-home-tour-filters');
+      if ($form.length) {
+        $form.find('select').val('');
+      }
+      var base = href.split('?')[0];
+      fetchGrid(base);
+    });
+  };
+  initHomeTourFiltersAjax();
+
 });

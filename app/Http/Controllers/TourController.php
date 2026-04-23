@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\Tour;
 use App\Models\User;
+use App\Support\HomeTourFilters;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
@@ -18,10 +20,29 @@ class TourController extends Controller
         $tours = Tour::latest()->get();
         return view('tours.index')->with('tours', $tours);
     }
-    public function mostrar()
+    public function mostrar(Request $request)
     {
-        $tours = Tour::latest()->get(); 
-        return view('inicio')->with('tours', $tours);
+        $query = Tour::query()->latest();
+        HomeTourFilters::applyToTourQuery($query, $request);
+        $tours = $query->get();
+        $blogsRecientes = Blog::query()->latest()->take(4)->get();
+        $filterMeta = HomeTourFilters::metaForTours();
+
+        if ($request->ajax()) {
+            return response()
+                ->view('partials.home-tours-grid-es', ['tours' => $tours])
+                ->header('Cache-Control', 'private, no-store');
+        }
+
+        return view('inicio', [
+            'tours' => $tours,
+            'blogsRecientes' => $blogsRecientes,
+            'filterUbicaciones' => $filterMeta['ubicaciones'],
+            'filterDias' => $filterMeta['dias'],
+            'filterPrecios' => $filterMeta['precios'],
+            'filterAction' => route('inicio'),
+            'filterLocale' => 'es',
+        ]);
     }
     public function users()  
     {
@@ -89,7 +110,7 @@ class TourController extends Controller
      */
     public function show($slug)
     {
-        $tour = Tour::where('slug', $slug)->firstOrFail();
+        $tour = Tour::query()->with('toursens')->where('slug', $slug)->firstOrFail();
         $otrosTours = Tour::where('id', '!=', $tour->id)->get();
         return view('tours.show', compact('tour', 'otrosTours'));
     }

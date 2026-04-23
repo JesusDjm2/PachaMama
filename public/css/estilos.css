@@ -17,6 +17,38 @@ html {
 }
 
 /* ---------- Typography scale ---------- */
+/* Sitio público: todos los <h1> usan Josefin; sombra suave (los héroes la refinan con reglas más específicas) */
+h1 {
+  font-family: "Josefin Sans", sans-serif;
+  text-shadow: 0 1px 2px rgba(26, 46, 69, 0.14);
+}
+
+/* Primer párrafo tras el título: ritmo y contraste sin caja con fondo */
+h1 + p {
+  margin-top: 0.35rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.65;
+  font-size: 1.05rem;
+  color: #334155;
+}
+
+/* Hero home: solo ritmo; color/sombra los define .contenidoindex p + .hero-index-lead */
+.contenidoindex h1 + p {
+  margin-top: 0;
+}
+
+/* Portadas oscuras (.temasBlogs): texto claro sobre foto */
+.temasBlogs h1 + p {
+  color: inherit;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* Portadas con .h1web sobre imagen */
+h1.h1web + p {
+  color: inherit;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
 h2 {
   color: #1a2e45;
   font-size: 1.5rem !important;
@@ -63,6 +95,390 @@ strong {
 .share {
   text-align: center;
   margin-top: 2em;
+}
+
+/* ---------- Helpers UI (Bootstrap + pocas reglas; evitar style="" en vistas) ---------- */
+.text-brand {
+  color: #2aa8a8 !important;
+}
+
+.hero-index-title {
+  color: #fff;
+  text-shadow:
+    0 0 1px rgba(0, 0, 0, 0.9),
+    0 2px 18px rgba(0, 0, 0, 0.55),
+    0 6px 36px rgba(0, 0, 0, 0.35);
+}
+
+/* Lead del hero: solo texto blanco + sombra (sin caja ni fondo) */
+.hero-index-lead {
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.65;
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.35rem 0.5rem;
+  color: rgba(255, 255, 255, 0.98) !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-radius: 0;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 2px 14px rgba(0, 0, 0, 0.75),
+    0 4px 28px rgba(0, 0, 0, 0.55);
+}
+
+.contenidoindex h1.hero-index-title {
+  text-shadow:
+    0 0 2px rgba(0, 0, 0, 0.75),
+    0 3px 22px rgba(0, 0, 0, 0.5),
+    0 8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.contenidoindex p.hero-index-lead {
+  color: rgba(255, 255, 255, 0.98) !important;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 2px 14px rgba(0, 0, 0, 0.75),
+    0 4px 28px rgba(0, 0, 0, 0.55);
+}
+
+/*
+ * Portadas con foto full-viewport (style.css): velo oscuro + zoom suave “respirar”.
+ * ::before del tema = degradado superior; ::after = velo uniforme encima del fondo.
+ */
+.hero::after,
+.destinos::after,
+.aventuras::after,
+.imperdible::after,
+.machu::after,
+.ollantaytambo::after,
+.pachamamalodge::after,
+.santuaryLodge::after,
+.paquetes::after,
+.blog::after,
+.terminos::after,
+.preguntas::after,
+.blog-temas::after,
+.puno::after,
+.valle::after,
+.selva::after,
+.caminata::after,
+.nazca::after,
+.lima::after,
+.arequipa::after,
+.cusco::after,
+.ollanta::after,
+.huchuy::after,
+.choque::after,
+.humantay::after,
+.vinicunca::after,
+.ica::after,
+.pisco::after,
+.puerto::after,
+.salkantay::after,
+.manu::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.34);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero,
+.destinos,
+.aventuras,
+.imperdible,
+.machu,
+.ollantaytambo,
+.pachamamalodge,
+.santuaryLodge,
+.paquetes,
+.blog,
+.terminos,
+.preguntas,
+.blog-temas,
+.puno,
+.valle,
+.selva,
+.caminata,
+.nazca,
+.lima,
+.arequipa,
+.cusco,
+.ollanta,
+.huchuy,
+.choque,
+.humantay,
+.vinicunca,
+.ica,
+.pisco,
+.puerto,
+.salkantay,
+.manu {
+  overflow: hidden;
+  animation: pacha-cover-breathe 20s ease-in-out infinite;
+  will-change: background-size;
+}
+
+/*
+ * Zoom “respiración”: solo longitudes que interpolan (nunca cover en keyframes).
+ * — pacha-cover-breathe: ancho % (ideal en escritorio / móvil apaisado).
+ * — pacha-cover-breathe-portrait: alto % (móvil/tablet vertical: rellena altura sin bandas).
+ */
+@keyframes pacha-cover-breathe {
+  0%,
+  100% {
+    background-size: 118% auto;
+  }
+
+  50% {
+    background-size: 128% auto;
+  }
+}
+
+@keyframes pacha-cover-breathe-portrait {
+  0%,
+  100% {
+    background-size: auto 118%;
+  }
+
+  50% {
+    background-size: auto 128%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .destinos,
+  .aventuras,
+  .imperdible,
+  .machu,
+  .ollantaytambo,
+  .pachamamalodge,
+  .santuaryLodge,
+  .paquetes,
+  .blog,
+  .terminos,
+  .preguntas,
+  .blog-temas,
+  .puno,
+  .valle,
+  .selva,
+  .caminata,
+  .nazca,
+  .lima,
+  .arequipa,
+  .cusco,
+  .ollanta,
+  .huchuy,
+  .choque,
+  .humantay,
+  .vinicunca,
+  .ica,
+  .pisco,
+  .puerto,
+  .salkantay,
+  .manu {
+    animation: none;
+    will-change: auto;
+  }
+
+  .circulo i.icon-chevron-down:last-of-type,
+  .circulo i.desvanecer {
+    animation: none !important;
+  }
+}
+
+/*
+ * Viewport en móvil/tablet: dvh/svh evitan franjas bajo barra del navegador.
+ * En vertical, la animación usa alto % (keyframes portrait) para que la foto cubra el alto.
+ */
+@media (max-width: 1024px) {
+  .hero,
+  .destinos,
+  .aventuras,
+  .imperdible,
+  .machu,
+  .ollantaytambo,
+  .pachamamalodge,
+  .santuaryLodge,
+  .paquetes,
+  .blog,
+  .terminos,
+  .preguntas,
+  .blog-temas,
+  .puno,
+  .valle,
+  .selva,
+  .caminata,
+  .nazca,
+  .lima,
+  .arequipa,
+  .cusco,
+  .ollanta,
+  .huchuy,
+  .choque,
+  .humantay,
+  .vinicunca,
+  .ica,
+  .pisco,
+  .puerto,
+  .salkantay,
+  .manu {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: portrait) {
+  .hero,
+  .destinos,
+  .aventuras,
+  .imperdible,
+  .machu,
+  .ollantaytambo,
+  .pachamamalodge,
+  .santuaryLodge,
+  .paquetes,
+  .blog,
+  .terminos,
+  .preguntas,
+  .blog-temas,
+  .puno,
+  .valle,
+  .selva,
+  .caminata,
+  .nazca,
+  .lima,
+  .arequipa,
+  .cusco,
+  .ollanta,
+  .huchuy,
+  .choque,
+  .humantay,
+  .vinicunca,
+  .ica,
+  .pisco,
+  .puerto,
+  .salkantay,
+  .manu {
+    animation-name: pacha-cover-breathe-portrait;
+    will-change: background-size;
+  }
+}
+
+@media (max-width: 768px) {
+  /* fixed + animación suele ir pesado en móvil (solo .hero usa attachment fixed en el tema) */
+  .hero {
+    background-attachment: scroll !important;
+  }
+}
+
+/* /alrededor-de-peru y /category/around-peru: portada solo a 100vh (no dvh/svh del bloque general) */
+.destinos.destinos-around-peru {
+  height: 100vh !important;
+  min-height: 100vh !important;
+}
+
+/*
+ * PC: zoom “118% auto” deja bandas en fotos muy anchas; el velo ::after sigue el cajón pero el fondo no.
+ * Solo estas portadas (around-peru + lodge, únicas con .destinos-around-peru / .pachamamalodge en público):
+ * animación por alto como en vertical + lodge centrado para que la imagen cubra el 100vh.
+ */
+@media (min-width: 1025px) {
+  .destinos.destinos-around-peru,
+  .pachamamalodge {
+    animation-name: pacha-cover-breathe-portrait;
+  }
+
+  .pachamamalodge {
+    background-position: center center;
+  }
+}
+
+.site-nav-mobile-toggle {
+  float: right;
+}
+
+.modal-pacha .modal-content {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.modal-pacha-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 2;
+  padding: 0;
+  margin: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  opacity: 0.55;
+  border: 0;
+  background: transparent;
+}
+
+.modal-pacha-close:hover {
+  opacity: 0.9;
+}
+
+.form-control-pacha-search {
+  border-radius: 2rem;
+  border: 1.5px solid #dee2e6;
+  padding: 0.65rem 1.15rem;
+}
+
+.form-control-pacha-search:focus {
+  border-color: #2aa8a8;
+  box-shadow: 0 0 0 0.2rem rgba(42, 168, 168, 0.2);
+}
+
+.footer-logo-img {
+  max-width: 160px;
+  height: auto;
+}
+
+.footer-tagline {
+  font-size: 0.82rem;
+}
+
+.footer-contact-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-contact-link:hover {
+  color: #2aa8a8;
+}
+
+.section-home-cta {
+  background-color: #f7f8fa;
+}
+
+.home-contact-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+
+.contact-line-icon {
+  color: #2aa8a8;
+  font-size: 1.2rem;
+}
+
+.feature-pillar-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* ---------- Navbar top bar ---------- */
@@ -136,24 +552,66 @@ strong {
 /* Menú con barra fija: tipografía/padding/capitalize los define style.css (.sticky-wrapper.is-sticky …).
    No redeclarar aquí el bloque .nav-link para no pisar el layout al hacer scroll. */
 
-/* Language button */
+/* Language button — en top (no sticky) style.css fuerza li>a a 15px / 20px padding */
 .castellano-es {
   font-weight: 700;
   background: #2aa8a8;
-  padding: 5px 14px;
-  color: #fff;
+  padding: 4px 10px;
+  color: #fff !important;
   border: none;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  border-radius: 16px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease, transform 0.2s ease, color 0.2s ease;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1.2;
 }
 
-.castellano-es:hover {
+.site-navbar .site-navigation .site-menu > li > a.castellano-es {
+  font-size: 12px !important;
+  padding: 4px 10px !important;
+  line-height: 1.2 !important;
+}
+
+.site-navbar .site-navigation .site-menu > li:has(> a.castellano-es) {
+  padding: 4px 3px;
+}
+
+.castellano-es:hover,
+.castellano-es:focus {
   background: #1a2e45;
+  color: #fff !important;
   transform: translateY(-1px);
+}
+
+/* Sobre style.css (.site-menu>li>a:hover → #43CFCF; sticky usa !important) */
+.site-navbar .site-navigation .site-menu > li > a.castellano-es:hover,
+.site-navbar .site-navigation .site-menu > li > a.castellano-es:focus {
+  color: #fff !important;
+  background: #1a2e45;
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a.castellano-es {
+  font-size: 12px !important;
+  color: #fff !important;
+  padding: 4px 10px !important;
+  line-height: 1.2 !important;
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a.castellano-es:hover,
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a.castellano-es:focus {
+  font-size: 12px !important;
+  color: #fff !important;
+  background: #1a2e45 !important;
+  padding: 4px 10px !important;
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li:has(> a.castellano-es) {
+  padding: 4px 3px;
 }
 
 .castellano-es:focus {
@@ -381,11 +839,6 @@ strong {
   display: none !important;
 }
 
-/* Botón de idioma dentro del panel */
-.site-mobile-menu .site-nav-wrap > li > .castellano-es {
-  margin: 10px 20px 14px;
-}
-
 .site-mobile-menu .site-nav-wrap > li > a {
   font-weight: 600;
   font-size: 1rem !important;
@@ -403,9 +856,25 @@ strong {
 }
 
 .site-mobile-menu .site-nav-wrap a.active,
-.site-mobile-menu .site-nav-wrap a:hover {
+.site-mobile-menu .site-nav-wrap a:hover:not(.castellano-es) {
   color: #2aa8a8 !important;
   background: rgba(42, 168, 168, 0.1);
+}
+
+/* Después de las reglas generales de <a> del panel móvil (padding 12×16) */
+.site-mobile-menu .site-nav-wrap > li > a.castellano-es {
+  margin: 8px 12px 10px;
+  font-size: 12px !important;
+  padding: 5px 12px !important;
+  line-height: 1.2 !important;
+  color: #fff !important;
+  background: #2aa8a8 !important;
+}
+
+.site-mobile-menu .site-nav-wrap > li > a.castellano-es:hover,
+.site-mobile-menu .site-nav-wrap > li > a.castellano-es:focus {
+  color: #fff !important;
+  background: #1a2e45 !important;
 }
 
 .site-mobile-menu .site-nav-wrap li.active > a {
@@ -458,22 +927,25 @@ strong {
   border-radius: 30px;
   font-size: 0.8rem;
   letter-spacing: 0.07em;
-  border: 1.5px solid rgba(255,255,255,0.7);
+  border: 1.5px solid #2aa8a8;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  background: rgba(255,255,255,0.1);
-  text-shadow: none;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-}
-
-.contenidoindex a:hover {
   background: #2aa8a8;
-  border-color: #2aa8a8;
-  transform: translateY(-2px);
+  text-shadow: none;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-/* Scroll indicator */
+.contenidoindex a:hover,
+.contenidoindex a:focus-visible {
+  background: #1a2e45;
+  border-color: #1a2e45;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(26, 46, 69, 0.35);
+}
+
+/* Scroll indicator: “respiración” continua + hover en el enlace */
 .circulo {
+  position: relative;
   margin: 2.5em auto 0;
   text-align: center;
   border: 2px solid rgba(255,255,255,0.6);
@@ -483,36 +955,72 @@ strong {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.circulo:hover {
-  border-color: #2aa8a8;
+.form-index > a:hover .circulo,
+.form-index > a:focus-visible .circulo {
+  border-color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.12);
+  box-shadow:
+    0 0 0 3px rgba(42, 168, 168, 0.45),
+    0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .circulo i {
   color: #fff;
   position: absolute;
-  margin-top: 8px;
-  transition: 0.5s;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: color 0.35s ease;
 }
 
-.circulo:hover i {
-  margin-top: 14px;
-  color: #2aa8a8;
+.circulo i.icon-chevron-down:last-of-type {
+  animation: circulo-chevron-bob 1.85s ease-in-out infinite;
 }
 
-.circulo .desvanecer {
-  color: rgba(255,255,255,0.7);
-  position: absolute;
-  margin-top: 8px;
-  transition: 0.5s;
+.circulo i.desvanecer {
+  color: rgba(255, 255, 255, 0.72);
+  animation: circulo-ghost-drift 1.85s ease-in-out infinite;
 }
 
-.circulo:hover .desvanecer {
-  opacity: 0;
-  margin-top: 20px;
-  transition: 2.2s;
+.form-index > a:hover .circulo i.icon-chevron-down:last-of-type,
+.form-index > a:focus-visible .circulo i.icon-chevron-down:last-of-type {
+  animation-duration: 1.05s;
+  color: #d4f4f4;
+}
+
+.form-index > a:hover .circulo i.desvanecer,
+.form-index > a:focus-visible .circulo i.desvanecer {
+  animation-duration: 1.05s;
+}
+
+@keyframes circulo-chevron-bob {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    color: #fff;
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(7px);
+    color: #2aa8a8;
+  }
+}
+
+@keyframes circulo-ghost-drift {
+  0%,
+  38% {
+    opacity: 0.62;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  55%,
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px);
+  }
 }
 
 /* ---------- Section titles ---------- */
@@ -573,6 +1081,7 @@ strong {
 .blog,
 .blog-temas,
 .machu,
+.ollantaytambo,
 .caminata,
 .cusco,
 .lima,
@@ -613,6 +1122,8 @@ strong {
 .blog-temas > .container-fluid,
 .machu > .container,
 .machu > .container-fluid,
+.ollantaytambo > .container,
+.ollantaytambo > .container-fluid,
 .caminata > .container,
 .caminata > .container-fluid,
 .cusco > .container,
@@ -848,8 +1359,8 @@ strong {
 }
 
 .feature-card p.feature-desc {
-  font-size: 0.83rem;
-  color: #6b7280;
+  font-size: 1em;
+  color: #2d2d2d;
   text-align: center;
   line-height: 1.6;
   margin: 0;
@@ -895,6 +1406,206 @@ strong {
   width: 100%;
   max-width: 18rem;
   margin-bottom: 0;
+}
+
+/* Responsive (<lg): centrar cards de tours en columnas Bootstrap (ES/EN, listados, home, blogs relacionados) */
+@media (max-width: 991.98px) {
+  .row > [class*="col-"]:has(.card.card-new) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card.card-new {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ---------- Blog search results (ES/EN) ---------- */
+.blog.blog--compact {
+  height: auto !important;
+  min-height: 220px;
+  padding: 3rem 0 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.blog.blog--compact .container {
+  flex: 1;
+}
+
+.blog.blog--compact .h1-destinos {
+  font-size: clamp(1.45rem, 4vw, 2.05rem);
+  line-height: 1.28;
+}
+
+@media (min-width: 768px) {
+  .blog.blog--compact {
+    min-height: 260px;
+    padding: 3.75rem 0 3rem;
+  }
+}
+
+.blog-search-results {
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 52%);
+  padding: 2rem 0 3.25rem;
+}
+
+.blog-search-results__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 1.25rem;
+  margin-bottom: 1.65rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(26, 46, 69, 0.09);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .blog-search-results__toolbar {
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.blog-search-results__breadcrumb {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.blog-search-results__breadcrumb a {
+  color: #2aa8a8;
+  font-weight: 600;
+}
+
+.blog-search-results__breadcrumb a:hover {
+  color: #1a2e45;
+}
+
+.blog-search-results__sep {
+  margin: 0 0.35rem;
+  opacity: 0.55;
+}
+
+.blog-search-results__back {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a2e45;
+  text-decoration: none;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(42, 168, 168, 0.12);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.blog-search-results__back:hover {
+  background: rgba(26, 46, 69, 0.1);
+  color: #2aa8a8;
+}
+
+.blog-search-results__grid {
+  max-width: 1140px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.blog-result-card .blog-result-card__media-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+.blog-result-card .card-img-top {
+  height: 200px;
+}
+
+.blog-result-card__date {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 0.35rem;
+}
+
+.blog-result-card .card-body {
+  padding: 1.15rem 1.2rem 1.35rem;
+}
+
+.blog-result-card .card-titulo {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.blog-result-card__excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-align: center !important;
+  flex-grow: 1;
+}
+
+.blog-result-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.blog-result-card__tags a {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(42, 168, 168, 0.12);
+  color: #1a5c5c !important;
+  text-decoration: none !important;
+  transition: background 0.2s ease;
+}
+
+.blog-result-card__tags a:hover {
+  background: rgba(42, 168, 168, 0.22);
+  color: #134848 !important;
+}
+
+.blog-search-results .blog-result-card.card-new {
+  max-width: none;
+}
+
+.blog-search-results--empty {
+  padding-top: 2.5rem;
+}
+
+.blog-search-empty-panel {
+  max-width: 36rem;
+  padding: 2rem 1.5rem 2.25rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 36px rgba(26, 46, 69, 0.08);
+  border: 1px solid rgba(26, 46, 69, 0.06);
+}
+
+.blog-search-empty-panel__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a2e45;
+  margin-bottom: 0.25rem;
+}
+
+.blog-search-results__link-all {
+  font-weight: 600;
+  color: #2aa8a8;
+}
+
+.blog-search-results__link-all:hover {
+  color: #1a2e45;
 }
 
 /* Destinos Perú (ES/EN): mismo layout de cards y tipografía del bloque texto */
@@ -945,6 +1656,12 @@ strong {
   flex-shrink: 0;
 }
 
+/* Listados de destinos (ES/EN): el grid de búsqueda anula margin-bottom; aquí lo recuperamos */
+.destinations-cards-grid.results-cards-grid .card.card-new,
+.destinations-peru-section .destiny-tours-en__grid .card.card-new.destiny-tour-card {
+  margin-bottom: 1.75rem;
+}
+
 .card .card-titulo {
   margin-bottom: 0.7rem;
   font-weight: 700;
@@ -968,9 +1685,9 @@ strong {
 }
 
 .text-card {
-  color: #6b7280;
+  color: #2d2d2d;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 1em;
   line-height: 1.55;
   margin-top: 0.8rem;
 }
@@ -982,8 +1699,8 @@ strong {
 
 .iconos-tours {
   padding-bottom: 1.5rem;
-  color: #6b7280;
-  font-size: 0.82rem;
+  color: #2d2d2d;
+  font-size: 1em;
 }
 
 /* Tour badge links */
@@ -1334,6 +2051,12 @@ strong {
   padding-bottom: 0.25rem;
 }
 
+.blog-post-meta {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
 /* ---------- Blog cards ---------- */
 .blogSpace {
   border-radius: 10px;
@@ -1359,6 +2082,7 @@ strong {
   object-fit: cover;
 }
 
+/* Listado público blog-peru / peru-blog: franja a ancho completo, 4 columnas en desktop */
 .blogs {
   width: 25%;
   border: none;
@@ -1397,6 +2121,11 @@ strong {
   transition: opacity 0.5s ease;
 }
 
+/* Título sobre la foto del listado blog-peru / peru-blog */
+.blogs h2.nombreBlog {
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7), 0 1px 4px rgba(0, 0, 0, 0.55), 0 0 1px rgba(0, 0, 0, 0.9);
+}
+
 .blogs h2::after { display: none; }
 
 .blogs p {
@@ -1420,7 +2149,7 @@ strong {
 
 .blogs a {
   text-align: center;
-  color: #fff;
+  color: #fff !important;
   background: transparent;
   padding: 8px 18px;
   border: 1.5px solid #fff;
@@ -1429,21 +2158,204 @@ strong {
   font-weight: 600;
   display: none;
   transition: all 0.4s ease;
+  text-decoration: none !important;
 }
 
-.blogs a:hover {
+.blogs a:hover,
+.blogs a:focus,
+.blogs a:focus-visible,
+.blogs a:active {
+  color: #fff !important;
   background: #2aa8a8;
   border-color: #2aa8a8;
+  text-decoration: none !important;
 }
 
 .blogs:hover a {
   display: inline;
+  color: #fff !important;
 }
 
 .blogimg {
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
+}
+
+/* Inicio (/) e inicio ES: carril horizontal con tarjetas inclinadas (solo home) */
+.home-blog-rail {
+  padding: 0 0 0.5rem;
+}
+
+/* Título centrado en el carril del blog: la línea decorativa debe ir al centro */
+.home-blog-rail__head .h2-tierras::after {
+  margin: 8px auto 0;
+}
+
+.home-blog-rail__lead {
+  color: #6b7280;
+  font-size: 0.95rem;
+  max-width: 34rem;
+  margin: 0.25rem auto 0;
+  line-height: 1.5;
+}
+
+.home-blog-rail__track {
+  display: flex;
+  gap: 1.15rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.75rem 0.5rem 1.25rem;
+  margin: 0 -0.5rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.home-blog-rail__track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.home-blog-rail__track::-webkit-scrollbar-thumb {
+  background: rgba(42, 168, 168, 0.45);
+  border-radius: 99px;
+}
+
+.home-blog-rail__card {
+  flex: 0 0 min(86vw, 300px);
+  scroll-snap-align: start;
+}
+
+.home-blog-rail__link {
+  display: block;
+  height: 100%;
+  min-height: 268px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(165deg, #1a2e45 0%, #243b55 55%, #1a2e45 100%);
+  box-shadow: 0 16px 40px rgba(26, 46, 69, 0.22);
+  transform: rotate(-1.1deg);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.home-blog-rail__card:nth-child(even) .home-blog-rail__link {
+  transform: rotate(1.1deg);
+}
+
+.home-blog-rail__link:hover {
+  transform: rotate(0deg) translateY(-5px);
+  box-shadow: 0 22px 50px rgba(42, 168, 168, 0.22);
+}
+
+.home-blog-rail__media {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+}
+
+.home-blog-rail__media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-blog-rail__body {
+  padding: 0.35rem 1rem 1.1rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.home-blog-rail__accent {
+  display: block;
+  width: 42px;
+  height: 3px;
+  background: linear-gradient(90deg, #2aa8a8, #d4a843);
+  border-radius: 2px;
+  margin-bottom: 0.45rem;
+}
+
+.home-blog-rail__date {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.home-blog-rail__title {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.28;
+  margin: 0.4rem 0 0.45rem;
+  color: #fff;
+}
+
+.home-blog-rail__excerpt {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.88;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.home-blog-rail__go {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2aa8a8;
+}
+
+.home-blog-rail__btn-all {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.5rem 1.35rem;
+  border-radius: 999px;
+  border: 2px solid #2aa8a8;
+  color: #2aa8a8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.home-blog-rail__btn-all:hover {
+  background: #2aa8a8;
+  color: #fff;
+}
+
+@media (min-width: 992px) {
+  .home-blog-rail__track {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+    scroll-snap-type: none;
+    gap: 1.35rem;
+    margin: 0;
+    padding: 0.75rem 0 1rem;
+  }
+
+  .home-blog-rail__card {
+    flex: 0 0 calc(25% - 1.1rem);
+    max-width: 280px;
+  }
+}
+
+/* Home tour filters (AJAX): scroll bajo cabecera sticky */
+.home-tours-results {
+  scroll-margin-top: 5.5rem;
+}
+
+.home-tours-results--loading {
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 .enlaces-blog {
@@ -2000,9 +2912,8 @@ footer p {
 }
 
 @media (max-width: 912px) {
-  .castellano-es {
-    margin-top: 1.5em;
-    margin-left: 4em;
+  .site-navbar .site-navigation .site-menu > li > a.castellano-es {
+    margin: 0;
   }
 
   .display-foot   { display: none; }
@@ -2041,7 +2952,10 @@ footer p {
                 url(../img/responsive/camino-inca-reserva.webp) center / cover no-repeat;
   }
 
-  .blogs { width: 100%; height: 220px; }
+  .blogs {
+    width: 100%;
+    height: 220px;
+  }
 }
 
 @media (max-width: 576px) {

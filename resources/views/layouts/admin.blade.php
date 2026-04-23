@@ -8,10 +8,9 @@
     <meta name="robots" content="nofollow">
     <title>@yield('titulo')</title>
     <link rel="shortcut icon" href="{{ asset('img/icono-home.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-   
+    <link href="{{ asset('css/admin-custom.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -204,7 +203,7 @@
     <script src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
-
+    @stack('admin_scripts')
 </body>
 
 </html>

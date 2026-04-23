@@ -1,18 +1,65 @@
 @extends('layouts.appen')
-@section('titulo', $blog->nombre)
+@section('titulo', $blog->nombre . ' | Pacha Mama Spirit')
 @section('metas')
     <meta name="description" content="{{ $blog->descripcion }}" />
     <meta name="keywords" content="{{ $blog->keywords }}" />
     <link rel="canonical" href="{{ request()->fullUrl() }}" />
-    <meta property="og:title" content="{{ $blog->nombre }}">
-    <meta property="og:description" content="{{ $blog->escripcion }}">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="{{ $blog->nombre }} | Pacha Mama Spirit">
+    <meta property="og:description" content="{{ $blog->descripcion }}">
     <meta property="og:url" content="{{ request()->fullUrl() }}">
-    <meta name="twitter:card" content="summary">
-    <meta name="robots" content="index,follow">
-    <meta name="og:image" content="{{ $blog->img }}" />
-    <meta name="og:secureImage" content="{{ $blog->img }}" />
     <meta property="og:image" content="{{ $blog->img }}">
+    <meta property="og:image:secure_url" content="{{ $blog->img }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $blog->nombre }} | Pacha Mama Spirit">
+    <meta name="twitter:description" content="{{ $blog->descripcion }}">
+    <meta name="twitter:image" content="{{ $blog->img }}">
+    <meta name="robots" content="index,follow">
+    <link rel="alternate" hreflang="en" href="{{ route('enblog', $blog->slug) }}">
+    @if ($blog->blog)
+    <link rel="alternate" hreflang="es" href="{{ route('blog.show', $blog->blog->slug) }}">
+    @endif
+    <link rel="alternate" hreflang="x-default" href="{{ $blog->blog ? route('blog.show', $blog->blog->slug) : route('enblog', $blog->slug) }}">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "{{ addslashes($blog->nombre) }}",
+          "description": "{{ addslashes($blog->descripcion) }}",
+          "image": "{{ $blog->img }}",
+          "url": "{{ request()->fullUrl() }}",
+          "datePublished": "{{ $blog->created_at->toIso8601String() }}",
+          "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
+          "author": { "@id": "https://pachamamaspirit.com/#organization" },
+          "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
+          "inLanguage": "en",
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ request()->fullUrl() }}" },
+          "keywords": "{{ addslashes($blog->keywords) }}"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pachamamaspirit.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Peru Blog", "item": "{{ route('enlistado') }}" },
+            { "@type": "ListItem", "position": 3, "name": "{{ addslashes($blog->nombre) }}", "item": "{{ request()->fullUrl() }}" }
+          ]
+        }
+      ]
+    }
+    </script>
 @endsection
+@push('locale_page_switcher')
+    @if ($blog->blog)
+        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
+            <a href="{{ route('blog.show', $blog->blog->slug) }}" hreflang="es" class="font-weight-bold">Ver este artículo en español →</a>
+        </div>
+    @endif
+@endpush
 @section('content')
     <div class="temasBlogs">
         <div class="container">
@@ -38,11 +85,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <h2 class="text-center">{{ $blog->nombre }}</h2>
-                    <div class="linea-blogs"></div>
-                    <p class="text-center"><i class="icon-calendar"></i> {{ $blog->created_at->format('d/m/Y') }}</p>
-                    </p>
+                <div class="col-lg-8" id="cuerpo">
+                    <h2 class="text-center blog-post-heading">{{ $blog->nombre }}</h2>
+                    <p class="text-center blog-post-meta"><i class="icon-calendar" aria-hidden="true"></i> {{ $blog->created_at->format('d/m/Y') }}</p>
                     {!! $blog->cuerpo !!}
                     <div class="compartir">
                         <h4 class="mb-3">Share:</h4>

@@ -1,2 +1,25 @@
 User-agent: *
-Disallow:
+Disallow: /login
+Disallow: /register
+Disallow: /password
+Disallow: /registrarPacha
+Disallow: /tours/create
+Disallow: /tours/*/edit
+Disallow: /toursen/create
+Disallow: /toursen/*/edit
+Disallow: /blogs/create
+Disallow: /blogs/*/edit
+Disallow: /enblogs/create
+Disallow: /enblogs/*/edit
+Disallow: /tags/create
+Disallow: /tags/*/edit
+Disallow: /entags/create
+Disallow: /entags/*/edit
+Disallow: /categories/create
+Disallow: /categories/*/edit
+Disallow: /users/
+Disallow: /imagenes/
+Disallow: /djm2
+Allow: /
+
+Sitemap: https://pachamamaspirit.com/sitemap.xml

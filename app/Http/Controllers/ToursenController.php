@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Enblog;
 use App\Models\Toursen;
 use App\Models\Tour;
+use App\Support\HomeTourFilters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 
 class ToursenController extends Controller
 {
@@ -25,10 +29,31 @@ class ToursenController extends Controller
         return view('toursen.index')->with('tours', $tours);
     }
 
-    public function mostrar()
+    public function mostrar(Request $request)
     {
-        $tours = Toursen::orderBy('created_at', 'desc')->get();
-        return view('index')->with('tours', $tours);
+        $query = Toursen::query()
+            ->with('categories')
+            ->orderBy('created_at', 'desc');
+        HomeTourFilters::applyToToursenQuery($query, $request);
+        $tours = $query->get();
+        $blogsRecientes = Enblog::query()->latest()->take(4)->get();
+        $filterMeta = HomeTourFilters::metaForToursen();
+
+        if ($request->ajax()) {
+            return response()
+                ->view('partials.home-tours-grid-en', ['tours' => $tours])
+                ->header('Cache-Control', 'private, no-store');
+        }
+
+        return view('index', [
+            'tours' => $tours,
+            'blogsRecientes' => $blogsRecientes,
+            'filterUbicaciones' => $filterMeta['ubicaciones'],
+            'filterDias' => $filterMeta['dias'],
+            'filterPrecios' => $filterMeta['precios'],
+            'filterAction' => route('index'),
+            'filterLocale' => 'en',
+        ]);
     }
 
     /**
@@ -38,10 +63,26 @@ class ToursenController extends Controller
      */
     public function create()
     {
-        $toursDisponibles = Tour::whereDoesntHave('toursens')->get();
+        $toursDisponibles = $this->toursDisponiblesParaToursen(null);
         $categories = Category::all();
 
         return view('toursen.create', compact('toursDisponibles', 'categories'));
+    }
+
+    /**
+     * Tours en español sin versión EN, más el tour ya vinculado al editar ($tourIdEs = tours.tour_id).
+     */
+    protected function toursDisponiblesParaToursen(?int $tourIdEsVinculado): Collection
+    {
+        return Tour::query()
+            ->where(function ($q) use ($tourIdEsVinculado) {
+                $q->whereDoesntHave('toursens');
+                if ($tourIdEsVinculado) {
+                    $q->orWhere('id', $tourIdEsVinculado);
+                }
+            })
+            ->orderBy('nombre')
+            ->get();
     }
 
     public function store(Request $request)
@@ -62,7 +103,12 @@ class ToursenController extends Controller
             'categoria.*' => 'string',
             'keywords' => 'nullable|string',
             'slug' => 'required|string|unique:toursens,slug',
-            'clase' => 'required|string'
+            'clase' => 'required|string',
+            'tour_id' => [
+                'required',
+                'exists:tours,id',
+                Rule::unique('toursens', 'tour_id'),
+            ],
         ]);
 
         $toursen = new Toursen();
@@ -89,13 +135,14 @@ class ToursenController extends Controller
         $toursen->keywords = $request->get('keywords');
         $toursen->slug = $request->get('slug');
         $toursen->clase = $request->get('clase');
+        $toursen->tour_id = $request->input('tour_id');
 
         $toursen->save();
 
         // Asociar categorías
         $toursen->categories()->sync($request->get('categoria'));
 
-        session()->flash('status', 'Tour en español creado exitosamente!');
+        session()->flash('status', 'Tour en inglés creado y vinculado al tour en español.');
         return redirect('toursen');
     }
 
@@ -103,7 +150,7 @@ class ToursenController extends Controller
     public function show($slug) 
     {
         /* $tour = Toursen::where('slug', $slug)->firstOrFail(); */
-        $tour = Toursen::with('categories')->where('slug', $slug)->firstOrFail();
+        $tour = Toursen::with(['categories', 'tour'])->where('slug', $slug)->firstOrFail();
         $otrosTours = Toursen::where('id', '!=', $tour->id)->get();
         return view('toursen.show', compact('tour', 'otrosTours'));
     }
@@ -111,7 +158,7 @@ class ToursenController extends Controller
     public function edit($id)
     {
         $tour = Toursen::findOrFail($id);
-        $toursDisponibles = Tour::whereDoesntHave('toursens')->get();
+        $toursDisponibles = $this->toursDisponiblesParaToursen($tour->tour_id);
         $categorias = Category::all(); // Obtener todas las categorías
 
         return view('toursen.edit', compact('tour', 'toursDisponibles', 'categorias'));
@@ -124,7 +171,11 @@ class ToursenController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:120',
             'descripcion' => 'required|string|max:250',
-            // Añade las validaciones necesarias para otros campos...
+            'tour_id' => [
+                'required',
+                'exists:tours,id',
+                Rule::unique('toursens', 'tour_id')->ignore($tour->id),
+            ],
         ]);
 
         $tour->nombre = $request->get('nombre');

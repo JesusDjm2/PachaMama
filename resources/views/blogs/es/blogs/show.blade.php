@@ -18,23 +18,48 @@
     <meta name="twitter:description" content="{{ $blog->descripcion }}">
     <meta name="twitter:image" content="{{ $blog->img }}">
     <meta name="robots" content="index,follow">
+    <link rel="alternate" hreflang="es" href="{{ route('blog.show', $blog->slug) }}">
+    @if ($blog->enblog)
+    <link rel="alternate" hreflang="en" href="{{ route('enblog', $blog->enblog->slug) }}">
+    @endif
+    <link rel="alternate" hreflang="x-default" href="{{ $blog->enblog ? route('enblog', $blog->enblog->slug) : route('blog.show', $blog->slug) }}">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "{{ addslashes($blog->nombre) }}",
-      "description": "{{ addslashes($blog->descripcion) }}",
-      "image": "{{ $blog->img }}",
-      "url": "{{ request()->fullUrl() }}",
-      "datePublished": "{{ $blog->created_at->toIso8601String() }}",
-      "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
-      "author": { "@id": "https://pachamamaspirit.com/#organization" },
-      "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
-      "inLanguage": "es-PE",
-      "isPartOf": { "@id": "https://pachamamaspirit.com/#website" }
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "headline": "{{ addslashes($blog->nombre) }}",
+          "description": "{{ addslashes($blog->descripcion) }}",
+          "image": "{{ $blog->img }}",
+          "url": "{{ request()->fullUrl() }}",
+          "datePublished": "{{ $blog->created_at->toIso8601String() }}",
+          "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
+          "author": { "@id": "https://pachamamaspirit.com/#organization" },
+          "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
+          "inLanguage": "es",
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ request()->fullUrl() }}" },
+          "keywords": "{{ addslashes($blog->keywords) }}"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://pachamamaspirit.com/inicio" },
+            { "@type": "ListItem", "position": 2, "name": "Blog Perú", "item": "{{ route('listado') }}" },
+            { "@type": "ListItem", "position": 3, "name": "{{ addslashes($blog->nombre) }}", "item": "{{ request()->fullUrl() }}" }
+          ]
+        }
+      ]
     }
     </script>
 @endsection
+@push('locale_page_switcher')
+    @if ($blog->enblog)
+        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
+            <a href="{{ route('enblog', $blog->enblog->slug) }}" hreflang="en" class="font-weight-bold">Ver este artículo en inglés →</a>
+        </div>
+    @endif
+@endpush
 @section('content')
     <div class="temasBlogs">
         <div class="container">
@@ -62,10 +87,8 @@
                 </div>
                 <div class="col-lg-8" id="cuerpo">
                     
-                    <h2 class="text-center">{{ $blog->nombre }}</h2>
-                    <div class="linea-blogs"></div>
-                    <p class="text-center"><i class="icon-calendar"></i> {{ $blog->created_at->format('d/m/Y') }}</p>
-                    </p>
+                    <h2 class="text-center blog-post-heading">{{ $blog->nombre }}</h2>
+                    <p class="text-center blog-post-meta"><i class="icon-calendar" aria-hidden="true"></i> {{ $blog->created_at->format('d/m/Y') }}</p>
                     {!! $blog->cuerpo !!}
                     <div class="compartir">
                         <h4 class="mb-3">Compartir:</h4>

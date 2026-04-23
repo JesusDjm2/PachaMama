@@ -26,6 +26,7 @@ Route::get('inicio', [TourController::class, 'mostrar'])->name('inicio');
 
 Route::get('contact-pacha-mama', [EnlacesCategorias::class, 'contact'])->name('contact');
 Route::get('about-Pacha-Mama', [EnlacesCategorias::class, 'about'])->name('about');
+Route::get('terms-and-conditions', [EnlacesCategorias::class, 'termsEn'])->name('terms-en');
 Route::get('contacte-pacha-mama', [EnlacesCategorias::class, 'contactenos'])->name('contactenos');
 //Categorias español
 Route::get('machu-picchu', [EnlacesCategorias::class, 'machuPicchu'])->name('mapi');
@@ -40,7 +41,7 @@ Route::get('categories/trekking', [EnlacesCategorias::class, 'hikes'])->name('hi
 Route::get('category/around-peru', [EnlacesCategorias::class, 'around'])->name('around');
 Route::get('category/luxury-tours', [EnlacesCategorias::class, 'private'])->name('private');
 Route::get('full-day-tours', [EnlacesCategorias::class, 'fulldayen'])->name('fulldayen');
-Route::get('category/luxury-tours', [EnlacesCategorias::class, 'lodgen'])->name('lodgen');
+Route::get('pacha-mama-spirit-lodge', [EnlacesCategorias::class, 'lodgen'])->name('lodgen');
 
 Route::get('category/{category:link}', [CategoryController::class, 'show'])->name('category.show');
 
@@ -58,6 +59,7 @@ Route::get('lodge-pacha-mama-spirit', [EnlacesCategorias::class, 'lodge'])->name
 Route::get('nosotros', [EnlacesCategorias::class, 'nosotros'])->name('nosotros');
 Route::get('terminos-y-condiciones', [EnlacesCategorias::class, 'terminos'])->name('terminos');
 Route::get('preguntas-frecuentes', [EnlacesCategorias::class, 'preguntas'])->name('preguntas');
+Route::get('frequently-asked-questions', [EnlacesCategorias::class, 'faq'])->name('faq');
 
 Route::get('ven-a-conocer-Peru', [EnlacesCategorias::class, 'landing'])->name('landing');
 

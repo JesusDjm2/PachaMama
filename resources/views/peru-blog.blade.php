@@ -40,58 +40,16 @@
                 </div>
                 <div class="col-lg-12 mb-5">
                     <div class="input-group mb-2">
-                        <input type="text" class="form-control" id="buscador" placeholder="Search topic">
+                        <input type="text" class="form-control" id="buscador" placeholder="Search topic" autocomplete="off">
                     </div>
                     <div id="no-results" class="blog-listing-no-results" style="display: none;">
                         No results found for your search.
                     </div>
                 </div>
-                <script>
-                    function searchBlogs() {
-                        const input = document.getElementById('buscador');
-                        const blogs = document.querySelectorAll('.nombreBlog');
-                        const blogContainers = document.querySelectorAll('.blog-container');
-                        const noResults = document.getElementById('no-results');
-                        let numResults = 0;
-
-                        const searchWords = input.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").split(' ');
-
-                        blogContainers.forEach(function(blogContainer) {
-                            let blogName = blogContainer.querySelector('.nombreBlog').textContent.toLowerCase().normalize('NFD')
-                                .replace(/[\u0300-\u036f]/g, "");
-                            let hasAllWords = true;
-                            searchWords.forEach(function(searchWord) {
-                                if (!blogName.includes(searchWord)) {
-                                    hasAllWords = false;
-                                }
-                            });
-
-                            if (hasAllWords) {
-                                blogContainer.style.display = 'block';
-                                numResults++;
-                            } else {
-                                blogContainer.style.display = 'none';
-                            }
-                        });
-
-                        if (input.value === '') {
-                            blogContainers.forEach(function(blogContainer) {
-                                blogContainer.style.display = 'block';
-                            });
-                        }
-
-                        if (numResults === 0) {
-                            noResults.style.display = 'block';
-                        } else {
-                            noResults.style.display = 'none';
-                        }
-                    }
-                    setInterval(searchBlogs, 500);
-                </script>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row">
+        <div class="container-fluid px-0">
+            <div class="row g-0">
                 @foreach ($blogs as $blog)
                     <div class="blogs blogimg blog-container"
                         style="background:url({{ $blog->img }});background-size:cover;">
@@ -107,6 +65,39 @@
             </div>
         </div>
     </section>
-    <div style="padding-bottom: 5em"></div>
+    <div class="pb-5"></div>
+    <script>
+        function searchBlogs() {
+            const input = document.getElementById('buscador');
+            if (!input) return;
+            const blogContainers = document.querySelectorAll('.blog-container');
+            const noResults = document.getElementById('no-results');
+            let numResults = 0;
+            const raw = input.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            const searchWords = raw.length ? raw.split(/\s+/).filter(Boolean) : [];
+
+            blogContainers.forEach(function (blogContainer) {
+                const titleEl = blogContainer.querySelector('.nombreBlog');
+                if (!titleEl) return;
+                const blogName = titleEl.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const hasAllWords = searchWords.length === 0 || searchWords.every(function (w) {
+                    return blogName.includes(w);
+                });
+                blogContainer.style.display = hasAllWords ? '' : 'none';
+                if (hasAllWords) numResults++;
+            });
+
+            if (raw === '') {
+                blogContainers.forEach(function (blogContainer) {
+                    blogContainer.style.display = '';
+                });
+            }
+
+            if (noResults) {
+                noResults.style.display = (searchWords.length && numResults === 0) ? 'block' : 'none';
+            }
+        }
+        document.getElementById('buscador')?.addEventListener('input', searchBlogs);
+    </script>
 
 @endsection

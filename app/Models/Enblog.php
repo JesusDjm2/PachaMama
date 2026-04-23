@@ -24,7 +24,7 @@ class Enblog extends Model
        *
        * @var array
        */
-      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug'];
+      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug', 'blog_id'];
     
     
       /**
@@ -33,5 +33,10 @@ class Enblog extends Model
       public function entags()
       {
         return $this->belongsToMany(Entag::class, 'enblog_categoria', 'blog_id', 'tag_id');
+      }
+
+      public function blog()
+      {
+        return $this->belongsTo(Blog::class);
       }
 }

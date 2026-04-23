@@ -33,7 +33,7 @@ class SearchController extends Controller
         if ($nombre === '') {
             return view('blogs.es.blogs.noresults', ['nombre' => '']);
         }
-        $blog = Blog::where('nombre', 'LIKE',  "%$nombre%")->get();
+        $blog = Blog::with('tags')->where('nombre', 'LIKE', "%$nombre%")->get();
         if (count($blog) != 0) {
             $blogs = [
                 'blogs' => $blog,

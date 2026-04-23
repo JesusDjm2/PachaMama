@@ -55,6 +55,12 @@ class EnlacesCategorias extends Controller
     {
         return view('preguntas-frecuentes');
     }
+
+    public function faq()
+    {
+        return view('frequently-asked-questions');
+    }
+
     public function landing()
     {
         return view('landing');
@@ -108,5 +114,10 @@ class EnlacesCategorias extends Controller
     {
         $tours = Tour::all();
         return view('en.pacha-mama-spirit-lodge', compact('tours'));
+    }
+
+    public function termsEn()
+    {
+        return view('terms-and-conditions');
     }
 }

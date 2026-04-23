@@ -1,156 +1,117 @@
 @extends('layouts.admin')
-@section('titulo', 'Tours en español')
-@section('css')
-    <!-- Puedes añadir tus estilos personalizados aquí -->
-@endsection
+@section('titulo', 'Tours en Español')
 
 @section('contenido')
-    <style>
-        th {
-            cursor: pointer;
-        }
-        .sort-arrow {
-            font-size: 0.8em;
-            margin-left: 5px;
-            opacity: 0.6;
-        }
-        .asc .sort-arrow::after {
-            content: '▲'; /* Flecha hacia arriba */
-            opacity: 1;
-        }
-        .desc .sort-arrow::after {
-            content: '▼'; /* Flecha hacia abajo */
-            opacity: 1;
-        }
-    </style>
+<div class="pm-page-header">
+    <div>
+        <h1>Tours en Español</h1>
+        <small>Gestiona todos los tours publicados en español</small>
+    </div>
+    <a href="{{ url('tours/create') }}" class="btn btn-pm-primary btn-sm">
+        <i class="fas fa-plus mr-1"></i> Nuevo Tour
+    </a>
+</div>
 
-    <div class="row">
-        <div class="col-12 mt-2">
-            <div class="row">
-                <div class="col-6 float-left">
-                    <h2>Lista de tours en español:</h2>                    
-                </div>
-                <div class="col-6">
-                    <a href="{{ url('tours/create') }}" class="btn btn-primary btn-sm float-right mr-2">Nuevo Tour</a>
-                </div>
-                <div class="col-lg-12">
-                    @if (session('status'))
-                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                            {{ session('status') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <div style="width: 100%; margin-bottom:2em; border-bottom: 2px dotted #858796"></div>
-            <div class="row mt-4">
-                <div class="col-lg-12 mb-3">
-                    <input type="text" id="search" class="form-control form-control-sm" placeholder="Buscar...">
-                </div>
-            </div>
-            <table id="tabladatos" class="table mt-4 table-hover">
-                <thead class="thead-dark">
+@if(session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle mr-1"></i> {{ session('status') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+<div class="card pm-card">
+    <div class="card-header pm-card-header">
+        <h6>Listado de tours</h6>
+        <div class="pm-search">
+            <input type="text" id="search" class="form-control form-control-sm" placeholder="Buscar tour...">
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table id="tabladatos" class="table pm-table table-hover mb-0">
+                <thead>
                     <tr>
-                        <th scope="col" data-sort="nombre">Nombre<span class="sort-arrow"></span></th>
-                        <th scope="col" data-sort="imagen">Imagen<span class="sort-arrow"></span></th>
-                        <th scope="col" data-sort="categoria">Categoría<span class="sort-arrow"></span></th>
-                        <th scope="col" data-sort="slug">Slug<span class="sort-arrow"></span></th>
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th class="sortable" data-index="0">Nombre</th>
+                        <th>Imagen</th>
+                        <th class="sortable" data-index="2">Categoría</th>
+                        <th class="sortable" data-index="3">Slug</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tours as $tour)
-                        <tr>
-                            <td class="font-weight-bold">
-                                <li>{{ $tour->nombre }}</li>
-                                <ul>
-                                    <span class="font-weight-normal">
-                                        Precio: {{ $tour->precio }}<br>
-                                        Días: {{ $tour->dias }}<br>
-                                        Ubicación: {{ $tour->ubicacion }}
-                                    </span>
-                                </ul>
-                            </td>
-                            <td><img src="{{ $tour->img }}" width="120px"></td>
-                            <td>{{ $tour->categoria }}</td>
-                            <td>{{ $tour->slug }}</td>
-                            <td style="width: 140px">
-                                <form action="{{ route('toursen.destroy', $tour->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <a href="{{ route('toursen.edit', $tour->id) }}" class="btn btn-info btn-sm" title="Editar">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}" class="btn btn-success btn-sm" title="Ver tour" target="_blank">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
-                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm('¿Desea eliminar?');">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                    @foreach($tours as $tour)
+                    <tr>
+                        <td>
+                            <div class="font-weight-bold" style="color:#1a2e45;">{{ $tour->nombre }}</div>
+                            <div style="font-size:0.78rem; color:#6b7280; margin-top:2px;">
+                                <span class="mr-2"><i class="fas fa-dollar-sign fa-xs mr-1"></i>{{ $tour->precio }}</span>
+                                <span class="mr-2"><i class="fas fa-calendar-day fa-xs mr-1"></i>{{ $tour->dias }} días</span>
+                                <span><i class="fas fa-map-marker-alt fa-xs mr-1"></i>{{ $tour->ubicacion }}</span>
+                            </div>
+                        </td>
+                        <td><img src="{{ $tour->img }}" width="100" height="65" style="border-radius:8px; object-fit:cover;"></td>
+                        <td><span class="pm-table badge-cat">{{ $tour->categoria }}</span></td>
+                        <td><code style="font-size:0.75rem; color:#6b7280;">{{ $tour->slug }}</code></td>
+                        <td class="text-center" style="white-space:nowrap;">
+                            <form action="{{ route('tours.destroy', $tour->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{ route('tours.edit', $tour->id) }}" class="btn btn-action btn-action-edit" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}" class="btn btn-action btn-action-view" title="Ver en web" target="_blank">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <button type="submit" class="btn btn-action btn-action-delete" title="Eliminar"
+                                    onclick="return confirm('¿Eliminar este tour?');">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const searchInput = document.getElementById('search');
-                const table = document.getElementById('tabladatos');
-                const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-                const headers = table.querySelectorAll('thead th');
-                const defaultSortIndex = 0; // Index of the column you want to sort by default (0 = "Nombre")
-
-                function normalizeText(text) {
-                    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-                }
-
-                function sortTable(index, isAscending) {
-                    const sortedRows = Array.from(rows).sort((a, b) => {
-                        const aText = normalizeText(a.children[index].textContent.trim());
-                        const bText = normalizeText(b.children[index].textContent.trim());
-                        
-                        if (aText < bText) return isAscending ? -1 : 1;
-                        if (aText > bText) return isAscending ? 1 : -1;
-                        return 0;
-                    });
-
-                    const tbody = table.querySelector('tbody');
-                    sortedRows.forEach(row => tbody.appendChild(row));
-                }
-
-                searchInput.addEventListener('input', function() {
-                    const query = normalizeText(searchInput.value);
-                    for (let row of rows) {
-                        const cells = row.getElementsByTagName('td');
-                        let found = false;
-                        for (let cell of cells) {
-                            if (normalizeText(cell.textContent).includes(query)) {
-                                found = true;
-                                break;
-                            }
-                        }
-                        row.style.display = found ? '' : 'none';
-                    }
-                });
-
-                headers.forEach((header, index) => {
-                    header.addEventListener('click', () => {
-                        const sortKey = header.getAttribute('data-sort');
-                        const isAscending = !header.classList.contains('asc');
-                        
-                        headers.forEach(h => h.classList.remove('asc', 'desc'));
-                        header.classList.add(isAscending ? 'asc' : 'desc');
-                        
-                        sortTable(index, isAscending);
-                    });
-                });
-
-                headers[defaultSortIndex].classList.add('asc');
-                sortTable(defaultSortIndex, true);
-            });
-        </script>
     </div>
+</div>
+
+@push('admin_scripts')
+<script>
+(function() {
+    const searchInput = document.getElementById('search');
+    const table = document.getElementById('tabladatos');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const headers = table.querySelectorAll('thead th.sortable');
+
+    function normalize(str) {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
+    searchInput.addEventListener('input', function() {
+        const q = normalize(this.value);
+        rows.forEach(row => {
+            row.style.display = normalize(row.textContent).includes(q) ? '' : 'none';
+        });
+    });
+
+    headers.forEach(th => {
+        th.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.index);
+            const asc = !this.classList.contains('asc');
+            headers.forEach(h => h.classList.remove('asc', 'desc'));
+            this.classList.add(asc ? 'asc' : 'desc');
+            rows.sort((a, b) => {
+                const ta = normalize(a.children[idx].textContent);
+                const tb = normalize(b.children[idx].textContent);
+                return asc ? ta.localeCompare(tb) : tb.localeCompare(ta);
+            }).forEach(r => tbody.appendChild(r));
+        });
+    });
+})();
+</script>
+@endpush
 @endsection

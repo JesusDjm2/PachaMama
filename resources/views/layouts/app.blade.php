@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="es-PE">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('titulo') | Pacha Mama Spirit Perú</title>
+
+    @include('layouts.hreflang')
 
     <!-- DNS prefetch & preconnect (mejora velocidad de carga) -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -109,8 +111,8 @@
                     <div class="col-10">
                         <nav class="site-navigation" role="navigation" aria-label="Menú principal">
                             <div class="container">
-                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3" style="float: right"><a
-                                        href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Abrir menú"><span
+                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 site-nav-mobile-toggle">
+                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Abrir menú"><span
                                             class="icon-menu h3" aria-hidden="true"></span></a>
                                 </div>
                                 <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
@@ -142,8 +144,8 @@
                                         <a href="{{ route('listado') }}" class="nav-link @if(request()->is('blog*')) active @endif">Blog</a>
                                     </li>
                                     <li>
-                                        <button type="button" onclick="window.location='{{ URL::route('index') }}'"
-                                            class="castellano-es">English</button>
+                                        <a href="{{ \App\Support\LocaleRouteMap::menuLanguageSwitchUrl(true) }}"
+                                            class="castellano-es" hreflang="en" lang="en">English</a>
                                     </li>
                                     <li class="nav-item-search">
                                         <i class="icon-search botonsearch" data-bs-toggle="modal"
@@ -158,22 +160,24 @@
         </div>
     </div>
 
+    @include('partials.locale-destination-switcher')
+    @stack('locale_page_switcher')
     @yield('content')
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade modal-pacha" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content border-0" style="border-radius:14px; overflow:hidden;">
-                <div class="modal-body p-4">
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Cerrar" style="position:absolute;top:12px;right:16px;font-size:1.4rem;opacity:0.5;">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-body p-4 position-relative">
+                    <button type="button" class="close modal-pacha-close" data-bs-dismiss="modal" aria-label="Cerrar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <form action="{{ route('search') }}" method="GET">
                         @csrf
                         <h3 class="h3-book-pop-up">Encuentra tu destino en Perú</h3>
-                        <div class="form-group">
-                            <input type="text" id="search-name" name="name" class="form-control"
-                                placeholder="¿Qué destino buscas?" required
-                                style="border-radius:30px; border:1.5px solid #ddd; padding: 10px 18px;">
+                        <div class="form-group mb-0">
+                            <label for="search-name" class="visually-hidden">Destino</label>
+                            <input type="text" id="search-name" name="name" class="form-control form-control-pacha-search"
+                                placeholder="¿Qué destino buscas?" required>
                         </div>
                         <div class="text-center mt-3">
                             <input type="submit" class="boton-index" value="Buscar">
@@ -197,8 +201,8 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-md-6 text-center mb-4">
-                        <img src="{{ asset('img/Pacha-Mama-Spirit-Blanco.png') }}" alt="Pacha Mama Spirit — Agencia de viajes Perú" width="160px" class="mb-3" loading="lazy" onerror="this.style.display='none'">
-                        <p style="font-size:0.82rem;">Agencia de viajes peruana especializada en tours de aventura, cultura y experiencias únicas por Perú.</p>
+                        <img src="{{ asset('img/Pacha-Mama-Spirit-Blanco.png') }}" alt="Pacha Mama Spirit — Agencia de viajes Perú" width="160" height="80" class="mb-3 img-fluid footer-logo-img mt-5" loading="lazy">
+                        <p class="footer-tagline text-white-50">Agencia de viajes peruana especializada en tours de aventura, cultura y experiencias únicas por Perú.</p>
                     </div>
                     <div class="col-lg-2 col-md-6 text-center mb-4">
                         <h4 class="h4-foot">Explora</h4>
@@ -207,13 +211,14 @@
                         <a class="a-foot" href="{{ route('terminos') }}">Términos &amp; Condiciones</a>
                         <a class="a-foot" href="{{ route('preguntas') }}">Preguntas Frecuentes</a>
                         <a class="a-foot" href="{{ route('listado') }}">Blog</a>
+                        <a class="a-foot" href="{{ route('contactenos') }}">Contáctenos</a>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center mb-4">
                         <h4 class="h4-foot">Contacto</h4>
                         <div class="linea-foot"></div>
-                        <p><span class="icon-whatsapp mr-1"></span> <a href="tel:+51921136755" style="color:inherit;">+51 921 136 755</a></p>
-                        <p><span class="icon-whatsapp mr-1"></span> <a href="tel:+19895722905" style="color:inherit;">+1 (989) 572-2905</a></p>
-                        <p><span class="icon-envelope mr-1"></span> <a href="mailto:info@pachamamaspirit.com" style="color:inherit;">info@pachamamaspirit.com</a></p>
+                        <p><span class="icon-whatsapp mr-1"></span> <a href="tel:+51921136755" class="footer-contact-link">+51 921 136 755</a></p>
+                        <p><span class="icon-whatsapp mr-1"></span> <a href="tel:+19895722905" class="footer-contact-link">+1 (989) 572-2905</a></p>
+                        <p><span class="icon-envelope mr-1"></span> <a href="mailto:info@pachamamaspirit.com" class="footer-contact-link">info@pachamamaspirit.com</a></p>
                         <p><span class="icon-map-marker mr-1"></span> Cusco - Perú</p>
                     </div>
                     <div class="col-lg-2 col-md-6 text-center mb-4">
@@ -236,89 +241,13 @@
         </footer>
     </section>
 
-    <!-- JSON-LD: Organización + Sitio Web (aplica a todas las páginas) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": ["TravelAgency", "LocalBusiness"],
-          "@id": "https://pachamamaspirit.com/#organization",
-          "name": "Pacha Mama Spirit",
-          "description": "Agencia de viajes peruana especializada en tours de aventura, caminatas, cultura e historia. Fundada en Cusco en 2018 con más de 20 años de experiencia.",
-          "url": "https://pachamamaspirit.com/inicio",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://pachamamaspirit.com/img/pacha-mama-spirit-logo.png",
-            "width": 200,
-            "height": 60
-          },
-          "image": "https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Ayuda Mutua k2-6",
-            "addressLocality": "Cusco",
-            "addressRegion": "Cusco",
-            "addressCountry": "PE"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": -13.5319,
-            "longitude": -71.9675
-          },
-          "telephone": "+51921136755",
-          "email": "info@pachamamaspirit.com",
-          "priceRange": "$$",
-          "openingHoursSpecification": [
-            {
-              "@type": "OpeningHoursSpecification",
-              "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-              "opens": "08:00",
-              "closes": "20:00"
-            }
-          ],
-          "sameAs": [
-            "https://www.facebook.com/PachaMamaSpiritMountain",
-            "https://www.instagram.com/pachamamaspiritmountain/",
-            "https://www.tripadvisor.com/Attraction_Review-g294314-d23476170-Reviews-Pacha_Mama_Spirit-Cusco_Cusco_Region.html",
-            "https://www.youtube.com/channel/UCR5v94oQX3budGLKTRL4BBQ"
-          ],
-          "areaServed": {
-            "@type": "Country",
-            "name": "Perú"
-          },
-          "knowsLanguage": ["es", "en"],
-          "foundingDate": "2018",
-          "foundingLocation": {
-            "@type": "Place",
-            "name": "Cusco, Perú"
-          }
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://pachamamaspirit.com/#website",
-          "url": "https://pachamamaspirit.com",
-          "name": "Pacha Mama Spirit — Agencia de viajes en Perú",
-          "description": "Tours a Machu Picchu, Camino Inca, Cusco, aventura y cultura en Perú",
-          "inLanguage": "es-PE",
-          "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://pachamamaspirit.com/search?name={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
-        }
-      ]
-    }
-    </script>
+    @include('layouts.schema_org')
 
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
     <script src="{{ asset('js/main.js') }}" defer></script>
+    @stack('scripts')
 </body>
 
 </html>

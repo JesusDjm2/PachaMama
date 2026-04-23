@@ -46,11 +46,11 @@
                 <div class="col-12 mx-auto">
                     <div class="form-index">
                         <div class="contenidoindex">
-                            <h1 style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">Descubre los
+                            <h1 class="text-center hero-index-title">Descubre los
                                 lugares mas impresionantes que tiene
                                 Perú
                             </h1>
-                            <p style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">Caminatas,
+                            <p class="text-center hero-index-lead">Caminatas,
                                 gastronomía, sitios arqueológicos, reservas naturales,
                                 costumbres, tradiciones, paisajes y mucho más...
                             </p>
@@ -76,7 +76,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12 text-center">
                     <h1 class="h1-index">
-                        <span style="color:#2aa8a8;">Pacha Mama Spirit</span>
+                        <span class="text-brand">Pacha Mama Spirit</span>
                     </h1>
                     <div class="linea mb-4"></div>
                     <p>
@@ -155,76 +155,50 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="space"></div>
-                <div class="col-lg-12">
-                    <h2 class="h2-tierras">Top tours mas vendidos:</h2>
-                </div>
-
-                <!-----Prueba--->
-                @foreach ($tours->take(8) as $tour)
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card card-new">
-                            <a href="{{ route('tours.show', $tour->slug) }}">
-                                <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
-                                    loading="lazy">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-titulo">{{ $tour->nombre }}</h5>
-                                <p class="text-card">{{ $tour->descripcion }}</p>
-                                <div class="enlacesCategoria">
-                                    @if (Str::contains($tour->categoria, 'machupicchu'))
-                                        <p style="display:none">
-                                            {{ $mapi = 'Machu Picchu' }}
-                                        </p>
-                                        <a class="enlaceMapi" href="{{ route('mapi') }}">{{ $mapi }}
+                    @if (isset($blogsRecientes) && $blogsRecientes->isNotEmpty())
+                        <div class="home-blog-rail w-100 mt-4">
+                            <div class="home-blog-rail__head text-center mb-2">
+                                <h2 class="h2-tierras">Últimas entradas del blog</h2>
+                                <p class="home-blog-rail__lead">Tips, cultura e inspiración para tu viaje a Perú — desliza en el móvil</p>
+                            </div>
+                            <div class="home-blog-rail__track" role="region" aria-label="Últimas entradas del blog">
+                                @foreach ($blogsRecientes as $entrada)
+                                    @php
+                                        $imgEntrada = $entrada->img ?? '';
+                                        $srcEntrada = \Illuminate\Support\Str::startsWith($imgEntrada, ['http://', 'https://'])
+                                            ? $imgEntrada
+                                            : asset(ltrim($imgEntrada, '/'));
+                                    @endphp
+                                    <article class="home-blog-rail__card">
+                                        <a href="{{ route('blog.show', $entrada->slug) }}" class="home-blog-rail__link">
+                                            <div class="home-blog-rail__media" role="img" aria-label="{{ $entrada->nombre }}">
+                                                <img src="{{ $srcEntrada }}" alt="" class="home-blog-rail__media-img" width="400" height="200" loading="lazy">
+                                            </div>
+                                            <div class="home-blog-rail__body">
+                                                <span class="home-blog-rail__accent" aria-hidden="true"></span>
+                                                <time class="home-blog-rail__date" datetime="{{ $entrada->created_at->toIso8601String() }}">{{ $entrada->created_at->format('d/m/Y') }}</time>
+                                                <h3 class="home-blog-rail__title">{{ $entrada->nombre }}</h3>
+                                                <p class="home-blog-rail__excerpt">{{ Str::limit(strip_tags($entrada->descripcion ?? ''), 96) }}</p>
+                                                <span class="home-blog-rail__go" aria-hidden="true">Leer →</span>
+                                            </div>
                                         </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'hikes'))
-                                        <p style="display:none">
-                                            {{ $hike = 'Caminata' }}
-                                        </p>
-                                        <a class="enlaceHike" href="{{ route('caminata') }}">
-                                            {{ $hike }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'around'))
-                                        <p style="display: none">
-                                            {{ $peru = 'Perú' }}
-                                        </p>
-                                        <a class="enlaceAround" href="{{ route('peru') }}">
-                                            {{ $peru }}
-                                        </a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'luxury'))
-                                        <p style="display:none">
-                                            {{ $luxury = 'Privado' }}
-                                        </p>
-                                        <a class="enlaceLuxury" href="{{ route('luxury') }}"> {{ $luxury }}</a>
-                                    @endif
-                                    @if (Str::contains($tour->categoria, 'fullday'))
-                                        <p style="display:none">
-                                            {{ $fullday = 'Full Day' }}
-                                        </p>
-                                        <a class="enlaceFullday" href="{{ route('fullday') }}"> {{ $fullday }}</a>
-                                    @endif
-                                </div>
-                                <div class="row iconos-tours">
-                                    <div class="col-6">
-                                        <span class="icon-clock-o" style="float:right"> {{ $tour->dias }}
-                                            {{ $tour->dias == 1 ? 'día' : 'días' }}</span>
-                                    </div>
-                                    <div class="col-6">
-                                        <span class="icon-usd" style="float:left">{{ $tour->precio }}.00</span>
-                                    </div>
-                                    <div class="col-12 pt-2">
-                                        <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
-                                    </div>
-                                </div>
-                                <a href="{{ route('tours.show', $tour->slug) }}" class="boton-card">Más detalles</a>
+                                    </article>
+                                @endforeach
+                            </div>
+                            <div class="text-center mt-2">
+                                <a href="{{ route('listado') }}" class="home-blog-rail__btn-all">Ver todo el blog</a>
                             </div>
                         </div>
+                    @endif
+                </div>
+                <div class="space"></div>
+                <div class="col-12" id="home-tours-section">
+                    <h2 class="h2-tierras">Top tours mas vendidos:</h2>
+                    @include('partials.home-tour-filters')
+                    <div class="row g-3 home-tours-results" id="home-tours-results" aria-live="polite">
+                        @include('partials.home-tours-grid-es')
                     </div>
-                @endforeach
+                </div>
 
                 <div class="space"></div>
             </div>
@@ -292,21 +266,21 @@
                                     <p class="text-card">{{ $tour->descripcion }}</p>
                                     <div class="enlacesCategoria">
                                         @if (Str::contains($tour->categoria, 'machupicchu'))
-                                            <p style="display:none">
+                                            <p class="d-none">
                                                 {{ $mapi = 'Machu Picchu' }}
                                             </p>
                                             <a class="enlaceMapi" href="{{ route('mapi') }}">{{ $mapi }}
                                             </a>
                                         @endif
                                         @if (Str::contains($tour->categoria, 'hikes'))
-                                            <p style="display:none">
+                                            <p class="d-none">
                                                 {{ $hike = 'Caminata' }}
                                             </p>
                                             <a class="enlaceHike" href="{{ route('caminata') }}">
                                                 {{ $hike }}</a>
                                         @endif
                                         @if (Str::contains($tour->categoria, 'around'))
-                                            <p style="display: none">
+                                            <p class="d-none">
                                                 {{ $peru = 'Perú' }}
                                             </p>
                                             <a class="enlaceAround" href="{{ route('peru') }}">
@@ -314,14 +288,14 @@
                                             </a>
                                         @endif
                                         @if (Str::contains($tour->categoria, 'luxury'))
-                                            <p style="display:none">
+                                            <p class="d-none">
                                                 {{ $luxury = 'Privado' }}
                                             </p>
                                             <a class="enlaceLuxury" href="{{ route('luxury') }}">
                                                 {{ $luxury }}</a>
                                         @endif
                                         @if (Str::contains($tour->categoria, 'fullday'))
-                                            <p style="display:none">
+                                            <p class="d-none">
                                                 {{ $fullday = 'Full Day' }}
                                             </p>
                                             <a class="enlaceFullday" href="{{ route('fullday') }}">
@@ -329,16 +303,16 @@
                                         @endif
                                     </div>
 
-                                    <div class="row iconos-tours">
-                                        <div class="col-6">
-                                            <span class="icon-clock-o" style="float: right">
-                                                {{ $tour->dias }} {{ $tour->dias == 1 ? 'día' : 'días' }}</span>
+                                    <div class="row iconos-tours small text-secondary">
+                                        <div class="col-6 text-end">
+                                            <span class="icon-clock-o" aria-hidden="true"></span>
+                                                {{ $tour->dias }} {{ $tour->dias == 1 ? 'día' : 'días' }}
                                         </div>
-                                        <div class="col-6">
-                                            <span class="icon-usd" style="float:left"> {{ $tour->precio }}.00</span>
+                                        <div class="col-6 text-start">
+                                            <span class="icon-usd" aria-hidden="true"></span> {{ $tour->precio }}.00
                                         </div>
-                                        <div class="col-12 pt-2">
-                                            <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
+                                        <div class="col-12 pt-2 text-center">
+                                            <span class="icon-map-marker" aria-hidden="true"></span> {{ $tour->ubicacion }}
                                         </div>
                                     </div>
                                     <a href="{{ route('tours.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
@@ -353,20 +327,20 @@
             </div>
         </div>
     </section>
-    <section style="background: #f7f8fa; padding: 4rem 0;">
+    <section class="section-home-cta py-5">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h2>Contáctanos</h2>
-                    <p class="mt-3" style="text-align:left;">¿Tienes alguna pregunta o quieres planear tu viaje? Nuestro equipo te responderá en pocas horas.</p>
-                    <div class="mt-4">
-                        <p style="text-align:left;"><span class="icon-whatsapp mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> +51 921 136 755</p>
-                        <p style="text-align:left;"><span class="icon-envelope mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> info@pachamamaspirit.com</p>
-                        <p style="text-align:left;"><span class="icon-map-marker mr-2" style="color:#2aa8a8;font-size:1.2rem;"></span> Cusco, Perú</p>
+                <div class="col-md-4 mb-4 mb-md-0 text-md-start text-center">
+                    <h2 class="text-md-start text-center">Contáctanos</h2>
+                    <p class="mt-3 mb-0">¿Tienes alguna pregunta o quieres planear tu viaje? Nuestro equipo te responderá en pocas horas.</p>
+                    <div class="mt-4 text-md-start text-center">
+                        <p class="mb-2"><span class="icon-whatsapp mr-2 contact-line-icon" aria-hidden="true"></span> +51 921 136 755</p>
+                        <p class="mb-2"><span class="icon-envelope mr-2 contact-line-icon" aria-hidden="true"></span> info@pachamamaspirit.com</p>
+                        <p class="mb-0"><span class="icon-map-marker mr-2 contact-line-icon" aria-hidden="true"></span> Cusco, Perú</p>
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div style="background:#fff; border-radius:14px; padding:2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.07);">
+                    <div class="home-contact-card">
                         <form id="contact-form" name="contact-form" action="{{ route('mensajeIndex') }}" method="POST">
                             @csrf
                             <div class="row formTransparent">

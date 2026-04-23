@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('titulo', $tour->nombre)
 @include('layouts.metas')
+@push('locale_page_switcher')
+    @if ($tour->toursens)
+        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
+            <a href="{{ route('toursen.show', $tour->toursens->slug) }}" hreflang="en" class="font-weight-bold">View this tour in English →</a>
+        </div>
+    @endif
+@endpush
 @section('content')
     <div class="blog" id="blog">
         <!----Variable de clase------>

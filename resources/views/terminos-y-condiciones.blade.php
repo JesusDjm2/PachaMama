@@ -1,45 +1,28 @@
 @extends('layouts.app')
-@section('titulo', 'Pacha Mama Spirit | Travel Agency for Perú')
+@section('titulo', 'Términos y Condiciones — Pacha Mama Spirit | Agencia de Viajes Perú')
 @section('metas')
-    <meta name="keywords"
-        content="Book Peru, Book Machu Picchu, machu Picchu, Travel peru, Travel to Machu Picchu, Inca Trail, Ica trail to Machu Picchu">
-    <link rel="canonical" href="https://pachamamaspirit.com">
-    <meta name="description"
-        content="Pacha Mama Spirit It's a travel agency to visit and do tourism in Peru. Travel around Peru and get to know its culture, gastronomy and History">
-    <meta name="image_src" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-
-    <meta name="og_image" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-    <meta name="og_secureImage" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
-
-    <meta property="og:title" content="Pacha Mama Spirit | Travel Agency Perú">
-    <meta property="og:description"
-        content="Pacha Mama Spirit It's a travel agency to visit and do tourism in Peru. Travel around Peru and get to know its culture, gastronomy and History">
-    <meta property="og:url" content="https://pachamamaspirit.com">
-    <meta name="twitter:card" content="summary">
-    <meta name="robots" content="index,follow">
-@endsection
-@section('metas')
-<meta name="title" content="Sobre la agencia de viajes Pacha Mama Spirit, viajes a Perú, reserva tu viaje a Perú"/>
-<meta name="keywords" content="Pacha Mama Spirit, viajes a Perú, reservar Peru, peru, Cusco peru, tours a Peru, tours a Machu Picchu, Machu Picchu, Reservar Machu Picchu, Viajes  Machu Picchu, Incas"/>
-<meta rel="canonical" content="{{ request()->fullUrl() }}">
-
-<meta name="og_image" content="{{ asset('img/pacha-mama-spirit-logo.png')  }}"/>
-<meta name="og_secureImage" content="{{ asset('img/pacha-mama-spirit-logo.png')  }}"/>
-
-<meta property="og:title" content="{Sobre la agencia de viajes Pacha Mama Spirit, viajes a Perú, reserva tu viaje a Perú"/>
-<meta property="og:description" content="Pacha Mama Spirit, viajes a Perú, reservar Peru, peru, Cusco peru, tours a Peru, tours a Machu Picchu, Machu Picchu, Reservar Machu Picchu, Viajes  Machu Picchu, Incas"/>
-<meta property="og:locale" content="es" />
-<meta property="og:url" content="{{ request()->fullUrl() }}"/>
-<meta name="twitter:card" content="summary"/>
-<meta name="robots" content="index,follow" />
+<meta name="description" content="Términos y condiciones de Pacha Mama Spirit: política de cancelaciones, modificaciones, precios y reservas para tours a Machu Picchu, Camino Inca y Perú.">
+<meta name="keywords" content="términos y condiciones Pacha Mama Spirit, política de cancelación Peru, condiciones tours Machu Picchu, Camino Inca reservas, agencia viajes Cusco condiciones">
+<link rel="canonical" href="{{ request()->url() }}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_PE">
+<meta property="og:title" content="Términos y Condiciones — Pacha Mama Spirit">
+<meta property="og:description" content="Política de cancelaciones, modificaciones, precios y reservas de Pacha Mama Spirit para tours a Machu Picchu, Camino Inca y Perú.">
+<meta property="og:url" content="{{ request()->url() }}">
+<meta property="og:image" content="https://pachamamaspirit.com/img/panoramico/Recorrido-Cusco-Machu-Picchu.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Términos y Condiciones — Pacha Mama Spirit">
+<meta name="twitter:description" content="Política de cancelaciones y reservas para tours a Machu Picchu y Camino Inca.">
+<meta name="robots" content="index,follow">
 @endsection
 @section('content')
     @include('layouts.menu')
     <div class="terminos">
-        <div class="container">
-            <div class="row">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="row w-100">
                 <div class="col-lg-12 text-center">
-                    <h1 style="padding-top: 250px;color:#fff" class="h1web">Términos y Condiciones</h1>
+                    <h1 class="h1-destinos">Términos y Condiciones</h1>
+                    <p>Condiciones generales de servicio, cancelaciones y política de reservas de Pacha Mama Spirit.</p>
                 </div>
             </div>
         </div>

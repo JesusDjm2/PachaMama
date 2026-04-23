@@ -248,7 +248,7 @@ a:hover {
 .blog {
     height: 100vh;
     width: 100%;
-    background-image: url('../img/blog/camino-inca-temas-de-blog-from-Peru.webp');
+    background-image: url('../img/panoramico/fondo-blog-peru-2027.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -309,6 +309,8 @@ a:hover {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
 }
 .blog-temas::before {
     content: '';
@@ -316,9 +318,10 @@ a:hover {
     top: 0;
     left: 0;
     width: 100%;
-    height: 20%; 
+    height: 20%;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
+    z-index: 1;
+    pointer-events: none;
 }
 
 .puno {
@@ -582,6 +585,8 @@ a:hover {
     height: 300px;
     width: 100%;
     background: #343434;
+    position: relative;
+    overflow: hidden;
 }
 .temasBlogs::before {
     content: '';
@@ -589,9 +594,10 @@ a:hover {
     top: 0;
     left: 0;
     width: 100%;
-    height: 20%; 
+    height: 20%;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.638), rgba(0, 0, 0, 0));
-    z-index: 1; 
+    z-index: 1;
+    pointer-events: none;
 }
 
 .temasBlogs h1 {

@@ -1,170 +1,185 @@
 @extends('layouts.admin')
-@section('titulo', 'Crear nuevo tour en español')
+@section('titulo', 'Crear Tour en Español')
 
 @section('contenido')
-    <div class="row">
-        <div class="col-12 mt-2">
-            <div class="row" style="padding: 1em; border-radius: 10px;">
-                <div class="col-lg-6 float-left">
-                    <h3>Crear nuevo tour en español</h3>                    
+<div class="pm-page-header">
+    <div>
+        <h1>Crear Tour en Español</h1>
+        <small>Nuevo tour visible en la versión en español de la web</small>
+    </div>
+    <div>
+        <a href="/toursen/create" class="btn btn-pm-outline btn-sm mr-2">
+            <i class="fas fa-globe mr-1"></i> Crear en Inglés
+        </a>
+        <a href="{{ route('tours.index') }}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left mr-1"></i> Volver
+        </a>
+    </div>
+</div>
+
+<form action="/tours" method="POST" enctype="multipart/form-data">
+    @csrf
+
+    {{-- Información básica --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6>Información básica</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label">Nombre del tour</label>
+                    <input type="text" name="nombre" class="form-control form-control-sm" required>
                 </div>
-                <div class="col-lg-6">                    
-                    <a href="/toursen/create" class="btn btn-primary btn-sm float-right">Crear tour en Ingles</a>
-                    <a href="/tours" class="btn btn-danger btn-sm mr-3 float-right">Volver</a>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label">Precio (USD)</label>
+                    <input type="text" name="precio" class="form-control form-control-sm" required>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label">Días</label>
+                    <input type="text" name="dias" class="form-control form-control-sm" required>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label">Ubicación</label>
+                    <input type="text" name="ubicacion" class="form-control form-control-sm" required>
+                </div>
+                <div class="col-12 mb-3">
+                    <label class="form-label">Descripción corta (meta)</label>
+                    <input type="text" name="descripcion" class="form-control form-control-sm" required>
                 </div>
             </div>
-            <div style="width: 100%; margin-bottom:2em; border-bottom: 2px dotted #858796"></div>
-            <form action="/tours" method="post" enctype="multipart/form-data" class="bg-light">
-                @csrf
-                <div class="row">
-                    <div class="col-lg-4 pt-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="" class="form-label">Precio:</label>
-                        <input type="text" id="precio" name="precio" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="" class="form-label">Días:</label>
-                        <input type="text" id="dias" name="dias" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-12 pt-3">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-12 pt-3">
-                        <label for="contenido" class="form-label">Contenido:</label>
-                        <textarea class="ckeditor form-control" name="contenido" id="contenido"></textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-12 pt-3">
-                        <label for="detallado" class="form-label">Detalle del tour:</label>
-                        <textarea class="ckeditor form-control" name="detallado" id="detallado"></textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="incluidos" class="form-label">Incluye: <small>Preferible listas</small> </label>
-                        <textarea class="ckeditor form-control" name="incluidos" id="incluidos" required></textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="importante" class="form-label">Importante: <small>Preferible listas</small></label>
-                        <textarea class="ckeditor form-control" name="importante" id="importante"></textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-4 pt-3">
-                        <label for="mapa" class="form-label">Mapa:</label>
-                        <textarea class="ckeditor form-control" name="mapa" id="mapa"></textarea>
-                    </div>
-                    {{-- <div class="col-lg-12 pt-3">
-                        <label for="img" class="form-label">Imagen:</label>
-                        <input type="file" id="img" name="img" class="form-control" accept="image/*" required>
-                    </div> --}}
-                    <div class="col-lg-12 pt-3">
-                        <label for="img" class="form-label">Imagen:</label>
-                        <input type="file" id="img" name="img" class="form-control form-control-sm" accept="image/*" required onchange="previewImage(event)">
-                        <img id="img-preview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100%; max-height: 200px;">
-                    </div>
-                    
-                    <script>
-                        function previewImage(event) {
-                            var input = event.target;
-                            var imgPreview = document.getElementById('img-preview');
-                    
-                            if (input.files && input.files[0]) {
-                                var reader = new FileReader();
-                    
-                                reader.onload = function (e) {
-                                    imgPreview.src = e.target.result;
-                                    imgPreview.style.display = 'block'; // Mostrar la imagen previa
-                                }
-                    
-                                reader.readAsDataURL(input.files[0]); // Convertir la imagen a formato base64
-                            }
-                        }
-                    </script>
-
-                    <div class="col-lg-6 pt-3">
-                        <label for="" class="form-label">Categoría: <small class="text-success">Presionar Ctrl para
-                                seleccionar mas de1 categoria</small></label>
-                        <select name="categoria[]" id="categoria" class="form-control form-control-sm" required multiple="multiple">
-                            <option value="hikes">Hikes</option>
-                            <option value="around">Around Perú</option>
-                            <option value="machupicchu">Machu Picchu</option>
-                            <option value="luxury">Luxury</option>
-                            <option value="fullday">Full day</option>
-                        </select>
-                    </div>
-                    <div class="col-lg-3 pt-3">
-                        <label for="" class="form-label">Ubicación:</label>
-                        <input type="text" id="ubicacion" name="ubicacion" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-3 pt-3">
-                        <label for="" class="form-label">Clase:<small>(Clase que tomara la imagen)</small></label>
-                        <select name="clase" id="clase" class="form-control form-control-sm" required>
-                            <option value="aventuras">Camino Inca Salkantay</option>
-                            <option value="imperdible">Cusco city tour</option>
-                            <option value="machu">Machu Picchu</option>
-                            <option value="ollantaytambo">Ollantaytambo</option>
-                            <option value="pachamamalodge">Vista Valle Sagrado</option>
-                            <option value="valle">Vista Valle Sagrado 2</option>
-                            <option value="santuaryLodge">Hotel Sanctuary Lodge</option>
-                            <option value="puno">Balsa en Lago Titicaca</option>
-                            <option value="selva">Amazonas</option>
-                            <option value="caminata">Caminata Salkantay</option>
-                            <option value="nazca">Lineas de Nazca</option>
-                            <option value="lima">Ciudad de Lima</option>
-                            <option value="arequipa">Ciudad de Arequipa</option>
-                            <option value="huchuy">Huchuy Qosqo</option>
-                            <option value="choque">Choquequirao</option>
-                            <option value="humantay">Laguna Humantay</option>
-                            <option value="vinicunca">Vinicunca</option>
-                            <option value="ica">Huacachina</option>
-                            <option value="pisco">Reserva Nacional Paracas</option>
-                            <option value="puerto">Puerto Maldonado</option>
-                        </select>
-
-                        <!-- Divs para previsualización de imágenes -->
-                        <div style="width: 100%; height:180px; object-fit:cover" id="dynamic-class-div" class="default-class">
-                            <!-- Contenido aquí -->
-                        </div>
-                        <script>
-                            document.getElementById('clase').addEventListener('change', function() {
-                                var selectedClass = this.value;
-                                var dynamicDiv = document.getElementById('dynamic-class-div');
-                            
-                                // Elimina todas las clases dinámicas anteriores (excepto la clase predeterminada)
-                                dynamicDiv.className = 'default-class';
-                            
-                                // Agrega la nueva clase basada en la opción seleccionada
-                                if (selectedClass) {
-                                    dynamicDiv.classList.add(selectedClass);
-                                }
-                            });
-                            </script>
-                    </div>
-                    <div class="col-lg-12 pt-3">
-                        <label for="" class="form-label">Keywords: <small class="text-success">(Separar cada
-                                palabra/frase por una coma)</small></label>
-                        <input type="text" id="keywords" name="keywords" class="form-control form-control-sm" required>
-                    </div>
-                    <div class="col-lg-12 pt-3">
-                        <label for="" class="form-label">Slug:</label>
-                        <input type="text" id="slug" name="slug" class="form-control form-control-sm" required>
-                    </div>
-
-                </div>
-                <a href="/tours" class="btn btn-secondary mt-4">Cancelar</a>
-                <button class="btn btn-primary mt-4" type="submit">Guardar</button>
-            </form>
         </div>
     </div>
-    <script type="text/javascript">
-        CKEDITOR.replace('.ckeditor', {
-            toolbar: [
-                ['Youtube']
-            ]
-        });
-    </script>
+
+    {{-- Contenido rico --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6>Contenido del tour</h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label">Contenido principal</label>
+                <textarea class="ckeditor form-control" name="contenido" id="contenido"></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Detalle del tour</label>
+                <textarea class="ckeditor form-control" name="detallado" id="detallado"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-3">
+                    <label class="form-label">Incluye <small>— preferible listas</small></label>
+                    <textarea class="ckeditor form-control" name="incluidos" id="incluidos" required></textarea>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <label class="form-label">Importante <small>— preferible listas</small></label>
+                    <textarea class="ckeditor form-control" name="importante" id="importante"></textarea>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <label class="form-label">Mapa (embed)</label>
+                    <textarea class="ckeditor form-control" name="mapa" id="mapa"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Imagen y clasificación --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6>Imagen y clasificación</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 mb-3">
+                    <label class="form-label">Imagen principal</label>
+                    <input type="file" name="img" class="form-control form-control-sm" accept="image/*" required
+                        onchange="previewImg(event)">
+                    <img id="img-preview" class="pm-img-preview" alt="Vista previa">
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <label class="form-label">Categoría <small>— Ctrl para seleccionar varias</small></label>
+                    <select name="categoria[]" id="categoria" class="form-control form-control-sm" required multiple>
+                        <option value="hikes">Hikes</option>
+                        <option value="around">Around Perú</option>
+                        <option value="machupicchu">Machu Picchu</option>
+                        <option value="luxury">Luxury</option>
+                        <option value="fullday">Full day</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 mb-3">
+                    <label class="form-label">Clase de imagen</label>
+                    <select name="clase" id="clase" class="form-control form-control-sm" required>
+                        <option value="aventuras">Camino Inca / Salkantay</option>
+                        <option value="imperdible">Cusco city tour</option>
+                        <option value="machu">Machu Picchu</option>
+                        <option value="ollantaytambo">Ollantaytambo</option>
+                        <option value="pachamamalodge">Vista Valle Sagrado</option>
+                        <option value="valle">Vista Valle Sagrado 2</option>
+                        <option value="santuaryLodge">Hotel Sanctuary Lodge</option>
+                        <option value="puno">Balsa Lago Titicaca</option>
+                        <option value="selva">Amazonas</option>
+                        <option value="caminata">Caminata Salkantay</option>
+                        <option value="nazca">Líneas de Nazca</option>
+                        <option value="lima">Ciudad de Lima</option>
+                        <option value="arequipa">Ciudad de Arequipa</option>
+                        <option value="huchuy">Huchuy Qosqo</option>
+                        <option value="choque">Choquequirao</option>
+                        <option value="humantay">Laguna Humantay</option>
+                        <option value="vinicunca">Vinicunca</option>
+                        <option value="ica">Huacachina</option>
+                        <option value="pisco">Reserva Paracas</option>
+                        <option value="puerto">Puerto Maldonado</option>
+                    </select>
+                    <div id="clase-preview" class="pm-clase-preview mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- SEO --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6>SEO</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-8 mb-3">
+                    <label class="form-label">Keywords <small>— separar por comas</small></label>
+                    <input type="text" name="keywords" class="form-control form-control-sm" required>
+                </div>
+                <div class="col-lg-4 mb-3">
+                    <label class="form-label">Slug</label>
+                    <input type="text" name="slug" class="form-control form-control-sm" required>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pm-form-actions">
+        <button type="submit" class="btn btn-pm-primary">
+            <i class="fas fa-save mr-1"></i> Guardar tour
+        </button>
+        <a href="{{ route('tours.index') }}" class="btn btn-secondary">
+            <i class="fas fa-times mr-1"></i> Cancelar
+        </a>
+    </div>
+</form>
+
+@push('admin_scripts')
+<script>
+function previewImg(e) {
+    var preview = document.getElementById('img-preview');
+    var file = e.target.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(ev) { preview.src = ev.target.result; preview.style.display = 'block'; };
+        reader.readAsDataURL(file);
+    }
+}
+document.getElementById('clase').addEventListener('change', function() {
+    var div = document.getElementById('clase-preview');
+    div.className = 'pm-clase-preview mt-2 ' + this.value;
+});
+$(document).ready(function() { $('.ckeditor').ckeditor(); CKEDITOR.config.allowedContent = true; });
+</script>
+@endpush
 @endsection

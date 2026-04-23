@@ -23,10 +23,10 @@
                 <div class="col-12 mx-auto">
                     <div class="form-index">
                         <div class="contenidoindex">
-                            <h1 style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">
+                            <h1 class="text-center hero-index-title">
                                 Discover the most impressive places that Peru has
                             </h1>
-                            <p style="color: #fff;text-shadow:3px 3px 4px rgb(30 53 52)" class="text-center">
+                            <p class="text-center hero-index-lead">
                                 Walks, gastronomy, archaeological sites, nature reserves, customs, traditions, landscapes
                                 and much more...
                             </p>
@@ -64,7 +64,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <h2 class="h1-index">
-                        <beige>Pacha Mama Spirit</beige>
+                        <span class="text-brand">Pacha Mama Spirit</span>
                     </h2>
                     <p>
                         <strong>Pacha Mama Spirit</strong> is a Peruvian travel agency born in Cusco, which is known as the
@@ -91,126 +91,118 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
                                 <img src="{{ asset('img/thumb/local-tour-guide-in-Peru.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
+                                    alt="Local tour guide in Peru" loading="lazy">
                                 <p class="font-weight-bold mt-3">Local tour guide</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Local guides who are experts and
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">Local guides who are experts and
                                     knowledgeable about the
                                     richness of the past of the Inca culture.</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
                                 <img src="{{ asset('img/thumb/eco-friendly-company.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
+                                    alt="Eco-friendly travel company in Peru" loading="lazy">
                                 <p class="font-weight-bold mt-3">Sustainable Tourism</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">We're proud to offer experiences that
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">We're proud to offer experiences that
                                     combine the natural
                                     with responsible practices that respect the environment and local communities.</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/small-groups.png') }}" height="100px" alt="Local Tour guide"
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
+                                <img src="{{ asset('img/thumb/small-groups.png') }}" height="100px" alt="Small tour groups in Peru"
                                     loading="lazy">
                                 <p class="font-weight-bold mt-3">Small groups</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">You get to spend more time with the
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">You get to spend more time with the
                                     guide and listen to
                                     everything
                                     they have to say. A personalized tour.</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new" style="border:1px solid grey">
-                                <img src="{{ asset('img/thumb/food-on-trail.png') }}" height="100px" alt="Local Tour guide"
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
+                                <img src="{{ asset('img/thumb/food-on-trail.png') }}" height="100px" alt="Quality food on Peru trails"
                                     loading="lazy">
                                 <p class="font-weight-bold mt-3">Food on trail</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Delight your taste buds with our
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">Delight your taste buds with our
                                     delicious trail food.We ensure
                                     you have flavorful sustenance during your adventures.</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new"
-                                style="border:1px solid grey">
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
                                 <img src="{{ asset('img/thumb/legally-licensed.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
+                                    alt="Legally licensed travel agency in Peru" loading="lazy">
                                 <p class="font-weight-bold mt-3">Legally licensed</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">Our travel agency in Peru has a
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">Our travel agency in Peru has a
                                     license and permits in order,
                                     providing quality and reliable tourist services.</p>
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pt-4 d-flex flex-column align-items-center card-new"
-                                style="border:1px solid grey">
+                            <div class="pt-4 d-flex flex-column align-items-center card-new feature-pillar-card rounded-3">
                                 <img src="{{ asset('img/thumb/camping-equipment.png') }}" height="100px"
-                                    alt="Local Tour guide" loading="lazy">
+                                    alt="Quality camping equipment for Peru treks" loading="lazy">
                                 <p class="font-weight-bold mt-3">Camping Equipment</p>
-                                <div class="linea2-blogs" style="margin-bottom: 0px"></div>
-                                <p class="text-justify m-3" style="font-size: 14px">We offer a wide selection of
+                                <div class="linea2-blogs"></div>
+                                <p class="text-justify m-3 small">We offer a wide selection of
                                     high-quality camping equipment to
                                     ensure a comfortable and safe experience in the wilderness.</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="space"></div>
-                <div class="col-lg-12 mb-4">
-                    <h2 class="h2-tierras">Recommended tours:</h2>
-                    <div class="linea2-blogs"></div>
-                </div>
-
-                <!-----Prueba--->
-                @foreach ($tours->take(8) as $tour)
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card card-new" style="width: 18rem;">
-                            <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}">
-                                <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
-                                    loading="lazy">
-                            </a>
-                            <div class="card-body text-center">
-                                <h5 class="card-titulo">{{ $tour->nombre }}</h5>
-                                <p class="text-card">{{ $tour->descripcion }}</p>
-                                <div class="enlacesCategoria">
+                    @if (isset($blogsRecientes) && $blogsRecientes->isNotEmpty())
+                        <div class="home-blog-rail w-100 mt-4">
+                            <div class="home-blog-rail__head text-center mb-2">
+                                <h2 class="h2-tierras">Latest blog posts</h2>
+                                <p class="home-blog-rail__lead">Tips, culture, and travel ideas for Peru — swipe on mobile</p>
+                            </div>
+                            <div class="home-blog-rail__track" role="region" aria-label="Latest blog posts">
+                                @foreach ($blogsRecientes as $entrada)
                                     @php
-                                        $colors = ['text-primary', 'text-success', 'text-info', 'text-warning', 'text-secondary'];
+                                        $imgEntrada = $entrada->img ?? '';
+                                        $srcEntrada = \Illuminate\Support\Str::startsWith($imgEntrada, ['http://', 'https://'])
+                                            ? $imgEntrada
+                                            : asset(ltrim($imgEntrada, '/'));
                                     @endphp
-                                
-                                    @foreach ($tour->categories as $index => $category)
-                                        <a href="{{ route('category.show', $category) }}"
-                                            class="{{ $colors[$index % count($colors)] }} font-weight-bold text-uppercase"
-                                            title="Ver categoría" style="font-size: 11px;">
-                                            {{ $category->nombre }}
+                                    <article class="home-blog-rail__card">
+                                        <a href="{{ route('enblog', $entrada->slug) }}" class="home-blog-rail__link">
+                                            <div class="home-blog-rail__media" role="img" aria-label="{{ $entrada->nombre }}">
+                                                <img src="{{ $srcEntrada }}" alt="" class="home-blog-rail__media-img" width="400" height="200" loading="lazy">
+                                            </div>
+                                            <div class="home-blog-rail__body">
+                                                <span class="home-blog-rail__accent" aria-hidden="true"></span>
+                                                <time class="home-blog-rail__date" datetime="{{ $entrada->created_at->toIso8601String() }}">{{ $entrada->created_at->format('d/m/Y') }}</time>
+                                                <h3 class="home-blog-rail__title">{{ $entrada->nombre }}</h3>
+                                                <p class="home-blog-rail__excerpt">{{ Str::limit(strip_tags($entrada->descripcion ?? ''), 96) }}</p>
+                                                <span class="home-blog-rail__go" aria-hidden="true">Read →</span>
+                                            </div>
                                         </a>
-                                    @endforeach
-                                </div>
-                                
-
-                                <div class="row iconos-tours">
-                                    <div class="col-6">
-                                        <span class="icon-clock-o" style="float: right">
-                                            {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
-                                    </div>
-                                    <div class="col-6">
-                                        <span class="icon-usd" style="float:left">{{ $tour->precio }}.00</span>
-                                    </div>
-                                    <div class="col-12 mt-2">
-                                        <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
-                                    </div>
-                                </div>
-                                <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}" class="boton-card">Más
-                                    detalles</a>
+                                    </article>
+                                @endforeach
+                            </div>
+                            <div class="text-center mt-2">
+                                <a href="{{ route('enlistado') }}" class="home-blog-rail__btn-all">View all posts</a>
                             </div>
                         </div>
+                    @endif
+                </div>
+                <div class="space"></div>
+                <div class="col-12" id="home-tours-section">
+                    <h2 class="h2-tierras">Recommended tours:</h2>
+                    <div class="linea2-blogs mb-3"></div>
+                    @include('partials.home-tour-filters')
+                    <div class="row g-3 home-tours-results" id="home-tours-results" aria-live="polite">
+                        @include('partials.home-tours-grid-en')
                     </div>
-                @endforeach
+                </div>
                 <!-----Fin orueba--->
                 <div class="space"></div>
             </div>
@@ -265,10 +257,10 @@
                 </div>
                 <div class="space"></div>
                 @foreach ($tours as $tour)
-                    @if (Str::contains($tour->categoria, 'caminata'))
+                    @if (Str::contains($tour->categoria, 'hikes'))
                         <div class="col-lg-3 col-md-6">
-                            <div class="card card-new" style="width: 100%;">
-                                <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                            <div class="card card-new w-100">
+                                <a href="{{ route('toursen.show', $tour->slug) }}">
                                     <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
                                         loading="lazy">
                                 </a>
@@ -282,25 +274,25 @@
                                     
                                         @foreach ($tour->categories as $index => $category)
                                             <a href="{{ route('category.show', $category) }}"
-                                                class="{{ $colors[$index % count($colors)] }} font-weight-bold text-uppercase"
-                                                title="Ver categoría" style="font-size: 11px;">
+                                                class="{{ $colors[$index % count($colors)] }} fw-bold text-uppercase small text-decoration-none"
+                                                title="Ver categoría">
                                                 {{ $category->nombre }}
                                             </a>
                                         @endforeach
                                     </div>
-                                    <div class="row iconos-tours">
-                                        <div class="col-6">
-                                            <span class="icon-clock-o" style="float: right">
-                                                {{ $tour->dias }}day{{ $tour->dias == 1 ? '' : 's' }}</span>
+                                    <div class="row iconos-tours small text-secondary">
+                                        <div class="col-6 text-end">
+                                            <span class="icon-clock-o" aria-hidden="true"></span>
+                                                {{ $tour->dias }} day{{ $tour->dias == 1 ? '' : 's' }}
                                         </div>
-                                        <div class="col-6">
-                                            <span class="icon-usd" style="float:left">{{ $tour->precio }}.00</span>
+                                        <div class="col-6 text-start">
+                                            <span class="icon-usd" aria-hidden="true"></span> {{ $tour->precio }}.00
                                         </div>
-                                        <div class="col-12 mt-2">
-                                            <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
+                                        <div class="col-12 mt-2 text-center">
+                                            <span class="icon-map-marker" aria-hidden="true"></span> {{ $tour->ubicacion }}
                                         </div>
                                     </div>
-                                    <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                    <a href="{{ route('toursen.show', $tour->slug) }}"
                                         class="boton-card">Más detalles</a>
                                 </div>
                             </div>

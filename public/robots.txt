@@ -20,6 +20,7 @@ Disallow: /categories/*/edit
 Disallow: /users/
 Disallow: /imagenes/
 Disallow: /djm2
+Disallow: /cdn-cgi/
 Allow: /
 
 Sitemap: https://pachamamaspirit.com/sitemap.xml

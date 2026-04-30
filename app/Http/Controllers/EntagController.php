@@ -58,7 +58,8 @@ class EntagController extends Controller
         $tag = Entag::where('slug', $slug)->firstOrFail();
         $blogs = $tag->enblogs()->get();
         $coincidencias = $tag->enblogs()->count();
-        return view('blogs.en.tags.show', compact('tag','blogs','coincidencias'));
+        $allTags = Entag::orderBy('nombre')->get();
+        return view('blogs.en.tags.show', compact('tag','blogs','coincidencias','allTags'));
     }
 
     /**

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos-bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}?v={{ file_exists(public_path('css/estilos.css')) ? filemtime(public_path('css/estilos.css')) : '20261021' }}">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap"></noscript>
@@ -101,21 +101,27 @@
         <div class="site-navbar site-navbar-target js-sticky-header">
             <div class="container">
                 <div class="row align-items-center row-menu">
-                    <div class="col-2">
-                        <a href="{{ route('pt.index') }}">
+                    <div class="col-6 col-md-4 col-xl-2 site-navbar-logo-col">
+                        <a href="{{ route('pt.index') }}" aria-label="Pacha Mama Spirit Início">
                             <img src="{{ asset('img/pacha-mama-spirit-logo.png') }}" alt="Logotipo Pacha Mama Spirit"
                                 class="logo" title="Logo Pacha Mama Spirit">
                         </a>
                     </div>
-                    <div class="col-10">
-                        <nav class="site-navigation" role="navigation">
-                            <div class="container">
-                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 site-nav-mobile-toggle">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Abrir o menu">
-                                        <span class="icon-menu h3" aria-hidden="true"></span>
+                    <div class="col-6 col-md-8 col-xl-10 site-navbar-nav-col">
+                        <nav class="site-navigation" role="navigation" aria-label="Menu principal">
+                            <div class="container pe-0">
+                                <div class="d-inline-flex d-xl-none align-items-center justify-content-end site-nav-mobile-toggle">
+                                    <div class="tablet-header-quick d-none d-md-inline-flex align-items-center me-2">
+                                        @include('partials.language-select', ['currentLocale' => 'pt', 'compact' => true, 'extraClass' => 'pacha-lang-select-wrap--header'])
+                                        <button type="button" class="header-search-icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Buscar tours">
+                                            <span class="icon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <a href="#" class="site-menu-toggle js-menu-toggle" aria-label="Abrir o menu">
+                                        <span class="icon-menu h3 mb-0" aria-hidden="true"></span>
                                     </a>
                                 </div>
-                                <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
+                                <ul class="site-menu main-menu js-clone-nav d-none d-xl-block">
                                     <li>
                                         <a href="{{ route('pt.categoria', ['categoria' => 'trilhas']) }}" class="nav-link">Trilhas e caminhadas</a>
                                     </li>
@@ -134,13 +140,8 @@
                                     <li>
                                         <a href="{{ route('pt.contato') }}" class="nav-link">Contato</a>
                                     </li>
-                                    <li>
-                                        <a href="{{ \App\Support\LocaleRouteMap::switchUrlTo('es') }}"
-                                            class="castellano-es" hreflang="es" lang="es">Español</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ \App\Support\LocaleRouteMap::switchUrlTo('en') }}"
-                                            class="castellano-es" hreflang="en" lang="en">English</a>
+                                    <li class="nav-item-lang">
+                                        @include('partials.language-select', ['currentLocale' => 'pt'])
                                     </li>
                                     <li class="nav-item-search">
                                         <i class="icon-search botonsearch" data-bs-toggle="modal"
@@ -211,7 +212,7 @@
                         <a class="a-foot" href="{{ route('nosotros') }}">Quem somos</a>
                         <a class="a-foot" href="{{ route('terminos') }}">Termos e Condições</a>
                         <a class="a-foot" href="{{ route('preguntas') }}">Perguntas frequentes</a>
-                        <a class="a-foot" href="{{ route('listado') }}">Blog</a>
+                        <a class="a-foot" href="{{ route('pt.blog.index') }}">Blog</a>
                         <a class="a-foot" href="{{ route('pt.contato') }}">Fale conosco</a>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center mb-4">
@@ -245,7 +246,7 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}?v={{ file_exists(public_path('js/main.js')) ? filemtime(public_path('js/main.js')) : '20261021' }}" defer></script>
     @stack('scripts')
 
 </body>

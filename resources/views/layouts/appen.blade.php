@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos-bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}?v={{ file_exists(public_path('css/estilos.css')) ? filemtime(public_path('css/estilos.css')) : '20261021' }}">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap"></noscript>
@@ -105,21 +105,27 @@
         <div class="site-navbar site-navbar-target js-sticky-header">
             <div class="container">
                 <div class="row align-items-center row-menu">
-                    <div class="col-2">
-                        <a href="{{ route('index') }}">
+                    <div class="col-6 col-md-4 col-xl-2 site-navbar-logo-col">
+                        <a href="{{ route('index') }}" aria-label="Pacha Mama Spirit Home">
                             <img src="{{ asset('img/pacha-mama-spirit-logo.png') }}" alt="Pacha mama Spirit logo"
                                 class="logo" title="Logo Pacha Mama Spirit">
                         </a>
                     </div>
-                    <div class="col-10">
-                        <nav class="site-navigation" role="navigation">
-                            <div class="container">
-                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 site-nav-mobile-toggle">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Open menu">
-                                        <span class="icon-menu h3" aria-hidden="true"></span>
+                    <div class="col-6 col-md-8 col-xl-10 site-navbar-nav-col">
+                        <nav class="site-navigation" role="navigation" aria-label="Main navigation">
+                            <div class="container pe-0">
+                                <div class="d-inline-flex d-xl-none align-items-center justify-content-end site-nav-mobile-toggle">
+                                    <div class="tablet-header-quick d-none d-md-inline-flex align-items-center me-2">
+                                        @include('partials.language-select', ['currentLocale' => 'en', 'compact' => true, 'extraClass' => 'pacha-lang-select-wrap--header'])
+                                        <button type="button" class="header-search-icon-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Search tours">
+                                            <span class="icon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <a href="#" class="site-menu-toggle js-menu-toggle" aria-label="Open menu">
+                                        <span class="icon-menu h3 mb-0" aria-hidden="true"></span>
                                     </a>
                                 </div>
-                                <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
+                                <ul class="site-menu main-menu js-clone-nav d-none d-xl-block">
                                     <li class="has-children">
                                         <a href="{{ route('destinies-peru') }}" class="nav-link"
                                             @if (request()->is('destinies')) id="active" @endif>Destinies</a>
@@ -165,16 +171,9 @@
                                     <li>
                                         <a href="{{ route('enlistado') }}" class="nav-link">Blogs</a>
                                     </li>
-                                    <li>
-                                        <a href="{{ \App\Support\LocaleRouteMap::menuLanguageSwitchUrl(false) }}"
-                                            class="castellano-es" hreflang="es" lang="es">Español</a>
+                                    <li class="nav-item-lang">
+                                        @include('partials.language-select', ['currentLocale' => 'en'])
                                     </li>
-                                    @if ($portuguesUrl = \App\Support\LocaleRouteMap::counterpartUrl('pt'))
-                                    <li>
-                                        <a href="{{ $portuguesUrl }}"
-                                            class="castellano-es" hreflang="pt-br" lang="pt-BR">Português</a>
-                                    </li>
-                                    @endif
                                     <li class="nav-item-search">
                                         <i class="icon-search botonsearch" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" role="button" tabindex="0" aria-label="Search tours"></i>
@@ -280,7 +279,7 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}?v={{ file_exists(public_path('js/main.js')) ? filemtime(public_path('js/main.js')) : '20261021' }}" defer></script>
     @stack('scripts')
 
 </body>

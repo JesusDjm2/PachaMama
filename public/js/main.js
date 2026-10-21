@@ -84,7 +84,7 @@ $(function() {
     $(window).resize(function() {
       var $this = $(this),
           w = $this.width();
-      if ( w > 768 ) {
+      if ( w >= 1200 ) {
         if ( $('body').hasClass('offcanvas-menu') ) {
           $('body').removeClass('offcanvas-menu');
           $('.site-mobile-menu').attr('aria-hidden', 'true');
@@ -264,5 +264,15 @@ $(function() {
     });
   };
   initFooterCondorWhenVisible();
+
+  /* -----------------------------------------------
+   * Selector de idioma (Senior Select Handler)
+   * --------------------------------------------- */
+  $(document).on('change', '.js-pacha-lang-select', function() {
+    var targetUrl = $(this).val();
+    if (targetUrl && targetUrl !== '#' && targetUrl !== window.location.href) {
+      window.location.href = targetUrl;
+    }
+  });
 
 });

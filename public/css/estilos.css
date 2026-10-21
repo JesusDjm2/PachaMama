@@ -530,28 +530,373 @@ strong {
 
 /* Barra principal fija: jquery.sticky pone .is-sticky en .sticky-wrapper (no en .js-sticky-header) */
 .sticky-wrapper.is-sticky .site-navbar {
-  box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.12);
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a {
+  color: #1a2e45 !important;
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a:hover {
+  color: #2aa8a8 !important;
+}
+
+.sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a.active {
+  color: #2aa8a8 !important;
 }
 
 .logo {
   max-width: 200px;
   width: auto;
   height: auto;
-  max-height: 56px;
+  max-height: 54px;
   object-fit: contain;
   object-position: left center;
   display: block;
-  padding-bottom: 0.6em;
-  margin-left: -1.5em;
-  transition: opacity 0.2s ease;
+  padding-bottom: 0.3em;
+  margin-left: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .logo:hover {
-  opacity: 0.85;
+  opacity: 0.9;
+  transform: scale(1.02);
 }
 
-/* Menú con barra fija: tipografía/padding/capitalize los define style.css (.sticky-wrapper.is-sticky …).
-   No redeclarar aquí el bloque .nav-link para no pisar el layout al hacer scroll. */
+.row-menu {
+  width: 100%;
+}
+
+/* ---------- Tablet Header Quick Actions (< 1200px) ---------- */
+.site-nav-mobile-toggle {
+  float: right;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.site-nav-mobile-toggle .site-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.25s ease;
+  text-decoration: none !important;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.site-nav-mobile-toggle .site-menu-toggle:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.site-nav-mobile-toggle .site-menu-toggle span.icon-menu {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+/* Quick pills for tablet header */
+.tablet-header-quick {
+  gap: 8px;
+}
+
+/* Quick actions container for tablet/header */
+.tablet-header-quick {
+  gap: 8px;
+}
+
+/* =========================================================
+   Selector de Idioma Senior (Select minimalista, elegante y accesible)
+   ========================================================= */
+
+/* Contenedor tipo píldora de vidrio pulido */
+.pacha-lang-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.pacha-lang-select-wrap:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.pacha-lang-select-wrap:focus-within {
+  border-color: #2aa8a8;
+  box-shadow: 0 0 0 3px rgba(42, 168, 168, 0.35);
+}
+
+/* Ícono de globo terráqueo */
+.pacha-lang-select-wrap .pacha-lang-globe {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: currentColor;
+  opacity: 0.92;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.pacha-lang-select-wrap:hover .pacha-lang-globe {
+  transform: translateY(-50%) rotate(25deg);
+  opacity: 1;
+}
+
+/* Flecha chevron sutil */
+.pacha-lang-select-wrap .pacha-lang-chevron {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 9px;
+  color: currentColor;
+  opacity: 0.8;
+  pointer-events: none;
+  transition: transform 0.25s ease;
+}
+
+.pacha-lang-select-wrap:hover .pacha-lang-chevron {
+  transform: translateY(-35%);
+}
+
+/* Elemento <select> nativo sin bordes ni flechas por defecto */
+.pacha-lang-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  height: 100%;
+  line-height: 32px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0 28px 0 32px;
+  cursor: pointer;
+  text-align-last: center;
+  z-index: 1;
+}
+
+/* Opciones desplegables legibles */
+.pacha-lang-select option {
+  background-color: #1a2e45 !important;
+  color: #ffffff !important;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 8px 12px;
+}
+
+/* Variante compacta para tablet/header */
+.pacha-lang-select-wrap--compact,
+.pacha-lang-select-wrap--header {
+  height: 32px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pacha-lang-select-wrap--compact .pacha-lang-globe,
+.pacha-lang-select-wrap--header .pacha-lang-globe {
+  left: 9px;
+  width: 13px;
+  height: 13px;
+}
+
+.pacha-lang-select-wrap--compact .pacha-lang-chevron,
+.pacha-lang-select-wrap--header .pacha-lang-chevron {
+  right: 9px;
+  width: 8px;
+  height: 8px;
+}
+
+.pacha-lang-select-wrap--compact .pacha-lang-select,
+.pacha-lang-select-wrap--header .pacha-lang-select {
+  font-size: 0.76rem;
+  padding: 0 22px 0 27px;
+  line-height: 30px;
+}
+
+/* Integración en el menú desktop */
+.site-navbar .site-navigation .site-menu > li.nav-item-lang {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.header-lang-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: #ffffff !important;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.header-lang-badge:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.header-search-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.header-search-icon-btn:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* Sticky Navbar: Color Inversions for mobile/tablet toggles */
+.sticky-wrapper.is-sticky .site-nav-mobile-toggle .site-menu-toggle {
+  color: #1a2e45 !important;
+  background: rgba(26, 46, 69, 0.06);
+  border-color: rgba(26, 46, 69, 0.15);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-wrapper.is-sticky .site-nav-mobile-toggle .site-menu-toggle:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff !important;
+}
+
+.sticky-wrapper.is-sticky .pacha-lang-select-wrap {
+  background: #f1f5f9;
+  border-color: rgba(26, 46, 69, 0.2);
+  color: #1a2e45;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.sticky-wrapper.is-sticky .pacha-lang-select-wrap:hover {
+  background: #e2e8f0;
+  border-color: #2aa8a8;
+  color: #1a2e45;
+}
+
+.sticky-wrapper.is-sticky .pacha-lang-select-wrap:focus-within {
+  border-color: #2aa8a8;
+  box-shadow: 0 0 0 3px rgba(42, 168, 168, 0.25);
+}
+
+.sticky-wrapper.is-sticky .header-lang-badge {
+  border-color: rgba(26, 46, 69, 0.2);
+  color: #1a2e45 !important;
+  background: rgba(26, 46, 69, 0.04);
+}
+
+.sticky-wrapper.is-sticky .header-lang-badge:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff !important;
+}
+
+.sticky-wrapper.is-sticky .header-search-icon-btn {
+  color: #1a2e45;
+  background: rgba(26, 46, 69, 0.06);
+  border-color: rgba(26, 46, 69, 0.15);
+}
+
+.sticky-wrapper.is-sticky .header-search-icon-btn:hover {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff;
+}
+
+/* Desktop Navbar: Perfect single line display on screens >= 1200px */
+@media (min-width: 1200px) {
+  .site-navbar .site-navigation .site-menu {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap !important;
+    gap: 2px;
+    margin-left: 0;
+  }
+
+  .site-navbar .site-navigation .site-menu > li {
+    padding: 0 2px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .site-navbar .site-navigation .site-menu > li > a {
+    padding: 14px 8px;
+    font-size: 0.86rem;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .site-navbar .site-navigation .site-menu .has-children > a {
+    padding-right: 20px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .site-navbar .site-navigation .site-menu > li > a {
+    padding: 16px 11px;
+    font-size: 0.92rem;
+  }
+  .site-navbar .site-navigation .site-menu {
+    gap: 4px;
+  }
+}
 
 /* Language button — en top (no sticky) style.css fuerza li>a a 15px / 20px padding */
 .castellano-es {
@@ -589,7 +934,6 @@ strong {
   transform: translateY(-1px);
 }
 
-/* Sobre style.css (.site-menu>li>a:hover → #43CFCF; sticky usa !important) */
 .site-navbar .site-navigation .site-menu > li > a.castellano-es:hover,
 .site-navbar .site-navigation .site-menu > li > a.castellano-es:focus {
   color: #fff !important;
@@ -625,7 +969,6 @@ strong {
   vertical-align: middle;
 }
 
-/* Misma zona clic que los enlaces del template; más compacto cuando la barra está fija */
 .site-menu.main-menu > li.nav-item-search .botonsearch {
   line-height: 1;
   padding: 20px 10px;
@@ -650,10 +993,6 @@ strong {
   transform: scale(1.1);
 }
 
-.row-menu {
-  width: 100%;
-}
-
 /* Menú móvil: flecha como <button> (Bootstrap 5 collapse) */
 .site-mobile-menu .site-nav-wrap button.arrow-collapse {
   -webkit-appearance: none;
@@ -669,13 +1008,35 @@ strong {
 
 /* ---------- Menú móvil (off-canvas): panel, buscador y enlaces ---------- */
 .site-mobile-menu {
-  width: min(340px, calc(100vw - 40px));
+  width: min(380px, calc(100vw - 40px));
   padding-top: 0;
   display: flex;
   flex-direction: column;
   background: linear-gradient(165deg, #f0f4f8 0%, #ffffff 38%, #fafbfc 100%);
   box-shadow: -14px 0 48px rgba(26, 46, 69, 0.22);
   border-left: 1px solid rgba(42, 168, 168, 0.2);
+  z-index: 2005;
+}
+
+/* Backdrop blur when offcanvas menu is open */
+body.offcanvas-menu::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  animation: pachaBackdropFade 0.25s ease forwards;
+  pointer-events: auto;
+}
+
+@keyframes pachaBackdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .site-mobile-menu .site-mobile-menu-header {
@@ -862,20 +1223,65 @@ strong {
   background: rgba(42, 168, 168, 0.1);
 }
 
-/* Después de las reglas generales de <a> del panel móvil (padding 12×16) */
+/* Enlaces de idioma en el panel móvil */
+.site-mobile-menu .site-nav-wrap > li:has(> a.castellano-es) {
+  display: inline-block !important;
+  width: auto !important;
+  float: none !important;
+}
+
 .site-mobile-menu .site-nav-wrap > li > a.castellano-es {
-  margin: 8px 12px 10px;
-  font-size: 12px !important;
-  padding: 5px 12px !important;
+  margin: 10px 4px 6px;
+  font-size: 0.8rem !important;
+  padding: 8px 18px !important;
   line-height: 1.2 !important;
   color: #fff !important;
-  background: #2aa8a8 !important;
+  background: linear-gradient(135deg, #2aa8a8 0%, #238f8f 100%) !important;
+  border-radius: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(42, 168, 168, 0.3);
 }
 
 .site-mobile-menu .site-nav-wrap > li > a.castellano-es:hover,
 .site-mobile-menu .site-nav-wrap > li > a.castellano-es:focus {
   color: #fff !important;
   background: #1a2e45 !important;
+  transform: translateY(-1px);
+}
+
+/* Selector de idioma en el panel móvil */
+.site-mobile-menu .site-nav-wrap > li.nav-item-lang {
+  padding: 12px 16px 8px;
+  list-style: none;
+  display: block !important;
+  width: 100% !important;
+}
+
+.site-mobile-menu .site-nav-wrap > li.nav-item-lang .pacha-lang-select-wrap {
+  width: 100%;
+  height: 42px;
+  background: #ffffff;
+  border: 1px solid rgba(42, 168, 168, 0.4);
+  color: #1a2e45;
+  box-shadow: 0 2px 10px rgba(26, 46, 69, 0.06);
+  justify-content: center;
+}
+
+.site-mobile-menu .site-nav-wrap > li.nav-item-lang .pacha-lang-globe {
+  left: 14px;
+}
+
+.site-mobile-menu .site-nav-wrap > li.nav-item-lang .pacha-lang-chevron {
+  right: 14px;
+}
+
+.site-mobile-menu .site-nav-wrap > li.nav-item-lang .pacha-lang-select {
+  width: 100%;
+  font-size: 0.88rem;
+  padding: 0 34px 0 38px;
+  text-align-last: center;
 }
 
 .site-mobile-menu .site-nav-wrap li.active > a {
@@ -892,48 +1298,59 @@ strong {
   background: rgba(42, 168, 168, 0.12);
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero Responsive ---------- */
 .form-index {
-  margin-top: 22%;
+  margin-top: 18vh;
+  margin-bottom: 2rem;
 }
 
 .contenidoindex {
   text-align: center;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contenidoindex h1 {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 3rem;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
 }
 
 .contenidoindex p {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
   font-weight: 500;
-  color: rgba(255,255,255,0.92) !important;
-  text-shadow: 1px 2px 8px rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.95) !important;
+  text-shadow: 1px 2px 10px rgba(0,0,0,0.6);
   margin-bottom: 1.8rem;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contenidoindex a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   font-weight: 600;
   text-transform: uppercase;
-  margin: 0.3em 0.4em;
-  padding: 0.55em 1.2em;
+  margin: 6px 6px;
+  padding: 0.65em 1.35em;
   border-radius: 30px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   letter-spacing: 0.07em;
   border: 1.5px solid #2aa8a8;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  background: #2aa8a8;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: rgba(42, 168, 168, 0.95);
   text-shadow: none;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: all 0.25s ease;
+  min-width: 140px;
 }
 
 .contenidoindex a:hover,
@@ -942,6 +1359,29 @@ strong {
   border-color: #1a2e45;
   transform: translateY(-3px);
   box-shadow: 0 10px 28px rgba(26, 46, 69, 0.35);
+  color: #fff;
+}
+
+@media (max-width: 991.98px) {
+  .form-index {
+    margin-top: 13vh;
+  }
+  .contenidoindex a {
+    margin: 4px 4px;
+    padding: 0.58em 1.15em;
+    font-size: 0.78rem;
+    min-width: 125px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .form-index {
+    margin-top: 18vh;
+  }
+  .contenidoindex a {
+    min-width: 135px;
+    padding: 0.55em 1.1em;
+  }
 }
 
 /* Scroll indicator: “respiración” continua + hover en el enlace */

@@ -3,12 +3,12 @@
 @section('metas')
     <meta name="description" content="{{ $blog->descripcion }}" />
     <meta name="keywords" content="{{ $blog->keywords }}" />
-    <link rel="canonical" href="{{ request()->fullUrl() }}" />
+    <link rel="canonical" href="{{ request()->url() }}" />
     <meta property="og:type" content="article">
     <meta property="og:locale" content="es_PE">
     <meta property="og:title" content="{{ $blog->nombre }} | Pacha Mama Spirit">
     <meta property="og:description" content="{{ $blog->descripcion }}">
-    <meta property="og:url" content="{{ request()->fullUrl() }}">
+    <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:image" content="{{ $blog->img }}">
     <meta property="og:image:secure_url" content="{{ $blog->img }}">
     <meta property="og:image:width" content="1200">
@@ -22,6 +22,9 @@
     @if ($blog->enblog)
     <link rel="alternate" hreflang="en" href="{{ route('enblog', $blog->enblog->slug) }}">
     @endif
+    @if ($blog->ptblog)
+    <link rel="alternate" hreflang="pt-br" href="{{ route('pt.blog', $blog->ptblog->slug) }}">
+    @endif
     <link rel="alternate" hreflang="x-default" href="{{ $blog->enblog ? route('enblog', $blog->enblog->slug) : route('blog.show', $blog->slug) }}">
     <script type="application/ld+json">
     {
@@ -32,13 +35,13 @@
           "headline": "{{ addslashes($blog->nombre) }}",
           "description": "{{ addslashes($blog->descripcion) }}",
           "image": "{{ $blog->img }}",
-          "url": "{{ request()->fullUrl() }}",
-          "datePublished": "{{ $blog->created_at->toIso8601String() }}",
+          "url": "{{ request()->url() }}",
+          "datePublished": "{{ ($blog->published_at ?? $blog->created_at)->toIso8601String() }}",
           "dateModified": "{{ $blog->updated_at->toIso8601String() }}",
           "author": { "@id": "https://pachamamaspirit.com/#organization" },
           "publisher": { "@id": "https://pachamamaspirit.com/#organization" },
           "inLanguage": "es",
-          "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ request()->fullUrl() }}" },
+          "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ request()->url() }}" },
           "keywords": "{{ addslashes($blog->keywords) }}"
         },
         {
@@ -46,7 +49,7 @@
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://pachamamaspirit.com/inicio" },
             { "@type": "ListItem", "position": 2, "name": "Blog Perú", "item": "{{ route('listado') }}" },
-            { "@type": "ListItem", "position": 3, "name": "{{ addslashes($blog->nombre) }}", "item": "{{ request()->fullUrl() }}" }
+            { "@type": "ListItem", "position": 3, "name": "{{ addslashes($blog->nombre) }}", "item": "{{ request()->url() }}" }
           ]
         }
       ]
@@ -54,9 +57,17 @@
     </script>
 @endsection
 @push('locale_page_switcher')
-    @if ($blog->enblog)
-        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
-            <a href="{{ route('enblog', $blog->enblog->slug) }}" hreflang="en" class="font-weight-bold">Ver este artículo en inglés →</a>
+    @if ($blog->enblog || $blog->ptblog)
+        <div class="locale-lang-strip text-center small">
+            @if ($blog->enblog)
+                <a href="{{ route('enblog', $blog->enblog->slug) }}" hreflang="en">Ver este artículo en inglés →</a>
+            @endif
+            @if ($blog->enblog && $blog->ptblog)
+                <span class="locale-lang-strip__muted mx-1" aria-hidden="true">·</span>
+            @endif
+            @if ($blog->ptblog)
+                <a href="{{ route('pt.blog', $blog->ptblog->slug) }}" hreflang="pt-br">Ver este artículo en portugués →</a>
+            @endif
         </div>
     @endif
 @endpush
@@ -86,29 +97,36 @@
                     </div>
                 </div>
                 <div class="col-lg-8" id="cuerpo">
-                    
                     <h2 class="text-center blog-post-heading">{{ $blog->nombre }}</h2>
-                    <p class="text-center blog-post-meta"><i class="icon-calendar" aria-hidden="true"></i> {{ $blog->created_at->format('d/m/Y') }}</p>
-                    {!! $blog->cuerpo !!}
+                    <p class="text-center blog-post-meta">
+                        <i class="icon-calendar" aria-hidden="true"></i>
+                        Publicado: {{ ($blog->published_at ?? $blog->created_at)->format('d/m/Y') }}
+                        &nbsp;·&nbsp;
+                        <i class="icon-pencil" aria-hidden="true"></i>
+                        Actualizado: {{ $blog->updated_at->format('d/m/Y') }}
+                    </p>
+                    <div class="blog-post-content">
+                        {!! $blog->cuerpo !!}
+                    </div>
                     <div class="compartir">
                         <h4 class="mb-3">Compartir:</h4>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request()->fullUrl() }}" target="_blank"
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request()->url() }}" target="_blank"
                             rel="noopener nofollow">
                             <i class="icon-facebook"></i>
                         </a>
-                        <a href="https://twitter.com/intent/tweet?url={{ request()->fullUrl() }}" target="_blank"
+                        <a href="https://twitter.com/intent/tweet?url={{ request()->url() }}" target="_blank"
                             rel="noopener nofollow">
                             <i class="icon-twitter"></i>
                         </a>
-                        <a href="https://pinterest.com/pin/create/button/?url={{ request()->fullUrl() }}&description={{ $blog->descripcion }}"
+                        <a href="https://pinterest.com/pin/create/button/?url={{ request()->url() }}&description={{ $blog->descripcion }}"
                             target="_blank" rel="noopener nofollow">
                             <i class="icon-pinterest"></i>
                         </a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request()->fullUrl() }}&title={{ $blog->nombre }}&summary={{ $blog->descripcion }}&source=PachaMamaSpirit"
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request()->url() }}&title={{ $blog->nombre }}&summary={{ $blog->descripcion }}&source=PachaMamaSpirit"
                             target="_blank" rel="noopener nofollow">
                             <i class="icon-linkedin"></i>
                         </a>
-                        <a href="https://api.whatsapp.com/send?text={{ request()->fullUrl() }}" target="_blank"
+                        <a href="https://api.whatsapp.com/send?text={{ request()->url() }}" target="_blank"
                             rel="noopener nofollow">
                             <i class="icon-whatsapp"></i>
                         </a>
@@ -140,7 +158,7 @@
                         <h3>Blogs sugeridos:</h3>
                         <div class="linea2-blogs"></div>
                         @foreach ($blogses as $blogse)
-                            <a href="{{ route('blog.show', ['id' => $blogse->id, 'slug' => $blogse->slug]) }}">
+                            <a href="{{ route('blog.show', $blogse->slug) }}">
                                 <div class="row blogSpace">
                                     <div class="col-4">
                                         <img src="{{ asset($blogse->img) }}" alt="{{ $blogse->nombre }}"
@@ -215,7 +233,7 @@
                                         <span class="icon-usd"><strong>{{ $tour->precio }}</strong></span>
                                     </div>
                                 </div>
-                                <a href="{{ route('tours.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                <a href="{{ route('tours.show', $tour->slug) }}"
                                     class="boton-card">Más detalles</a>
 
                             </div>

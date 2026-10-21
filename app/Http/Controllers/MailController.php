@@ -15,9 +15,11 @@ class MailController extends Controller
     {
         $datos = request()->all();
         Mail::send("emails.contacto", $datos, function ($message) use ($datos) {
-            $message->from($datos['email'], $datos['nombre'])
-                ->to('info@pachamamaspirit.com', 'DJM2')
+            $message->to('info@pachamamaspirit.com', 'DJM2')
                 ->subject('Envio de formulario desde la página web.');
+            if (!empty($datos['email'])) {
+                $message->replyTo($datos['email'], $datos['nombre'] ?? null);
+            }
         });
         session()->flash('status', 'Mensaje enviado exitosamente!');
         return back();
@@ -26,14 +28,39 @@ class MailController extends Controller
     {
         $datos = request()->all();
         Mail::send("emails.contacto", $datos, function ($message) use ($datos) {
-            $message->from($datos['email'], $datos['nombre'])
-                ->to('info@pachamamaspirit.com', 'DJM2')
+            $message->to('info@pachamamaspirit.com', 'DJM2')
                 ->subject('Envio de formulario desde la página web.');
+            if (!empty($datos['email'])) {
+                $message->replyTo($datos['email'], $datos['nombre'] ?? null);
+            }
         });
         session()->flash('status', 'Message sent successfully!');
         return back();
     }
+    public function getMailPt()
+    {
+        $datos = request()->all();
+        Mail::send("emails.contacto", $datos, function ($message) use ($datos) {
+            $message->to('info@pachamamaspirit.com', 'DJM2')
+                ->subject('Envio de formulario desde la página web.');
+            if (!empty($datos['email'])) {
+                $message->replyTo($datos['email'], $datos['nombre'] ?? null);
+            }
+        });
+        session()->flash('status', 'Mensagem enviada com sucesso!');
+        return back();
+    }
     public function getMailIndex(Request $request)
+    {
+        return $this->sendContactForm($request, 'Your message has been sent successfully!');
+    }
+
+    public function getMailIndexPt(Request $request)
+    {
+        return $this->sendContactForm($request, 'Mensagem enviada com sucesso!');
+    }
+
+    private function sendContactForm(Request $request, string $successMessage)
     {
         $data = [
             'name' => $request->name,
@@ -46,11 +73,12 @@ class MailController extends Controller
         ];
 
         $contactFormMail = new ContactFormMail($data);
-        $contactFormMail->from($request->email, $request->name);
+        if ($request->email) {
+            $contactFormMail->replyTo($request->email, $request->name);
+        }
 
-        Mail::to('mirandadjmdjm@gmail.com')->send($contactFormMail);
+        Mail::to('info@pachamamaspirit.com')->send($contactFormMail);
 
-        return redirect()->back()->with('success', 'Your message has been sent successfully!');
-        dd('Después de la redirección');
+        return redirect()->back()->with('success', $successMessage);
     }
 }

@@ -24,10 +24,21 @@
                 Tours
             </div>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('tours.index') }}">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Tours español</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tourses"
+                    aria-expanded="false" aria-controls="tourses">
+                    <i class="fas fa-fw fa-language"></i>
+                    <span>Tours Español</span>
                 </a>
+                <div id="tourses" class="collapse" aria-labelledby="headingTourses" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('tours.index') }}">
+                            Tours
+                        </a>
+                        <a class="collapse-item" href="{{ route('categoria.index') }}">
+                            Categorías
+                        </a>
+                    </div>
+                </div>
             </li>
             <hr class="sidebar-divider">
             <li class="nav-item">
@@ -43,6 +54,24 @@
                             Tours
                         </a>
                         <a class="collapse-item" href="{{ route('category.index') }}">
+                            Categorias
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tourspt"
+                    aria-expanded="false" aria-controls="tourspt">
+                    <i class="fas fa-fw fa-language"></i>
+                    <span>Tours Português</span>
+                </a>
+                <div id="tourspt" class="collapse" aria-labelledby="headingTourspt" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('tourspt.index') }}">
+                            Tours
+                        </a>
+                        <a class="collapse-item" href="{{ route('ptcategoria.index') }}">
                             Categorias
                         </a>
                     </div>
@@ -81,6 +110,24 @@
                             Tags de blogs
                         </a>
                         <a class="collapse-item" href="{{ route('enblogs.index') }}">
+                            Blogs
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#portugues"
+                    aria-expanded="false" aria-controls="portugues">
+                    <i class="fas fa-fw fa-language"></i>
+                    <span>Blogs Português</span>
+                </a>
+                <div id="portugues" class="collapse" aria-labelledby="headingPortugues" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('pttags.index') }}">
+                            Tags de blogs
+                        </a>
+                        <a class="collapse-item" href="{{ route('ptblogs.index') }}">
                             Blogs
                         </a>
                     </div>

@@ -155,41 +155,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (isset($blogsRecientes) && $blogsRecientes->isNotEmpty())
-                        <div class="home-blog-rail w-100 mt-4">
-                            <div class="home-blog-rail__head text-center mb-2">
-                                <h2 class="h2-tierras">Últimas entradas del blog</h2>
-                                <p class="home-blog-rail__lead">Tips, cultura e inspiración para tu viaje a Perú — desliza en el móvil</p>
-                            </div>
-                            <div class="home-blog-rail__track" role="region" aria-label="Últimas entradas del blog">
-                                @foreach ($blogsRecientes as $entrada)
-                                    @php
-                                        $imgEntrada = $entrada->img ?? '';
-                                        $srcEntrada = \Illuminate\Support\Str::startsWith($imgEntrada, ['http://', 'https://'])
-                                            ? $imgEntrada
-                                            : asset(ltrim($imgEntrada, '/'));
-                                    @endphp
-                                    <article class="home-blog-rail__card">
-                                        <a href="{{ route('blog.show', $entrada->slug) }}" class="home-blog-rail__link">
-                                            <div class="home-blog-rail__media" role="img" aria-label="{{ $entrada->nombre }}">
-                                                <img src="{{ $srcEntrada }}" alt="" class="home-blog-rail__media-img" width="400" height="200" loading="lazy">
-                                            </div>
-                                            <div class="home-blog-rail__body">
-                                                <span class="home-blog-rail__accent" aria-hidden="true"></span>
-                                                <time class="home-blog-rail__date" datetime="{{ $entrada->created_at->toIso8601String() }}">{{ $entrada->created_at->format('d/m/Y') }}</time>
-                                                <h3 class="home-blog-rail__title">{{ $entrada->nombre }}</h3>
-                                                <p class="home-blog-rail__excerpt">{{ Str::limit(strip_tags($entrada->descripcion ?? ''), 96) }}</p>
-                                                <span class="home-blog-rail__go" aria-hidden="true">Leer →</span>
-                                            </div>
-                                        </a>
-                                    </article>
-                                @endforeach
-                            </div>
-                            <div class="text-center mt-2">
-                                <a href="{{ route('listado') }}" class="home-blog-rail__btn-all">Ver todo el blog</a>
-                            </div>
-                        </div>
-                    @endif
+                    @include('partials.home-blog-rail', ['blogs' => $blogsRecientes ?? collect(), 'locale' => 'es'])
                 </div>
                 <div class="space"></div>
                 <div class="col-12" id="home-tours-section">
@@ -257,7 +223,7 @@
                     @if (Str::contains($tour->categoria, 'hikes'))
                         <div class="col-lg-3 col-md-6">
                             <div class="card card-new">
-                                <a href="{{ route('tours.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                                <a href="{{ route('tours.show', $tour->slug) }}">
                                     <img class="card-img-top" src="{{ $tour->img }}" alt="Camino Inca 4 dias"
                                         loading="lazy">
                                 </a>
@@ -315,7 +281,7 @@
                                             <span class="icon-map-marker" aria-hidden="true"></span> {{ $tour->ubicacion }}
                                         </div>
                                     </div>
-                                    <a href="{{ route('tours.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                    <a href="{{ route('tours.show', $tour->slug) }}"
                                         class="boton-card">Más detalles</a>
 
                                 </div>

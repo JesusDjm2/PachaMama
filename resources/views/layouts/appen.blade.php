@@ -7,6 +7,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title> @yield('titulo') </title>
 
+    @include('partials.gtm-head')
+    @include('partials.google-ads-tag')
+
     @include('layouts.hreflang')
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -28,8 +31,9 @@
 </head>
 
 <body>
+    @include('partials.gtm-body')
     <div class="btn-whatsapp">
-        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp">
+        <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank" rel="noopener" aria-label="Contact us on WhatsApp" data-track="whatsapp_click">
             <span class="btn-whatsapp__icon icon-whatsapp" aria-hidden="true"></span>
         </a>
     </div>
@@ -165,6 +169,12 @@
                                         <a href="{{ \App\Support\LocaleRouteMap::menuLanguageSwitchUrl(false) }}"
                                             class="castellano-es" hreflang="es" lang="es">Español</a>
                                     </li>
+                                    @if ($portuguesUrl = \App\Support\LocaleRouteMap::counterpartUrl('pt'))
+                                    <li>
+                                        <a href="{{ $portuguesUrl }}"
+                                            class="castellano-es" hreflang="pt-br" lang="pt-BR">Português</a>
+                                    </li>
+                                    @endif
                                     <li class="nav-item-search">
                                         <i class="icon-search botonsearch" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" role="button" tabindex="0" aria-label="Search tours"></i>
@@ -212,13 +222,15 @@
     <!-- Fin Modal de banner-->
 
     <section>
-        <div class="display-foot">
+        <div class="display-foot footer-mountain-stage">
+            @include('partials.footer-condor')
             <img src="{{ asset('img/paisaje-cerros-silueta.png') }}" alt="Paisaje Pacha Mama cerros silueta"
-                 width="100%" loading="lazy">
+                 width="100%" loading="lazy" decoding="async">
         </div>
-        <div class="display-foot-2">
+        <div class="display-foot-2 footer-mountain-stage">
+            @include('partials.footer-condor')
             <img src="{{ asset('img/paisaje-cerros-silueta-responsive.png') }}"
-                title="Paisaje cerros sombra viajes min" alt="Paisaje Pacha Mama cerros silueta" width="100%" loading="lazy">
+                title="Paisaje cerros sombra viajes min" alt="Paisaje Pacha Mama cerros silueta" width="100%" loading="lazy" decoding="async">
         </div>
 
         <footer>

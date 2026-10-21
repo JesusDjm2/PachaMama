@@ -29,7 +29,7 @@
                     @if (Str::contains($tour->categoria, 'machuPicchu'))
                         <div class="col-lg-3 col-md-6">
                             <div class="card card-new" style="width: 18rem;">
-                                <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                                <a href="{{ route('toursen.show', $tour->slug) }}">
                                     <img class="card-img-top" src="{{ $tour->img }}"
                                         alt="Camino Inca 4 dias" loading="lazy">
                                 </a>
@@ -80,7 +80,7 @@
                                             <span class="icon-map-marker"> {{ $tour->ubicacion }}</span>
                                         </div>
                                     </div>
-                                    <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                    <a href="{{ route('toursen.show', $tour->slug) }}"
                                         class="boton-card">Más Info</a>
 
                                 </div>

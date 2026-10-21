@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\Tour;
+use App\Models\Tourpt;
 use App\Models\Toursen;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,19 +12,23 @@ class HomeTourFilters
 {
     public static function applyToTourQuery(Builder $query, Request $request): void
     {
-        if ($request->filled('ubicacion')) {
-            $u = trim((string) $request->input('ubicacion'));
-            $query->where('ubicacion', 'like', '%' . $u . '%');
-        }
-        if ($request->filled('dias')) {
-            $query->where('dias', (int) $request->input('dias'));
-        }
-        if ($request->filled('precio_max')) {
-            $query->where('precio', '<=', (int) $request->input('precio_max'));
-        }
+        self::applyToQuery($query, $request);
     }
 
     public static function applyToToursenQuery(Builder $query, Request $request): void
+    {
+        self::applyToQuery($query, $request);
+    }
+
+    public static function applyToTourptQuery(Builder $query, Request $request): void
+    {
+        self::applyToQuery($query, $request);
+    }
+
+    /**
+     * tours, toursens y tourspt comparten ubicacion/dias/precio, así que el filtro es idéntico.
+     */
+    public static function applyToQuery(Builder $query, Request $request): void
     {
         if ($request->filled('ubicacion')) {
             $u = trim((string) $request->input('ubicacion'));
@@ -42,26 +47,7 @@ class HomeTourFilters
      */
     public static function metaForTours(): array
     {
-        $ubicaciones = Tour::query()
-            ->select('ubicacion')
-            ->distinct()
-            ->whereNotNull('ubicacion')
-            ->where('ubicacion', '!=', '')
-            ->orderBy('ubicacion')
-            ->pluck('ubicacion')
-            ->values();
-
-        $dias = Tour::query()
-            ->select('dias')
-            ->distinct()
-            ->orderBy('dias')
-            ->pluck('dias')
-            ->values();
-
-        $max = (int) Tour::query()->max('precio');
-        $precios = self::precioOpciones($max);
-
-        return compact('ubicaciones', 'dias', 'precios');
+        return self::metaFor(Tour::class);
     }
 
     /**
@@ -69,7 +55,24 @@ class HomeTourFilters
      */
     public static function metaForToursen(): array
     {
-        $ubicaciones = Toursen::query()
+        return self::metaFor(Toursen::class);
+    }
+
+    /**
+     * @return array{ubicaciones: \Illuminate\Support\Collection, dias: \Illuminate\Support\Collection, precios: list<int>}
+     */
+    public static function metaForTourpt(): array
+    {
+        return self::metaFor(Tourpt::class);
+    }
+
+    /**
+     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $model
+     * @return array{ubicaciones: \Illuminate\Support\Collection, dias: \Illuminate\Support\Collection, precios: list<int>}
+     */
+    private static function metaFor(string $model): array
+    {
+        $ubicaciones = $model::query()
             ->select('ubicacion')
             ->distinct()
             ->whereNotNull('ubicacion')
@@ -78,14 +81,14 @@ class HomeTourFilters
             ->pluck('ubicacion')
             ->values();
 
-        $dias = Toursen::query()
+        $dias = $model::query()
             ->select('dias')
             ->distinct()
             ->orderBy('dias')
             ->pluck('dias')
             ->values();
 
-        $max = (int) Toursen::query()->max('precio');
+        $max = (int) $model::query()->max('precio');
         $precios = self::precioOpciones($max);
 
         return compact('ubicaciones', 'dias', 'precios');

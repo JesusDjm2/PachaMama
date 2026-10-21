@@ -23,10 +23,18 @@ class ToursenController extends Controller
         $tours = Toursen::all();
         return view('toursen.index')->with('tours', $tours);
     } */
-    public function index()
+    public function index(Request $request)
     {
-        $tours = Toursen::with('categories')->get();
-        return view('toursen.index')->with('tours', $tours);
+        $categories = Category::orderBy('nombre')->get();
+        $filtroCategoria = $request->get('categoria');
+
+        $query = Toursen::with('categories')->latest();
+        if ($filtroCategoria) {
+            $query->whereHas('categories', fn ($q) => $q->where('link', $filtroCategoria));
+        }
+        $tours = $query->get();
+
+        return view('toursen.index', compact('tours', 'categories', 'filtroCategoria'));
     }
 
     public function mostrar(Request $request)
@@ -36,7 +44,11 @@ class ToursenController extends Controller
             ->orderBy('created_at', 'desc');
         HomeTourFilters::applyToToursenQuery($query, $request);
         $tours = $query->get();
-        $blogsRecientes = Enblog::query()->latest()->take(4)->get();
+        $blogsRecientes = Enblog::query()
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->take(12)
+            ->get();
         $filterMeta = HomeTourFilters::metaForToursen();
 
         if ($request->ajax()) {
@@ -147,10 +159,16 @@ class ToursenController extends Controller
     }
 
 
-    public function show($slug) 
+    public function show(Request $request, $slug)
     {
-        /* $tour = Toursen::where('slug', $slug)->firstOrFail(); */
-        $tour = Toursen::with(['categories', 'tour'])->where('slug', $slug)->firstOrFail();
+        // Cualquier query string aquí (?id=.., ?utm_..) es ruido heredado de enlaces
+        // viejos: la página no lo usa para nada, pero deja la misma ficha accesible por
+        // dos URLs distintas (duplicado para SEO). Se redirige 301 a la URL limpia.
+        if ($request->query() !== []) {
+            return redirect()->route('toursen.show', ['slug' => $slug], 301);
+        }
+
+        $tour = Toursen::with(['categories', 'tour.tourpt'])->where('slug', $slug)->firstOrFail();
         $otrosTours = Toursen::where('id', '!=', $tour->id)->get();
         return view('toursen.show', compact('tour', 'otrosTours'));
     }

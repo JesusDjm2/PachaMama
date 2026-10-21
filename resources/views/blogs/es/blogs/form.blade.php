@@ -45,6 +45,15 @@
         @endif
     </div>
     <div class="col-lg-6 mb-3">
+        <label class="form-label">Fecha de publicación <small>— se usa como <code>datePublished</code> en Google</small></label>
+        <input type="date" name="published_at"
+            class="form-control form-control-sm {{ $errors->has('published_at') ? 'is-invalid' : '' }}"
+            value="{{ old('published_at', optional($blog->published_at ?? $blog->created_at)->format('Y-m-d')) }}">
+        @if($errors->has('published_at'))
+            <div class="invalid-feedback">{{ $errors->first('published_at') }}</div>
+        @endif
+    </div>
+    <div class="col-lg-6 mb-3">
         <label class="form-label">Imagen de portada</label>
         <input type="file" name="img" class="form-control form-control-sm {{ $errors->has('img') ? 'is-invalid' : '' }}">
         @if($blog->img)

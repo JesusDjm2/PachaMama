@@ -387,6 +387,7 @@ strong {
 .destinos.destinos-around-peru {
   height: 100vh !important;
   min-height: 100vh !important;
+  background-image: url('../img/panoramico/machu-picchu-cusco.jpg');
 }
 
 /*
@@ -1579,6 +1580,80 @@ strong {
   max-width: none;
 }
 
+/* Tag archive (ES/EN): sidebar + text-only cards */
+.blog-tag-page .tag-sidebar {
+  background: #fff;
+  border: 1px solid rgba(26, 46, 69, 0.08);
+  border-radius: 16px;
+  padding: 1.15rem 1rem 1.25rem;
+  box-shadow: 0 6px 28px rgba(26, 46, 69, 0.06);
+  position: sticky;
+  top: 6.25rem;
+}
+
+.tag-sidebar__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a2e45;
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(26, 46, 69, 0.09);
+}
+
+.tag-sidebar__item {
+  border-bottom: 1px solid rgba(26, 46, 69, 0.06);
+}
+
+.tag-sidebar__item:last-child {
+  border-bottom: 0;
+}
+
+.tag-sidebar__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.15rem;
+  text-decoration: none !important;
+  color: #475569 !important;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.tag-sidebar__link:hover {
+  color: #2aa8a8 !important;
+}
+
+.tag-sidebar__item--active .tag-sidebar__link {
+  color: #1a5c5c !important;
+}
+
+.tag-sidebar__count {
+  flex-shrink: 0;
+  min-width: 1.75rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(42, 168, 168, 0.14);
+  color: #134848;
+}
+
+.tag-sidebar__item--active .tag-sidebar__count {
+  background: rgba(26, 46, 69, 0.12);
+  color: #1a2e45;
+}
+
+@media (max-width: 991.98px) {
+  .blog-tag-page .tag-sidebar {
+    position: static;
+    margin-bottom: 0.5rem;
+  }
+}
+
 .blog-search-results--empty {
   padding-top: 2.5rem;
 }
@@ -2093,11 +2168,17 @@ strong {
 }
 
 .blogs .black {
-  background: transparent;
+  background: linear-gradient(180deg, rgba(10, 18, 30, 0.2) 0%, rgba(10, 18, 30, 0.62) 100%);
   transition: background 0.5s ease;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  padding: 1.1rem 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .blogs:hover .black {
@@ -2116,7 +2197,8 @@ strong {
 .blogs h2 {
   color: #fff;
   font-size: 1.05rem !important;
-  padding-top: 50px;
+  padding-top: 0;
+  margin: 0;
   opacity: 0.92;
   transition: opacity 0.5s ease;
 }
@@ -2131,16 +2213,19 @@ strong {
 .blogs p {
   text-align: center;
   font-size: 0;
-  margin-left: -50em;
+  margin: 0;
   opacity: 0;
   color: #fff;
-  padding: 1em;
+  padding: 0;
+  max-width: 34ch;
   transition: 0.5s;
 }
 
 .blogs .fecha {
-  margin-right: -50em;
+  margin-right: 0;
   transition: 0.5s;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.82rem;
 }
 
 .blogs:hover .fecha {
@@ -2156,7 +2241,11 @@ strong {
   border-radius: 30px;
   font-size: 0.78rem;
   font-weight: 600;
-  display: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(7px);
   transition: all 0.4s ease;
   text-decoration: none !important;
 }
@@ -2172,14 +2261,76 @@ strong {
 }
 
 .blogs:hover a {
-  display: inline;
+  opacity: 1;
+  transform: translateY(0);
   color: #fff !important;
+}
+
+#cuerpo {
+  max-width: 760px;
+}
+
+#cuerpo .blog-post-heading {
+  line-height: 1.25;
+  margin-bottom: 0.45rem;
+}
+
+#cuerpo .blog-post-content {
+  color: #334155;
+  line-height: 1.75;
+  font-size: 1.03rem;
+  text-wrap: pretty;
+}
+
+#cuerpo .blog-post-content p,
+#cuerpo .blog-post-content li {
+  color: #334155;
+  line-height: 1.75;
+}
+
+#cuerpo .blog-post-content h2,
+#cuerpo .blog-post-content h3,
+#cuerpo .blog-post-content h4 {
+  color: #1a2e45;
+  line-height: 1.35;
+  margin-top: 1.4rem;
+  margin-bottom: 0.7rem;
+}
+
+#cuerpo .blog-post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
 
 .blogimg {
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
+}
+
+/* Enlace idioma alternativo (blog/tour/destinos): sin franja blanca bajo el menú */
+.locale-lang-strip {
+  padding: 0.2rem 0.75rem 0.45rem;
+  margin: 0;
+  background: transparent;
+  border: none;
+  line-height: 1.45;
+}
+
+.locale-lang-strip a {
+  color: #1f8a8a;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.locale-lang-strip a:hover {
+  color: #156f6f;
+  text-decoration: underline;
+}
+
+.locale-lang-strip__muted {
+  color: #64748b;
 }
 
 /* Inicio (/) e inicio ES: carril horizontal con tarjetas inclinadas (solo home) */
@@ -2200,24 +2351,80 @@ strong {
   line-height: 1.5;
 }
 
+.home-blog-rail__viewport {
+  position: relative;
+  padding: 0 2.35rem;
+}
+
 .home-blog-rail__track {
   display: flex;
   gap: 1.15rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: 0.75rem 0.5rem 1.25rem;
-  margin: 0 -0.5rem;
+  padding: 0.75rem 0.15rem 1.25rem;
+  margin: 0;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+}
+
+.home-blog-rail__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(26, 46, 69, 0.82);
+  color: #fff;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(26, 46, 69, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-blog-rail__arrow:hover {
+  background: #2aa8a8;
+  box-shadow: 0 8px 22px rgba(42, 168, 168, 0.28);
+}
+
+.home-blog-rail__arrow:focus-visible {
+  outline: 2px solid #2aa8a8;
+  outline-offset: 2px;
+}
+
+.home-blog-rail__arrow--prev {
+  left: 0;
+}
+
+.home-blog-rail__arrow--next {
+  right: 0;
+}
+
+@media (max-width: 575px) {
+  .home-blog-rail__viewport {
+    padding: 0 1.85rem;
+  }
+
+  .home-blog-rail__arrow {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.15rem;
+  }
 }
 
 .home-blog-rail__track::-webkit-scrollbar {
-  height: 6px;
-}
-
-.home-blog-rail__track::-webkit-scrollbar-thumb {
-  background: rgba(42, 168, 168, 0.45);
-  border-radius: 99px;
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .home-blog-rail__card {
@@ -2331,19 +2538,9 @@ strong {
 }
 
 @media (min-width: 992px) {
-  .home-blog-rail__track {
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow: visible;
-    scroll-snap-type: none;
-    gap: 1.35rem;
-    margin: 0;
-    padding: 0.75rem 0 1rem;
-  }
-
   .home-blog-rail__card {
-    flex: 0 0 calc(25% - 1.1rem);
-    max-width: 280px;
+    flex: 0 0 288px;
+    scroll-snap-align: center;
   }
 }
 
@@ -2709,6 +2906,123 @@ strong {
 .display-foot   { display: block; }
 .display-foot-2 { display: none; }
 
+/* Silueta cerros + cóndor (SVG) superpuesto */
+.footer-mountain-stage {
+  position: relative;
+  overflow: hidden;
+  line-height: 0;
+  /* Sin container-type: size (rompía la altura de la silueta en varios navegadores). */
+  --condor-y-start: calc(clamp(5%, 2vw, 13%) + 5%);
+  --condor-drop-end: clamp(120px, 52vh, 360px);
+  --condor-drop-travel: calc(var(--condor-drop-end) * 0.95);
+}
+
+.footer-mountain-stage > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.footer-condor {
+  position: absolute;
+  top: var(--condor-y-start);
+  /* 2% del ancho del viewport: visible enseguida al arrancar */
+  left: 2vw;
+  /* ~30% más pequeño que la versión intermedia (≈ 70% del tamaño previo) */
+  width: clamp(20px, 3.65vw, 44px);
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.1)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.32));
+  animation: footer-condor-fly-x 66.7s linear infinite;
+  animation-play-state: paused;
+}
+
+.footer-condor-bob {
+  animation: footer-condor-glide-y 66.7s linear infinite;
+  animation-play-state: paused;
+}
+
+body.js-footer-peaks-visible .footer-condor,
+body.js-footer-peaks-visible .footer-condor-bob {
+  animation-play-state: running;
+}
+
+.footer-condor-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+@keyframes footer-condor-fly-x {
+  0% {
+    left: 2vw;
+  }
+
+  100% {
+    left: 108%;
+  }
+}
+
+@keyframes footer-condor-glide-y {
+  0% {
+    transform: translateY(0);
+  }
+
+  14.28% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.1428));
+  }
+
+  28.57% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.2857));
+  }
+
+  42.85% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.4285));
+  }
+
+  57.14% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.5714));
+  }
+
+  71.42% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.7142));
+  }
+
+  85.71% {
+    transform: translateY(calc(var(--condor-drop-travel) * 0.8571));
+  }
+
+  100% {
+    transform: translateY(var(--condor-drop-travel));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-condor {
+    animation: none;
+    animation-play-state: running;
+    left: 38%;
+    top: var(--condor-y-start, calc(8% + 5%));
+    width: clamp(15px, 3.1vw, 34px);
+  }
+
+  .footer-condor-bob {
+    animation: none;
+    animation-play-state: running;
+  }
+
+  .footer-condor-img {
+    transform: none;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .footer-mountain-stage {
+    --condor-drop-end: clamp(88px, 44vh, 260px);
+  }
+}
+
 footer {
   width: 100%;
   background: #343434;
@@ -2955,6 +3269,73 @@ footer p {
   .blogs {
     width: 100%;
     height: 220px;
+  }
+
+  /* Listados blog-peru / peru-blog: margen lateral para que las cards no queden pegadas al borde */
+  .blog-listing-section > .container-fluid {
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+  }
+
+  .blogs .black {
+    background: linear-gradient(180deg, rgba(10, 18, 30, 0.16) 0%, rgba(10, 18, 30, 0.72) 100%);
+    align-items: center;
+    text-align: center;
+    gap: 0.42rem;
+    padding: 1.2rem 1.35rem 1.1rem;
+    justify-content: flex-end;
+  }
+
+  .blogs h2 {
+    width: 100%;
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 1rem !important;
+    opacity: 1;
+  }
+
+  .blogs .fecha {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+    font-size: 0.78rem;
+  }
+
+  .blogs p {
+    width: 100%;
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    opacity: 0.94;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .blogs a {
+    opacity: 1;
+    transform: none;
+    display: inline-flex;
+    align-self: center;
+    margin-top: 0.2rem;
+  }
+
+  #cuerpo {
+    max-width: 100%;
+  }
+
+  #cuerpo .blog-post-content {
+    font-size: 1rem;
+    line-height: 1.7;
   }
 }
 

@@ -29,7 +29,7 @@
                     @foreach ($category->toursens as $tour)
                         <div class="col-lg-3 col-md-6 mb-4">
                             <div class="card card-new" style="width: 100%;">
-                                <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                                <a href="{{ route('toursen.show', $tour->slug) }}">
                                     <img class="card-img-top" src="../{{ $tour->img }}" alt="{{ $tour->nombre }}" loading="lazy">
                                 </a>
                                 <div class="card-body text-center">
@@ -65,7 +65,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                    <a href="{{ route('toursen.show', $tour->slug) }}"
                                         class="boton-card">Más detalles</a>
                                 </div>
                             </div>

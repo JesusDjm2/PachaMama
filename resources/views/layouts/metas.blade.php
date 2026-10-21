@@ -1,20 +1,33 @@
 @push('page_metas')
 @php
-    $isEn = Route::currentRouteName() === 'toursen.show';
-    $ogLocale = $isEn ? 'en_US' : 'es_PE';
-    $touristTypes = $isEn ? ['Adventure', 'Culture', 'History'] : ['Aventura', 'Cultura', 'Historia'];
-    $itineraryLabel = $isEn ? 'Itinerary of' : 'Itinerario de';
-    $homeLabel = $isEn ? 'Home' : 'Inicio';
-    $homeUrl = $isEn ? 'https://pachamamaspirit.com/' : 'https://pachamamaspirit.com/inicio';
+    $ruta = Route::currentRouteName();
+    $isPt = $ruta === 'pt.tour';
+    $isEn = $ruta === 'toursen.show';
+    $isEs = ! $isPt && ! $isEn;
+
+    $ogLocale = $isPt ? 'pt_BR' : ($isEn ? 'en_US' : 'es_PE');
+    $touristTypes = match (true) {
+        $isPt => ['Aventura', 'Cultura', 'História'],
+        $isEn => ['Adventure', 'Culture', 'History'],
+        default => ['Aventura', 'Cultura', 'Historia'],
+    };
+    $itineraryLabel = $isPt ? 'Itinerário de' : ($isEn ? 'Itinerary of' : 'Itinerario de');
+    $homeLabel = $isPt ? 'Início' : ($isEn ? 'Home' : 'Inicio');
+    $homeUrl = $isPt ? route('pt.index') : ($isEn ? 'https://pachamamaspirit.com/' : 'https://pachamamaspirit.com/inicio');
+
+    // El tour "hermano" de cada idioma se resuelve desde la fila española (tours.id).
+    $tourEs = $isEs ? $tour : ($tour->tour ?? null);
+    $tourEn = $tourEs?->toursens;
+    $tourPt = $isPt ? $tour : $tourEs?->tourpt;
 @endphp
 <meta name="description" content="{{ $tour->descripcion }}">
 <meta name="keywords" content="{{ $tour->keywords }}">
-<link rel="canonical" href="{{ request()->fullUrl() }}">
+<link rel="canonical" href="{{ request()->url() }}">
 <meta property="og:type" content="product">
 <meta property="og:locale" content="{{ $ogLocale }}">
 <meta property="og:title" content="{{ $tour->nombre }} | Pacha Mama Spirit">
 <meta property="og:description" content="{{ $tour->descripcion }}">
-<meta property="og:url" content="{{ request()->fullUrl() }}">
+<meta property="og:url" content="{{ request()->url() }}">
 <meta property="og:image" content="{{ $tour->img }}">
 <meta property="og:image:secure_url" content="{{ $tour->img }}">
 <meta property="og:image:width" content="1200">
@@ -24,11 +37,21 @@
 <meta name="twitter:description" content="{{ $tour->descripcion }}">
 <meta name="twitter:image" content="{{ $tour->img }}">
 <meta name="robots" content="index,follow">
-@if (! $isEn && $tour->toursens)
-<link rel="alternate" hreflang="en" href="{{ route('toursen.show', $tour->toursens->slug) }}">
+@if ($isEs)
+<link rel="alternate" hreflang="es" href="{{ request()->url() }}">
+@else
+<link rel="alternate" hreflang="es" href="{{ $tourEs ? route('tours.show', $tourEs->slug) : $homeUrl }}">
 @endif
-@if ($isEn && $tour->tour)
-<link rel="alternate" hreflang="es" href="{{ route('tours.show', $tour->tour->slug) }}">
+@if ($tourEn)
+<link rel="alternate" hreflang="en" href="{{ $isEn ? request()->url() : route('toursen.show', $tourEn->slug) }}">
+@endif
+@if ($tourPt)
+<link rel="alternate" hreflang="pt-br" href="{{ $isPt ? request()->url() : route('pt.tour', $tourPt->slug) }}">
+@endif
+@if ($tourEn)
+<link rel="alternate" hreflang="x-default" href="{{ $isEn ? request()->url() : route('toursen.show', $tourEn->slug) }}">
+@else
+<link rel="alternate" hreflang="x-default" href="{{ request()->url() }}">
 @endif
 <script type="application/ld+json">
 {
@@ -39,8 +62,8 @@
       "name": "{{ addslashes($tour->nombre) }}",
       "description": "{{ addslashes($tour->descripcion) }}",
       "image": "{{ $tour->img }}",
-      "url": "{{ request()->fullUrl() }}",
-      "inLanguage": "{{ $isEn ? 'en' : 'es' }}",
+      "url": "{{ request()->url() }}",
+      "inLanguage": "{{ $isPt ? 'pt-BR' : ($isEn ? 'en' : 'es') }}",
       "provider": {
         "@id": "https://pachamamaspirit.com/#organization"
       },
@@ -50,7 +73,7 @@
         "price": "{{ $tour->precio }}",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
-        "url": "{{ request()->fullUrl() }}"
+        "url": "{{ request()->url() }}"
       },
       "itinerary": {
         "@type": "ItemList",
@@ -80,7 +103,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "{{ addslashes($tour->nombre) }}",
-          "item": "{{ request()->fullUrl() }}"
+          "item": "{{ request()->url() }}"
         }
       ]
     }

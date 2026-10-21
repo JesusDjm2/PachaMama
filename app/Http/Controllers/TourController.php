@@ -15,17 +15,34 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tours = Tour::latest()->get();
-        return view('tours.index')->with('tours', $tours);
+        $categorias = \App\Models\Categoria::orderBy('nombre')->get();
+        $filtroCategoria = $request->get('categoria');
+
+        $query = Tour::latest();
+        if ($filtroCategoria) {
+            $query->where(function ($q) use ($filtroCategoria) {
+                $q->where('categoria', $filtroCategoria)
+                  ->orWhere('categoria', 'LIKE', $filtroCategoria.',%')
+                  ->orWhere('categoria', 'LIKE', '%,'.$filtroCategoria)
+                  ->orWhere('categoria', 'LIKE', '%,'.$filtroCategoria.',%');
+            });
+        }
+        $tours = $query->get();
+
+        return view('tours.index', compact('tours', 'categorias', 'filtroCategoria'));
     }
     public function mostrar(Request $request)
     {
         $query = Tour::query()->latest();
         HomeTourFilters::applyToTourQuery($query, $request);
         $tours = $query->get();
-        $blogsRecientes = Blog::query()->latest()->take(4)->get();
+        $blogsRecientes = Blog::query()
+            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
+            ->take(12)
+            ->get();
         $filterMeta = HomeTourFilters::metaForTours();
 
         if ($request->ajax()) {
@@ -108,9 +125,16 @@ class TourController extends Controller
      * @param  \App\Models\tour  $tour
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
-        $tour = Tour::query()->with('toursens')->where('slug', $slug)->firstOrFail();
+        // Cualquier query string aquí (?id=.., ?utm_..) es ruido heredado de enlaces
+        // viejos: la página no lo usa para nada, pero deja la misma ficha accesible por
+        // dos URLs distintas (duplicado para SEO). Se redirige 301 a la URL limpia.
+        if ($request->query() !== []) {
+            return redirect()->route('tours.show', ['slug' => $slug], 301);
+        }
+
+        $tour = Tour::query()->with(['toursens', 'tourpt'])->where('slug', $slug)->firstOrFail();
         $otrosTours = Tour::where('id', '!=', $tour->id)->get();
         return view('tours.show', compact('tour', 'otrosTours'));
     }

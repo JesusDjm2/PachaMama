@@ -158,41 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (isset($blogsRecientes) && $blogsRecientes->isNotEmpty())
-                        <div class="home-blog-rail w-100 mt-4">
-                            <div class="home-blog-rail__head text-center mb-2">
-                                <h2 class="h2-tierras">Latest blog posts</h2>
-                                <p class="home-blog-rail__lead">Tips, culture, and travel ideas for Peru — swipe on mobile</p>
-                            </div>
-                            <div class="home-blog-rail__track" role="region" aria-label="Latest blog posts">
-                                @foreach ($blogsRecientes as $entrada)
-                                    @php
-                                        $imgEntrada = $entrada->img ?? '';
-                                        $srcEntrada = \Illuminate\Support\Str::startsWith($imgEntrada, ['http://', 'https://'])
-                                            ? $imgEntrada
-                                            : asset(ltrim($imgEntrada, '/'));
-                                    @endphp
-                                    <article class="home-blog-rail__card">
-                                        <a href="{{ route('enblog', $entrada->slug) }}" class="home-blog-rail__link">
-                                            <div class="home-blog-rail__media" role="img" aria-label="{{ $entrada->nombre }}">
-                                                <img src="{{ $srcEntrada }}" alt="" class="home-blog-rail__media-img" width="400" height="200" loading="lazy">
-                                            </div>
-                                            <div class="home-blog-rail__body">
-                                                <span class="home-blog-rail__accent" aria-hidden="true"></span>
-                                                <time class="home-blog-rail__date" datetime="{{ $entrada->created_at->toIso8601String() }}">{{ $entrada->created_at->format('d/m/Y') }}</time>
-                                                <h3 class="home-blog-rail__title">{{ $entrada->nombre }}</h3>
-                                                <p class="home-blog-rail__excerpt">{{ Str::limit(strip_tags($entrada->descripcion ?? ''), 96) }}</p>
-                                                <span class="home-blog-rail__go" aria-hidden="true">Read →</span>
-                                            </div>
-                                        </a>
-                                    </article>
-                                @endforeach
-                            </div>
-                            <div class="text-center mt-2">
-                                <a href="{{ route('enlistado') }}" class="home-blog-rail__btn-all">View all posts</a>
-                            </div>
-                        </div>
-                    @endif
+                    @include('partials.home-blog-rail', ['blogs' => $blogsRecientes ?? collect(), 'locale' => 'en'])
                 </div>
                 <div class="space"></div>
                 <div class="col-12" id="home-tours-section">

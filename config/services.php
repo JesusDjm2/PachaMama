@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'gtm' => [
+        'container_id' => env('GTM_CONTAINER_ID'),
+    ],
+
+    'google_ads' => [
+        'id' => env('GOOGLE_ADS_ID'),
+        'conversion_label' => env('GOOGLE_ADS_CONVERSION_LABEL'),
+    ],
+
 ];

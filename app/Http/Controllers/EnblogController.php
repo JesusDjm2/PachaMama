@@ -77,6 +77,7 @@ class EnblogController extends Controller
             'keywords' => 'nullable|string',
             'slug' => 'required|string|unique:enblogs,slug',
             'tags' => 'nullable|array',
+            'published_at' => 'nullable|date',
             'blog_id' => [
                 'nullable',
                 'exists:blogs,id',
@@ -97,6 +98,7 @@ class EnblogController extends Controller
         }
         $blog->keywords = $request->get('keywords');
         $blog->slug = $request->get('slug');
+        $blog->published_at = $request->filled('published_at') ? $request->get('published_at') : now();
         $blog->save();
         $blog->entags()->sync(request('tags'));
         return redirect()->route('enblogs.index', $blog->id)->with('success', 'El blog se ha creado correctamente.');
@@ -110,7 +112,7 @@ class EnblogController extends Controller
      */
     public function show($slug)
     {
-        $blog = Enblog::query()->with('blog')->where('slug', $slug)->firstOrFail();
+        $blog = Enblog::query()->with('blog.ptblog')->where('slug', $slug)->firstOrFail();
         $blogses = Enblog::where('id', '!=', $blog->id)->latest()->take(3)->get();
         $tours = Toursen::latest()->take(4)->get();
         return view('blogs.en.blogs.show', compact('blog', 'blogses','tours'));
@@ -152,6 +154,7 @@ class EnblogController extends Controller
             'keywords' => 'nullable|string',
             'slug' => 'required|string|unique:enblogs,slug,' . $id,
             'tags' => 'nullable|array',
+            'published_at' => 'nullable|date',
             'blog_id' => [
                 'nullable',
                 'exists:blogs,id',
@@ -165,6 +168,9 @@ class EnblogController extends Controller
         $blog->keywords = $request->get('keywords');
         $blog->slug = $request->get('slug');
         $blog->blog_id = $request->input('blog_id') ?: null;
+        if ($request->filled('published_at')) {
+            $blog->published_at = $request->get('published_at');
+        }
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $filename = $image->getClientOriginalName();

@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TourSeeder::class);
         $this->call(EnglishCategorySeeder::class);
         $this->call(CategoryToursenPivotSeeder::class);
+        $this->call(PortuguesCatalogoSeeder::class);
+        $this->call(PortuguesBlogSeeder::class);
     }
 }

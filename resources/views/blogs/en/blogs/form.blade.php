@@ -35,6 +35,16 @@
         </div>
 
         <div class="form-group">
+            <label for="published_at">Fecha de publicación <small class="text-muted">(datePublished para Google)</small></label>
+            <input type="date" name="published_at"
+                class="form-control {{ $errors->has('published_at') ? 'is-invalid' : '' }}"
+                value="{{ old('published_at', optional($blog->published_at ?? $blog->created_at)->format('Y-m-d')) }}">
+            @if ($errors->has('published_at'))
+                <div class="invalid-feedback">{{ $errors->first('published_at') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group">
             <label for="img">Imagen</label>
             <input type="file" name="img" class="form-control {{ $errors->has('img') ? 'is-invalid' : '' }}">
             @if ($blog->img)

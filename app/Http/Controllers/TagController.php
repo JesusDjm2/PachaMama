@@ -56,10 +56,15 @@ class TagController extends Controller
     public function show($slug)
     {
         $tag = Tag::where('slug', $slug)->firstOrFail();
-        $blogs = $tag->blogs()->get();
+        $blogs = $tag->blogs()->latest()->get();
         $coincidencias = $tag->blogs()->count();
-        $allTags = Tag::orderBy('nombre')->get();
-        return view('blogs.es.tags.show', compact('tag','blogs','coincidencias','allTags'));
+        $allTags = Tag::query()
+            ->withCount('blogs')
+            ->orderByDesc('blogs_count')
+            ->orderBy('nombre')
+            ->get();
+
+        return view('blogs.es.tags.show', compact('tag', 'blogs', 'coincidencias', 'allTags'));
     }
 
     /**

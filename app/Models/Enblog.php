@@ -24,7 +24,9 @@ class Enblog extends Model
        *
        * @var array
        */
-      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug', 'blog_id'];
+      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug', 'blog_id', 'published_at'];
+
+      protected $casts = ['published_at' => 'datetime'];
     
     
       /**

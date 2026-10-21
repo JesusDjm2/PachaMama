@@ -24,6 +24,10 @@ class Tour extends Model
     {
         return $this->hasOne(Toursen::class);
     }
+    public function tourpt()
+    {
+        return $this->hasOne(Tourpt::class);
+    }
     public function categorias()
     {
         return $this->belongsToMany(Categoria::class, 'categoria_tour');

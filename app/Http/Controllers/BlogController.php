@@ -53,6 +53,7 @@ class BlogController extends Controller
             'keywords' => 'nullable|string',
             'slug' => 'required|string',
             'tags' => 'nullable|array',
+            'published_at' => 'nullable|date',
         ]);
         $blog = new Blog();
         $blog->nombre = $request->get('nombre');
@@ -67,6 +68,7 @@ class BlogController extends Controller
         }
         $blog->keywords = $request->get('keywords');
         $blog->slug = $request->get('slug');
+        $blog->published_at = $request->filled('published_at') ? $request->get('published_at') : now();
         $blog->save();
         $blog->tags()->sync(request('tags'));
         return redirect()->route('blogs.index', $blog->id)->with('success', 'El blog se ha creado correctamente.');
@@ -80,7 +82,7 @@ class BlogController extends Controller
      */
     public function show($slug)
     {
-        $blog = Blog::query()->with('enblog')->where('slug', $slug)->firstOrFail();
+        $blog = Blog::query()->with(['enblog', 'ptblog'])->where('slug', $slug)->firstOrFail();
         $blogses = Blog::where('id', '!=', $blog->id)->latest()->take(3)->get();
         $tours = Tour::latest()->take(4)->get();
         return view('blogs.es.blogs.show', compact('blog', 'blogses','tours'));
@@ -116,6 +118,7 @@ class BlogController extends Controller
             'keywords' => 'nullable|string',
             'slug' => 'required|string',
             'tags' => 'nullable|array',
+            'published_at' => 'nullable|date',
         ]);
         $blog = Blog::findOrFail($id);
         $blog->nombre = $request->get('nombre');
@@ -123,6 +126,9 @@ class BlogController extends Controller
         $blog->cuerpo = $request->get('cuerpo');
         $blog->keywords = $request->get('keywords');
         $blog->slug = $request->get('slug');
+        if ($request->filled('published_at')) {
+            $blog->published_at = $request->get('published_at');
+        }
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $filename = $image->getClientOriginalName();

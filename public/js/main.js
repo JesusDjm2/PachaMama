@@ -192,4 +192,77 @@ $(function() {
   };
   initHomeTourFiltersAjax();
 
+  /**
+   * Carrusel de blogs en inicio / index: flechas desplazan el carril horizontal.
+   */
+  var initHomeBlogRailNav = function() {
+    $('.home-blog-rail__viewport').each(function() {
+      var $vp = $(this);
+      var $track = $vp.find('.home-blog-rail__track');
+      var $prev = $vp.find('.home-blog-rail__arrow--prev');
+      var $next = $vp.find('.home-blog-rail__arrow--next');
+      if (!$track.length) {
+        return;
+      }
+
+      var scrollStep = function() {
+        var w = $track.outerWidth() || 320;
+        return Math.max(260, Math.floor(w * 0.82));
+      };
+
+      $prev.on('click', function() {
+        $track[0].scrollBy({ left: -scrollStep(), behavior: 'smooth' });
+      });
+      $next.on('click', function() {
+        $track[0].scrollBy({ left: scrollStep(), behavior: 'smooth' });
+      });
+    });
+  };
+  initHomeBlogRailNav();
+
+  /**
+   * Cóndor del pie: la animación arranca al hacer scroll hasta la silueta de cerros
+   * (ahorra trabajo antes de que el usuario llegue al footer).
+   */
+  var initFooterCondorWhenVisible = function() {
+    var stages = document.querySelectorAll('.footer-mountain-stage');
+    if (!stages.length) {
+      return;
+    }
+
+    var reveal = function() {
+      document.body.classList.add('js-footer-peaks-visible');
+    };
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      reveal();
+      return;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      reveal();
+      return;
+    }
+
+    var obs = new IntersectionObserver(function(entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) {
+          reveal();
+          obs.disconnect();
+          return;
+        }
+      }
+    }, {
+      root: null,
+      /* Anticipa más el pie para que el vuelo arranque antes al hacer scroll */
+      rootMargin: '35% 0px 30% 0px',
+      threshold: 0.01
+    });
+
+    stages.forEach(function(el) {
+      obs.observe(el);
+    });
+  };
+  initFooterCondorWhenVisible();
+
 });

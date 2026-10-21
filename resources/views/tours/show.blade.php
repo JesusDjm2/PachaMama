@@ -2,9 +2,17 @@
 @section('titulo', $tour->nombre)
 @include('layouts.metas')
 @push('locale_page_switcher')
-    @if ($tour->toursens)
-        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
-            <a href="{{ route('toursen.show', $tour->toursens->slug) }}" hreflang="en" class="font-weight-bold">View this tour in English →</a>
+    @if ($tour->toursens || $tour->tourpt)
+        <div class="locale-lang-strip text-center small">
+            @if ($tour->toursens)
+                <a href="{{ route('toursen.show', $tour->toursens->slug) }}" hreflang="en">View this tour in English →</a>
+            @endif
+            @if ($tour->toursens && $tour->tourpt)
+                <span class="locale-lang-strip__muted mx-1" aria-hidden="true">·</span>
+            @endif
+            @if ($tour->tourpt)
+                <a href="{{ route('pt.tour', $tour->tourpt->slug) }}" hreflang="pt-br">Ver este tour en portugués →</a>
+            @endif
         </div>
     @endif
 @endpush

@@ -5,50 +5,226 @@ namespace App\Support;
 use App\Http\Controllers\DestiniesPeruController;
 use App\Models\Blog;
 use App\Models\Enblog;
+use App\Models\Ptblog;
 use App\Models\Tour;
+use App\Models\Tourpt;
 use App\Models\Toursen;
 use Illuminate\Support\Facades\Route;
 
 /**
- * URLs pareadas ES/EN para hreflang, conmutador de idioma del menú y SEO.
+ * URLs pareadas ES/EN/PT para hreflang, conmutador de idioma del menú y SEO.
  */
 final class LocaleRouteMap
 {
+    public const LOCALES = ['es', 'en', 'pt'];
+
+    /** Rutas de categoría ES/EN → link de la categoría PT equivalente. */
+    private const CATEGORY_PT_LINKS = [
+        'caminata' => 'trilhas',
+        'hikes' => 'trilhas',
+        'mapi' => 'machu-picchu',
+        'mapien' => 'machu-picchu',
+        'peru' => 'arredores-do-peru',
+        'around' => 'arredores-do-peru',
+        'fullday' => 'dia-inteiro',
+        'fulldayen' => 'dia-inteiro',
+        'luxury' => 'tours-de-luxo',
+        'private' => 'tours-de-luxo',
+    ];
+
     /**
-     * Rutas nombradas que tienen equivalente en el otro idioma (misma clave = nombre de ruta actual).
+     * URL de la contraparte real en el idioma pedido, o null si esta página no está traducida.
+     * A diferencia de switchUrlTo(), no cae en la portada: sirve para enlaces e hreflang.
+     */
+    public static function counterpartUrl(string $locale): ?string
+    {
+        $route = Route::currentRouteName();
+        if ($route === null || ! in_array($locale, self::LOCALES, true)) {
+            return null;
+        }
+
+        $slug = request()->route('slug');
+
+        $tour = self::tourAlternateUrls($route, $slug);
+        if ($tour !== null) {
+            return $tour[$locale] ?? null;
+        }
+
+        $blog = self::blogAlternateUrls($route, $slug);
+        if ($blog !== null) {
+            return $blog[$locale] ?? null;
+        }
+
+        $dest = self::destinationAlternateUrls($route, $slug);
+        if ($dest !== null) {
+            return $dest[$locale] ?? null;
+        }
+
+        if (isset(self::CATEGORY_PT_LINKS[$route]) && $locale === 'pt' && Route::has('pt.categoria')) {
+            return route('pt.categoria', self::CATEGORY_PT_LINKS[$route]);
+        }
+
+        $target = self::staticRoutePairs()[$route][$locale] ?? null;
+
+        return ($target !== null && Route::has($target)) ? route($target) : null;
+    }
+    /**
+     * Rutas nombradas que tienen equivalente en otro idioma (misma clave = nombre de ruta actual).
+     * `pt` es null mientras la página aún no tenga versión en portugués.
      *
-     * @return array<string, array{en: string, es: string}>
+     * @return array<string, array{en: string, es: string, pt: ?string}>
      */
     public static function staticRoutePairs(): array
     {
+        $ausente = ['pt' => null];
+
         return [
-            'index' => ['en' => 'index', 'es' => 'inicio'],
-            'inicio' => ['en' => 'index', 'es' => 'inicio'],
-            'contact' => ['en' => 'contact', 'es' => 'contactenos'],
-            'contactenos' => ['en' => 'contact', 'es' => 'contactenos'],
-            'about' => ['en' => 'about', 'es' => 'nosotros'],
-            'nosotros' => ['en' => 'about', 'es' => 'nosotros'],
-            'mapi' => ['en' => 'mapien', 'es' => 'mapi'],
-            'mapien' => ['en' => 'mapien', 'es' => 'mapi'],
-            'caminata' => ['en' => 'hikes', 'es' => 'caminata'],
-            'hikes' => ['en' => 'hikes', 'es' => 'caminata'],
-            'peru' => ['en' => 'around', 'es' => 'peru'],
-            'around' => ['en' => 'around', 'es' => 'peru'],
-            'luxury' => ['en' => 'private', 'es' => 'luxury'],
-            'private' => ['en' => 'private', 'es' => 'luxury'],
-            'fullday' => ['en' => 'fulldayen', 'es' => 'fullday'],
-            'fulldayen' => ['en' => 'fulldayen', 'es' => 'fullday'],
-            'lodges' => ['en' => 'lodgen', 'es' => 'lodges'],
-            'lodgen' => ['en' => 'lodgen', 'es' => 'lodges'],
-            'listado' => ['en' => 'enlistado', 'es' => 'listado'],
-            'enlistado' => ['en' => 'enlistado', 'es' => 'listado'],
-            'destinos-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'],
-            'destinies-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'],
-            'terminos' => ['en' => 'terms-en', 'es' => 'terminos'],
-            'terms-en' => ['en' => 'terms-en', 'es' => 'terminos'],
-            'preguntas' => ['en' => 'faq', 'es' => 'preguntas'],
-            'faq' => ['en' => 'faq', 'es' => 'preguntas'],
+            'index' => ['en' => 'index', 'es' => 'inicio', 'pt' => 'pt.index'],
+            'inicio' => ['en' => 'index', 'es' => 'inicio', 'pt' => 'pt.index'],
+            'pt.index' => ['en' => 'index', 'es' => 'inicio', 'pt' => 'pt.index'],
+            'contact' => ['en' => 'contact', 'es' => 'contactenos', 'pt' => 'pt.contato'],
+            'contactenos' => ['en' => 'contact', 'es' => 'contactenos', 'pt' => 'pt.contato'],
+            'pt.contato' => ['en' => 'contact', 'es' => 'contactenos', 'pt' => 'pt.contato'],
+            'about' => ['en' => 'about', 'es' => 'nosotros'] + $ausente,
+            'nosotros' => ['en' => 'about', 'es' => 'nosotros'] + $ausente,
+            'mapi' => ['en' => 'mapien', 'es' => 'mapi'] + $ausente,
+            'mapien' => ['en' => 'mapien', 'es' => 'mapi'] + $ausente,
+            'caminata' => ['en' => 'hikes', 'es' => 'caminata'] + $ausente,
+            'hikes' => ['en' => 'hikes', 'es' => 'caminata'] + $ausente,
+            'peru' => ['en' => 'around', 'es' => 'peru'] + $ausente,
+            'around' => ['en' => 'around', 'es' => 'peru'] + $ausente,
+            'luxury' => ['en' => 'private', 'es' => 'luxury'] + $ausente,
+            'private' => ['en' => 'private', 'es' => 'luxury'] + $ausente,
+            'fullday' => ['en' => 'fulldayen', 'es' => 'fullday'] + $ausente,
+            'fulldayen' => ['en' => 'fulldayen', 'es' => 'fullday'] + $ausente,
+            'lodges' => ['en' => 'lodgen', 'es' => 'lodges'] + $ausente,
+            'lodgen' => ['en' => 'lodgen', 'es' => 'lodges'] + $ausente,
+            'listado' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
+            'enlistado' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
+            'pt.blog.index' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
+            'destinos-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'] + $ausente,
+            'destinies-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'] + $ausente,
+            'terminos' => ['en' => 'terms-en', 'es' => 'terminos'] + $ausente,
+            'terms-en' => ['en' => 'terms-en', 'es' => 'terminos'] + $ausente,
+            'preguntas' => ['en' => 'faq', 'es' => 'preguntas'] + $ausente,
+            'faq' => ['en' => 'faq', 'es' => 'preguntas'] + $ausente,
         ];
+    }
+
+    /**
+     * URL de la página actual en el idioma pedido; cae en la portada de ese idioma.
+     */
+    public static function switchUrlTo(string $locale): string
+    {
+        if (! in_array($locale, self::LOCALES, true)) {
+            return self::homeUrl('es');
+        }
+
+        $route = Route::currentRouteName();
+        $slug = request()->route('slug');
+
+        if ($route !== null) {
+            $dest = self::destinationAlternateUrls($route, $slug);
+            if ($dest !== null && ($locale === 'es' || $locale === 'en')) {
+                return $dest[$locale];
+            }
+
+            $tour = self::tourAlternateUrls($route, $slug);
+            if ($tour !== null && isset($tour[$locale])) {
+                return $tour[$locale];
+            }
+
+            $blog = self::blogAlternateUrls($route, $slug);
+            if ($blog !== null) {
+                return $blog[$locale] ?? self::blogListUrl($locale);
+            }
+
+            $search = self::searchAlternateUrl($route, $locale);
+            if ($search !== null) {
+                return $search;
+            }
+
+            $target = self::staticRoutePairs()[$route][$locale] ?? null;
+            if ($target !== null && Route::has($target)) {
+                return route($target);
+            }
+        }
+
+        return self::homeUrl($locale);
+    }
+
+    public static function blogListUrl(string $locale): string
+    {
+        return match ($locale) {
+            'pt' => route('pt.index'),
+            'en' => route('enlistado'),
+            default => route('listado'),
+        };
+    }
+
+    public static function homeUrl(string $locale): string
+    {
+        return match ($locale) {
+            'pt' => route('pt.index'),
+            'en' => route('index'),
+            default => route('inicio'),
+        };
+    }
+
+    /**
+     * @return array<string, string>|null URLs del tour en los idiomas que tienen contraparte
+     */
+    public static function tourAlternateUrls(?string $routeName, mixed $slug): ?array
+    {
+        $anchor = match ($routeName) {
+            'tours.show' => Tour::query()->where('slug', $slug)->with(['toursens', 'tourpt'])->first(),
+            'toursen.show' => Toursen::query()->where('slug', $slug)->with('tour.tourpt')->first()?->tour,
+            'pt.tour' => Tourpt::query()->where('slug', $slug)->with('tour.toursens')->first()?->tour,
+            default => null,
+        };
+
+        if ($anchor === null) {
+            return null;
+        }
+
+        $out = ['es' => route('tours.show', $anchor->slug)];
+
+        if ($anchor->toursens && Route::has('toursen.show')) {
+            $out['en'] = route('toursen.show', $anchor->toursens->slug);
+        }
+        if ($anchor->tourpt && Route::has('pt.tour')) {
+            $out['pt'] = route('pt.tour', $anchor->tourpt->slug);
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array<string, string>|null
+     */
+    public static function blogAlternateUrls(?string $routeName, mixed $slug): ?array
+    {
+        $anchor = match ($routeName) {
+            'blog.show' => Blog::query()->where('slug', $slug)->with(['enblog', 'ptblog'])->first(),
+            'enblog' => Enblog::query()->where('slug', $slug)->with('blog.ptblog')->first()?->blog,
+            'pt.blog' => Ptblog::query()->where('slug', $slug)->with('blog.enblog')->first()?->blog,
+            default => null,
+        };
+
+        if ($anchor === null) {
+            return null;
+        }
+
+        $out = ['es' => route('blog.show', $anchor->slug)];
+
+        if ($anchor->enblog && Route::has('enblog')) {
+            $out['en'] = route('enblog', $anchor->enblog->slug);
+        }
+        if ($anchor->ptblog && Route::has('pt.blog')) {
+            $out['pt'] = route('pt.blog', $anchor->ptblog->slug);
+        }
+
+        return $out;
     }
 
     /**
@@ -89,105 +265,31 @@ final class LocaleRouteMap
      */
     public static function menuLanguageSwitchUrl(bool $toEnglish): string
     {
-        $route = Route::currentRouteName();
-        $req = request();
-        $slug = $req->route('slug');
+        return self::switchUrlTo($toEnglish ? 'en' : 'es');
+    }
 
-        $dest = self::destinationAlternateUrls($route, $slug);
-        if ($dest !== null) {
-            return $toEnglish ? $dest['en'] : $dest['es'];
+    /**
+     * Las páginas de búsqueda mantienen el término al cambiar de idioma.
+     */
+    private static function searchAlternateUrl(?string $route, string $locale): ?string
+    {
+        $targets = match ($route) {
+            'search', 'searchen' => ['es' => 'search', 'en' => 'searchen'],
+            'searchblog', 'search.blog.en' => ['es' => 'searchblog', 'en' => 'search.blog.en'],
+            default => null,
+        };
+
+        if ($targets === null) {
+            return null;
         }
 
-        foreach (self::staticRoutePairs() as $fromRoute => $targets) {
-            if ($route === $fromRoute) {
-                return $toEnglish ? route($targets['en']) : route($targets['es']);
-            }
+        $target = $targets[$locale] ?? null;
+        if ($target === null || ! Route::has($target)) {
+            return self::homeUrl($locale);
         }
 
-        if ($route === 'tours.show' && ($slug = $req->route('slug'))) {
-            if ($toEnglish) {
-                $tour = Tour::query()->where('slug', $slug)->with('toursens')->first();
-                if ($tour && $tour->toursens) {
-                    return route('toursen.show', $tour->toursens->slug);
-                }
-            }
+        $name = trim((string) request()->input('name', ''));
 
-            return route('inicio');
-        }
-
-        if ($route === 'toursen.show' && ($slug = $req->route('slug'))) {
-            if (! $toEnglish) {
-                $toursen = Toursen::query()->where('slug', $slug)->with('tour')->first();
-                if ($toursen && $toursen->tour) {
-                    return route('tours.show', $toursen->tour->slug);
-                }
-            }
-
-            return route('index');
-        }
-
-        if ($route === 'blog.show' && ($slug = $req->route('slug'))) {
-            if ($toEnglish) {
-                $blog = Blog::query()->where('slug', $slug)->with('enblog')->first();
-                if ($blog && $blog->enblog) {
-                    return route('enblog', $blog->enblog->slug);
-                }
-
-                return route('enlistado');
-            }
-
-            return route('listado');
-        }
-
-        if ($route === 'enblog' && ($slug = $req->route('slug'))) {
-            if (! $toEnglish) {
-                $en = Enblog::query()->where('slug', $slug)->with('blog')->first();
-                if ($en && $en->blog) {
-                    return route('blog.show', $en->blog->slug);
-                }
-
-                return route('listado');
-            }
-
-            return route('enlistado');
-        }
-
-        if ($route === 'search' && $toEnglish) {
-            $name = trim((string) $req->input('name', ''));
-            if ($name !== '') {
-                return route('searchen', ['name' => $name]);
-            }
-
-            return route('index');
-        }
-
-        if ($route === 'searchen' && ! $toEnglish) {
-            $name = trim((string) $req->input('name', ''));
-            if ($name !== '') {
-                return route('search', ['name' => $name]);
-            }
-
-            return route('inicio');
-        }
-
-        if ($route === 'searchblog' && $toEnglish) {
-            $name = trim((string) $req->input('name', ''));
-            if ($name !== '') {
-                return route('search.blog.en', ['name' => $name]);
-            }
-
-            return route('enlistado');
-        }
-
-        if ($route === 'search.blog.en' && ! $toEnglish) {
-            $name = trim((string) $req->input('name', ''));
-            if ($name !== '') {
-                return route('searchblog', ['name' => $name]);
-            }
-
-            return route('listado');
-        }
-
-        return $toEnglish ? route('index') : route('inicio');
+        return $name !== '' ? route($target, ['name' => $name]) : self::homeUrl($locale);
     }
 }

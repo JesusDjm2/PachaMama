@@ -2,23 +2,33 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EnblogController;
 use App\Http\Controllers\EnlacesCategorias;
 use App\Http\Controllers\EntagController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingPromoController;
 use App\Http\Controllers\ImagenesController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PtblogController;
+use App\Http\Controllers\PtagController;
+use App\Http\Controllers\PtcategoriaController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SearchenController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\ToursenController;
+use App\Http\Controllers\TourptController;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\DestiniesPeruController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SitemapController;
+
+// Sitemap dinámico
+Route::get('sitemap.xml', [SitemapController::class, 'index']);
 
 //Páginas de inicio
 Route::get('/', [ToursenController::class, 'mostrar'])->name('index');
@@ -42,11 +52,15 @@ Route::get('category/around-peru', [EnlacesCategorias::class, 'around'])->name('
 Route::get('category/luxury-tours', [EnlacesCategorias::class, 'private'])->name('private');
 Route::get('full-day-tours', [EnlacesCategorias::class, 'fulldayen'])->name('fulldayen');
 Route::get('pacha-mama-spirit-lodge', [EnlacesCategorias::class, 'lodgen'])->name('lodgen');
+Route::permanentRedirect('around-peru', 'category/around-peru');
+Route::permanentRedirect('hikes', 'categories/trekking'); 
+Route::permanentRedirect('machu-picchu-en', 'category/machu-picchu');
+Route::permanentRedirect('lodge-pacha-mama-spirit-en', 'pacha-mama-spirit-lodge');
 
 Route::get('category/{category:link}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::resource('categories', CategoryController::class)->middleware('auth')->names([
-    'index' => 'category.index',
+    'index' => 'category.index', 
     'create' => 'category.create',
     'store' => 'category.store',
     'edit' => 'category.edit',
@@ -62,6 +76,11 @@ Route::get('preguntas-frecuentes', [EnlacesCategorias::class, 'preguntas'])->nam
 Route::get('frequently-asked-questions', [EnlacesCategorias::class, 'faq'])->name('faq');
 
 Route::get('ven-a-conocer-Peru', [EnlacesCategorias::class, 'landing'])->name('landing');
+
+// Landing pages para campañas publicitarias (Ads)
+Route::get('promociones-tours-peru', [LandingPromoController::class, 'es'])->name('promo.es');
+Route::get('peru-tours-promotions', [LandingPromoController::class, 'en'])->name('promo.en');
+Route::get('promocoes-tours-peru', [LandingPromoController::class, 'pt'])->name('promo.pt');
 
 //Blog Ingles:
 Route::get('blog-peru', [BlogController::class, 'listado'])->name('listado');
@@ -101,19 +120,37 @@ Route::get('/djm2', [HomeController::class, 'index']);
 Route::resource('imagenes', ImagenesController::class)->middleware('auth');
 //Administrador de tour español
 Route::resource('tours', TourController::class)->middleware('auth');
+Route::resource('categorias', CategoriaController::class)->middleware('auth')->names([
+    'index'   => 'categoria.index',
+    'create'  => 'categoria.create',
+    'store'   => 'categoria.store',
+    'show'    => 'categoria.show',
+    'edit'    => 'categoria.edit',
+    'update'  => 'categoria.update',
+    'destroy' => 'categoria.destroy',
+]);
 Route::get('search', [SearchController::class, 'search'])->name('search');
 Route::get('searchblog', [SearchController::class, 'searchblog'])->name('searchblog');
 Route::get('tour/{slug}/', [TourController::class, 'show'])->name('tours.show');
 
 //Administrador de tour Ingles
 Route::resource('toursen', ToursenController::class)->middleware('auth')->except(['show'])->names('toursen');
+
+//Administrador del sitio en portugués (CRUD sobre tourspt, ptblogs, pttags, ptcategories)
+Route::resource('tourspt', TourptController::class)->middleware('auth')->except(['show'])->names('tourspt');
+Route::resource('ptcategoria', PtcategoriaController::class)->middleware('auth')->except(['show'])
+    ->parameters(['ptcategoria' => 'ptcategoria'])->names('ptcategoria');
+Route::resource('pttags', PtagController::class)->middleware('auth')->except(['show'])->names('pttags');
+Route::resource('ptblogs', PtblogController::class)->middleware('auth')->except(['show'])->names('ptblogs');
 Route::get('search-en-blog', [SearchenController::class, 'searchblog'])->name('search.blog.en');
 Route::get('searchen', [SearchenController::class, 'search'])->name('searchen');
 
 //mensajes
 Route::post('mensajePacha', [MailController::class, 'getMail'])->name('mensajePacha');
 Route::post('mensajePachaEn', [MailController::class, 'getMailEn'])->name('mensajePachaEn');
+Route::post('mensajePachaPt', [MailController::class, 'getMailPt'])->name('mensajePachaPt');
 Route::post('mensajeIndex', [MailController::class, 'getMailIndex'])->name('mensajeIndex');
+Route::post('mensajeIndexPt', [MailController::class, 'getMailIndexPt'])->name('mensajeIndexPt');
 
 //Paginas estaticas español:
 Route::get('arma-tu-viaje', function () {
@@ -144,6 +181,17 @@ Route::get('es/destinos-en-peru/ciudad-de-pisco', function () {
 Route::get('es/destinos-en-peru/puerto-maldonado', function () {
     return app(DestiniesPeruController::class)->destinationEs('puerto-maldonado');
 })->name('puerto-maldonado');
+
+// Sitio en portugués: lleva prefijo /pt porque el inglés ocupa la raíz y el catch-all {slug}
+Route::prefix('pt')->name('pt.')->group(function () {
+    Route::get('', [TourptController::class, 'mostrar'])->name('index');
+    Route::view('contato', 'pt.contato')->name('contato');
+    Route::get('blog', [PtblogController::class, 'listado'])->name('blog.index');
+    Route::get('blog/{slug}', [PtblogController::class, 'show'])->name('blog');
+    Route::get('tag/{slug}', [PtblogController::class, 'tag'])->name('tag');
+    Route::get('categoria/{categoria}', [TourptController::class, 'categoria'])->name('categoria');
+    Route::get('{slug}', [TourptController::class, 'show'])->name('tour');
+});
 
 // Tour público en inglés (slug) — al final para no interceptar rutas estáticas de una sola parte
 Route::get('{slug}', [ToursenController::class, 'show'])

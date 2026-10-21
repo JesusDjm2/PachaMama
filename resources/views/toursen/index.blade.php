@@ -23,8 +23,29 @@
 
 <div class="card pm-card">
     <div class="card-header pm-card-header">
-        <h6>Listado de tours</h6>
-        <div class="pm-search">
+        <div class="d-flex align-items-center flex-wrap" style="gap:8px;">
+            <h6 class="mb-0 mr-3">
+                Listado de tours
+                <span class="badge badge-secondary ml-1">{{ $tours->count() }}</span>
+                @if($filtroCategoria)
+                    <span class="badge badge-primary ml-1">filtrado</span>
+                @endif
+            </h6>
+            {{-- Category filter pills --}}
+            <a href="{{ route('toursen.index') }}"
+               class="badge {{ !$filtroCategoria ? 'badge-dark' : 'badge-light border' }} px-3 py-2"
+               style="font-size:0.78rem;text-decoration:none;cursor:pointer;">
+                All
+            </a>
+            @foreach($categories as $cat)
+            <a href="{{ route('toursen.index', ['categoria' => $cat->link]) }}"
+               class="badge {{ $filtroCategoria === $cat->link ? 'badge-primary' : 'badge-light border' }} px-3 py-2"
+               style="font-size:0.78rem;text-decoration:none;cursor:pointer;">
+                {{ $cat->nombre }}
+            </a>
+            @endforeach
+        </div>
+        <div class="pm-search mt-2 mt-sm-0">
             <input type="text" id="search" class="form-control form-control-sm" placeholder="Buscar tour...">
         </div>
     </div>
@@ -41,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($tours as $tour)
+                    @forelse($tours as $tour)
                     <tr>
                         <td>
                             <div class="font-weight-bold" style="color:#1a2e45;">{{ $tour->nombre }}</div>
@@ -79,7 +100,15 @@
                             </form>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            <i class="fas fa-search fa-2x mb-2 d-block"></i>
+                            No tours in this category.
+                            <a href="{{ route('toursen.index') }}">View all</a>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -96,7 +125,7 @@
     const headers = table.querySelectorAll('thead th.sortable');
 
     function normalize(str) {
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        return str.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
     }
 
     searchInput.addEventListener('input', function() {

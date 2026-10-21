@@ -56,10 +56,15 @@ class EntagController extends Controller
     public function show($slug)
     {
         $tag = Entag::where('slug', $slug)->firstOrFail();
-        $blogs = $tag->enblogs()->get();
+        $blogs = $tag->enblogs()->latest()->get();
         $coincidencias = $tag->enblogs()->count();
-        $allTags = Entag::orderBy('nombre')->get();
-        return view('blogs.en.tags.show', compact('tag','blogs','coincidencias','allTags'));
+        $allTags = Entag::query()
+            ->withCount('enblogs')
+            ->orderByDesc('enblogs_count')
+            ->orderBy('nombre')
+            ->get();
+
+        return view('blogs.en.tags.show', compact('tag', 'blogs', 'coincidencias', 'allTags'));
     }
 
     /**

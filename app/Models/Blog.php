@@ -24,7 +24,9 @@ class Blog extends Model
        *
        * @var array
        */
-      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug'];
+      protected $fillable = ['nombre', 'descripcion', 'cuerpo', 'img', 'keywords', 'slug', 'published_at'];
+
+      protected $casts = ['published_at' => 'datetime'];
     
     
       /**
@@ -38,5 +40,10 @@ class Blog extends Model
       public function enblog()
       {
         return $this->hasOne(Enblog::class, 'blog_id');
+      }
+
+      public function ptblog()
+      {
+        return $this->hasOne(Ptblog::class, 'blog_id');
       }
 }

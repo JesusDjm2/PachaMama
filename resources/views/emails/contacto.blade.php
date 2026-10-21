@@ -1,62 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h4>Correo enviado desde la página web Pacha Mama Spirit</h4>
-    <table class="table table-hover" style="text-align: left">
-        {{-- <thead>
-            <tr>
-                <th scope="col">Email:</th>
-                <td>{{ $email }}</th>
-            </tr>
-        </thead> --}}
-        <tbody>
-            <tr>
-                <th scope="row">Nombre:</th>
-                <td>{{ $nombre }}</td>
-            
-            </tr>
-            <tr>
-                <th scope="row">Nombre:</th>
-                <td>{{ $email }}</td>
-            
-            </tr>
-            <tr>
-                <th scope="row">Adultos:</th>
-                <td>{{ $adultos }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Niños:</th>
-                <td>{{ $childs }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Fecha de arrivo:</th>
-                <td>{{ $date }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Teléfono:</th>
-                <td>{{ $phone }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Tour:</th>
-                <td>{{ $tour }}</td>
-            </tr>
-            <tr>
-                <th scope="row">Mensaje:</th>
-                <td>{{ $mensaje }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <br><br><br>
-    <div class="conteiner">
-        <div class="col-lg-12 text-center">
-            Copiryght 2022 © todos los derechos reservados | Pacha Mama Spirit | Hecho por DJM2
-        </div>
-    </div>
-</body>
-</html>
+@extends('emails.layout')
+
+@section('title', '¡Tienes un nuevo lead!')
+@section('eyebrow', 'Formulario web · Ficha de tour')
+@section('subtitle', 'Alguien acaba de solicitar información sobre un tour desde la página web. Aquí están los detalles.')
+
+@section('content')
+    @include('emails.partials.fields-table', ['fields' => [
+        ['label' => 'Nombre', 'value' => $nombre ?? null],
+        ['label' => 'Email', 'value' => $email ?? null],
+        ['label' => 'Teléfono', 'value' => $phone ?? null],
+        ['label' => 'Adultos', 'value' => $adultos ?? null],
+        ['label' => 'Niños', 'value' => $childs ?? null],
+        ['label' => 'Fecha de arribo', 'value' => $date ?? null],
+        ['label' => 'Tour', 'value' => $tour ?? null],
+    ]])
+
+    @include('emails.partials.message-box', ['message' => $mensaje ?? null])
+@endsection
+
+@if (!empty($email))
+@section('cta')
+    <a href="mailto:{{ $email }}" style="display:inline-block; background-color:#d4a843; color:#1a2e45; text-decoration:none; font-weight:700; font-size:14px; padding:13px 30px; border-radius:8px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">Responder a {{ $nombre ?? 'este viajero' }}</a>
+@endsection
+@endif

@@ -1,16 +1,16 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
-    # Redireccionar todo al directorio "public"
+
+    # Forzar HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-SSL} !on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Enviar todo internamente a la carpeta "public" (el front controller de Laravel),
+    # sin que "public/" aparezca nunca en la URL del navegador. Nota: las peticiones que
+    # ya empiezan con "/public/" las maneja public/.htaccess directamente (Apache entra
+    # a esa carpeta real antes de volver a evaluar estas reglas), por eso la redirección
+    # que limpia "/public/..." vive allá y no aquí.
+    RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
-    
-    # Forzar SSL
-    
-    # Redireccionar URLs que incluyan "public" a la raíz
-    RewriteRule ^public/(.*)$ /$1 [L,R=301]
 </IfModule>
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP:X-Forwarded-SSL} !on
-RewriteCond %{HTTP_HOST} ^pachamamaspirit\.com$ [OR]
-RewriteCond %{HTTP_HOST} ^www\.pachamamaspirit\.com$
-RewriteRule ^/?$ "https\:\/\/pachamamaspirit\.com\/" [R=301,L]

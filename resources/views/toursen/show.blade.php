@@ -2,9 +2,17 @@
 @section('titulo', $tour->nombre)
 @include('layouts.metas')
 @push('locale_page_switcher')
-    @if ($tour->tour)
-        <div class="text-center py-2 small border-bottom bg-white" style="border-color: rgba(26,46,69,0.08) !important;">
-            <a href="{{ route('tours.show', $tour->tour->slug) }}" hreflang="es" class="font-weight-bold">Ver este tour en español →</a>
+    @if ($tour->tour || $tour->tour?->tourpt)
+        <div class="locale-lang-strip text-center small">
+            @if ($tour->tour)
+                <a href="{{ route('tours.show', $tour->tour->slug) }}" hreflang="es">Ver este tour en español →</a>
+            @endif
+            @if ($tour->tour && $tour->tour->tourpt)
+                <span class="locale-lang-strip__muted mx-1" aria-hidden="true">·</span>
+            @endif
+            @if ($tour->tour?->tourpt)
+                <a href="{{ route('pt.tour', $tour->tour->tourpt->slug) }}" hreflang="pt-br">Read this tour in Portuguese →</a>
+            @endif
         </div>
     @endif
 @endpush
@@ -222,7 +230,7 @@
                 @foreach ($otrosTours->random(4) as $tour)
                     <div class="col-lg-3 col-md-6 mb-4">
                         <div class="card card-new" style="width: 100%;">
-                            <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}">
+                            <a href="{{ route('toursen.show', $tour->slug) }}">
                                 <img class="card-img-top" src="../{{ $tour->img }}" alt="{{ $tour->nombre }}"
                                     loading="lazy">
                             </a>
@@ -265,7 +273,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <a href="{{ route('toursen.show', ['id' => $tour->id, 'slug' => $tour->slug]) }}"
+                                <a href="{{ route('toursen.show', $tour->slug) }}"
                                     class="boton-card">Más detalles</a>
                             </div>
                         </div>

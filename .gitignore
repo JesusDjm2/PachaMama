@@ -16,3 +16,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Respaldos de BD y logs locales (no publicar)
+/storage/backups/
+/storage/logs/

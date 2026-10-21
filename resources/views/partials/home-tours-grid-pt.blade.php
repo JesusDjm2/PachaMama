@@ -7,7 +7,7 @@
     <div class="col-lg-3 col-md-6">
         <div class="card card-new w-100">
             <a href="{{ route('pt.tour', $tour->slug) }}">
-                <img class="card-img-top" src="{{ $tour->img }}" alt="{{ $tour->nombre }}"
+                <img class="card-img-top" src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}"
                     loading="lazy">
             </a>
             <div class="card-body text-center">

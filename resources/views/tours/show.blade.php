@@ -17,18 +17,8 @@
     @endif
 @endpush
 @section('content')
-    <div class="blog" id="blog">
-        <!----Variable de clase------>
-        <div id="sarah" style="opacity: 0">
-            {{ $tour->clase }}
-            <script>
-                var $nombre = document.getElementById('sarah').innerText;
-                var $insertar = document.getElementById("blog");
-                $insertar.classList.remove("blog");
-                $insertar.classList.add($nombre);
-            </script>
-        </div>
-        <!----Fin Variable de clase------>
+    <div class="{{ trim($tour->clase) ?: 'blog' }}" id="blog">
+        <div id="sarah" style="display: none">{{ trim($tour->clase) }}</div>
 
         <div class="container h-100 d-flex align-items-center">
             <div class="row w-100">
@@ -251,7 +241,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="card card-new" style="width: 18rem;">
                             <a href="{{ route('tours.show', $tour->slug) }}">
-                                <img class="card-img-top" src="../{{ $tour->img }}" alt="Camino Inca 4 dias"
+                                <img class="card-img-top" src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}"
                                     loading="lazy">
                             </a>
                             <div class="card-body text-center">

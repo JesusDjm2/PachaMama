@@ -19,18 +19,8 @@
 @section('content')
     @include('layouts.menu')
     <div class="contenedor-fondo">
-        <div class="blog" id="blog">
-            <!----Variable de clase------>
-            <div id="sarah" style="opacity: 0">
-                {{ $tour->clase }}
-            </div>
-            <!----Fin Variable de clase------>
-            <script>
-                var $nombre = document.getElementById('sarah').innerText;
-                var $insertar = document.getElementById("blog");
-                $insertar.classList.remove("blog");
-                $insertar.classList.add($nombre);
-            </script>
+        <div class="{{ trim($tour->clase) ?: 'blog' }}" id="blog">
+            <div id="sarah" style="display:none">{{ trim($tour->clase) }}</div>
             <div class="container h-100 d-flex align-items-center">
                 <div class="row w-100">
                     <div class="col-lg-12 text-center">
@@ -231,7 +221,7 @@
                     <div class="col-lg-3 col-md-6 mb-4">
                         <div class="card card-new" style="width: 100%;">
                             <a href="{{ route('toursen.show', $tour->slug) }}">
-                                <img class="card-img-top" src="../{{ $tour->img }}" alt="{{ $tour->nombre }}"
+                                <img class="card-img-top" src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}"
                                     loading="lazy">
                             </a>
                             <div class="card-body text-center">

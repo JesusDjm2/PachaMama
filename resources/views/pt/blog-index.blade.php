@@ -56,7 +56,7 @@
             <div class="row g-0">
                 @forelse ($blogs as $blog)
                     <div class="blogs blogimg blog-container"
-                        style="background:url({{ $blog->img }});background-size:cover;">
+                        style="background:url({{ asset(ltrim($blog->img, '/')) }});background-size:cover;">
                         <div class="black">
                             <h2 class="nombreBlog">{{ $blog->nombre }}</h2>
                             <div class="fecha"><i class="icon-calendar"></i><span>

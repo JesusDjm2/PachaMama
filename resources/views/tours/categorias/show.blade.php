@@ -30,7 +30,7 @@
                         <div class="col-lg-3 col-md-6 mb-4">
                             <div class="card card-new" style="width: 100%;">
                                 <a href="{{ route('toursen.show', $tour->slug) }}">
-                                    <img class="card-img-top" src="../{{ $tour->img }}" alt="{{ $tour->nombre }}" loading="lazy">
+                                    <img class="card-img-top" src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}" loading="lazy">
                                 </a>
                                 <div class="card-body text-center">
                                     <h5 class="card-titulo">{{ $tour->nombre }}</h5>

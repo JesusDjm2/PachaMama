@@ -79,7 +79,7 @@
                                 <span><i class="fas fa-map-marker-alt fa-xs mr-1"></i>{{ $tour->ubicacion }}</span>
                             </div>
                         </td>
-                        <td><img src="{{ $tour->img }}" width="100" height="65" style="border-radius:8px; object-fit:cover;"></td>
+                        <td><img src="{{ asset($tour->img) }}" width="100" height="65" style="border-radius:8px; object-fit:cover;"></td>
                         <td style="font-size:0.82rem;">
                             @if ($tour->tour)
                                 <a href="{{ route('tours.edit', $tour->tour->id) }}">{{ Str::limit($tour->tour->nombre, 40) }}</a>

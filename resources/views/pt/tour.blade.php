@@ -15,18 +15,8 @@
 @section('content')
     @include('layouts.menu')
     <div class="contenedor-fondo">
-        <div class="blog" id="blog">
-            <!----Variável de classe------>
-            <div id="sarah" style="opacity: 0">
-                {{ $tour->clase }}
-            </div>
-            <!----Fim da variável de classe------>
-            <script>
-                var $nombre = document.getElementById('sarah').innerText;
-                var $insertar = document.getElementById("blog");
-                $insertar.classList.remove("blog");
-                $insertar.classList.add($nombre);
-            </script>
+        <div class="{{ trim($tour->clase) ?: 'blog' }}" id="blog">
+            <div id="sarah" style="display:none">{{ trim($tour->clase) }}</div>
             <div class="container h-100 d-flex align-items-center">
                 <div class="row w-100">
                     <div class="col-lg-12 text-center">

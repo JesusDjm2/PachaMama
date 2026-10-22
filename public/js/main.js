@@ -270,7 +270,8 @@ $(function() {
   initHomeTourFiltersAjax();
 
   /**
-   * Carrusel de blogs en inicio / index: flechas desplazan el carril horizontal.
+   * Carrusel de blogs en inicio / index: flechas con navegación en bucle infinito.
+   * Al llegar al final o al inicio, gira automáticamente al otro extremo.
    */
   var initHomeBlogRailNav = function() {
     $('.home-blog-rail__viewport').each(function() {
@@ -283,15 +284,48 @@ $(function() {
       }
 
       var scrollStep = function() {
+        var $firstCard = $track.find('.home-blog-rail__card').first();
+        var cardW = $firstCard.length ? $firstCard.outerWidth() : 300;
         var w = $track.outerWidth() || 320;
-        return Math.max(260, Math.floor(w * 0.82));
+        return Math.max(cardW, Math.floor(w * 0.82));
       };
 
-      $prev.on('click', function() {
-        $track[0].scrollBy({ left: -scrollStep(), behavior: 'smooth' });
+      $prev.on('click', function(e) {
+        e.preventDefault();
+        var el = $track[0];
+        var maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+        if (maxScroll <= 10) return;
+
+        // Si ya estamos en el inicio, gira en bucle hacia el final
+        if (el.scrollLeft <= 20) {
+          el.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+          var step = scrollStep();
+          if (el.scrollLeft - step <= 20) {
+            el.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            el.scrollBy({ left: -step, behavior: 'smooth' });
+          }
+        }
       });
-      $next.on('click', function() {
-        $track[0].scrollBy({ left: scrollStep(), behavior: 'smooth' });
+
+      $next.on('click', function(e) {
+        e.preventDefault();
+        var el = $track[0];
+        var maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+        if (maxScroll <= 10) return;
+
+        // Si ya estamos en el final, gira en bucle hacia el inicio
+        if (el.scrollLeft >= maxScroll - 20) {
+          el.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          var step = scrollStep();
+          if (el.scrollLeft + step >= maxScroll - 20) {
+            el.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            el.scrollBy({ left: step, behavior: 'smooth' });
+          }
+        }
       });
     });
   };

@@ -156,8 +156,6 @@
                 </div>
                 <div class="space"></div>
                 <div class="col-12" id="home-tours-section">
-                    <h2 class="h2-tierras">Tours recomendados:</h2>
-                    <div class="linea2-blogs mb-3"></div>
                     @include('partials.home-tour-filters')
                     <div class="row g-3 home-tours-results" id="home-tours-results" aria-live="polite">
                         @include('partials.home-tours-grid-pt')
@@ -326,6 +324,7 @@
                                     <button class="btnTransparent" type="submit">Enviar</button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>

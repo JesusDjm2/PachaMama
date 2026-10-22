@@ -186,6 +186,10 @@ Route::get('es/destinos-en-peru/puerto-maldonado', function () {
 Route::prefix('pt')->name('pt.')->group(function () {
     Route::get('', [TourptController::class, 'mostrar'])->name('index');
     Route::view('contato', 'pt.contato')->name('contato');
+    Route::view('destinos-no-peru', 'pt.destinos-no-peru')->name('destinos');
+    Route::get('destinos-no-peru/{slug}', [DestiniesPeruController::class, 'destinationPt'])
+        ->whereIn('slug', array_keys(DestiniesPeruController::PT_SLUG_TO_EN_SLUG))
+        ->name('destinos.destination');
     Route::get('blog', [PtblogController::class, 'listado'])->name('blog.index');
     Route::get('blog/{slug}', [PtblogController::class, 'show'])->name('blog');
     Route::get('tag/{slug}', [PtblogController::class, 'tag'])->name('tag');

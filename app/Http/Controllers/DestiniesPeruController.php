@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tour;
+use App\Models\Tourpt;
 use App\Models\Toursen;
 use Illuminate\View\View;
 
@@ -51,6 +52,17 @@ class DestiniesPeruController extends Controller
         'puerto-maldonado' => 'puerto-maldonado',
     ];
 
+    /** Slug de URL en portugués → clave inglesa en PAGES (misma ubicación / consulta de tours). */
+    public const PT_SLUG_TO_EN_SLUG = [
+        'cusco-umbigo-do-mundo' => 'cusco-navel-of-the-world',
+        'lima-cidade-dos-reis' => 'lima-city-of-kings',
+        'arequipa-a-cidade-branca' => 'arequipa-the-white-city',
+        'a-cidade-de-puno' => 'puno-city',
+        'cidade-de-ica' => 'ica-city',
+        'cidade-de-pisco' => 'pisco-city',
+        'puerto-maldonado' => 'puerto-maldonado',
+    ];
+
     public function destination(string $slug): View
     {
         if (! isset(self::PAGES[$slug])) {
@@ -74,8 +86,20 @@ class DestiniesPeruController extends Controller
         return view('es.destinos-en-peru.' . $esSlug, $data);
     }
 
+    public function destinationPt(string $ptSlug): View
+    {
+        $enSlug = self::PT_SLUG_TO_EN_SLUG[$ptSlug] ?? null;
+        if (! $enSlug || ! isset(self::PAGES[$enSlug])) {
+            abort(404);
+        }
+
+        $data = $this->destinationTourData(self::PAGES[$enSlug]['ubicacion']);
+
+        return view('pt.destinos-no-peru.' . $ptSlug, $data);
+    }
+
     /**
-     * @return array{toursByLocation: \Illuminate\Support\Collection, toursEsByLocation: \Illuminate\Support\Collection, destinationUbicacionLabel: string}
+     * @return array{toursByLocation: \Illuminate\Support\Collection, toursEsByLocation: \Illuminate\Support\Collection, toursPtByLocation: \Illuminate\Support\Collection, destinationUbicacionLabel: string}
      */
     private function destinationTourData(string $needle): array
     {
@@ -93,10 +117,18 @@ class DestiniesPeruController extends Controller
             ->orderBy('nombre')
             ->get();
 
+        $toursPtByLocation = Tourpt::query()
+            ->with('categories')
+            ->where('ubicacion', 'LIKE', '%' . $needle . '%')
+            ->orderBy('nombre')
+            ->get();
+
         return [
             'toursByLocation' => $toursByLocation,
             'toursEsByLocation' => $toursEsByLocation,
+            'toursPtByLocation' => $toursPtByLocation,
             'destinationUbicacionLabel' => $needle,
         ];
     }
 }
+

@@ -102,8 +102,9 @@ final class LocaleRouteMap
             'listado' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
             'enlistado' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
             'pt.blog.index' => ['en' => 'enlistado', 'es' => 'listado', 'pt' => 'pt.blog.index'],
-            'destinos-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'] + $ausente,
-            'destinies-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru'] + $ausente,
+            'destinos-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru', 'pt' => 'pt.destinos'],
+            'destinies-peru' => ['en' => 'destinies-peru', 'es' => 'destinos-peru', 'pt' => 'pt.destinos'],
+            'pt.destinos' => ['en' => 'destinies-peru', 'es' => 'destinos-peru', 'pt' => 'pt.destinos'],
             'terminos' => ['en' => 'terms-en', 'es' => 'terminos'] + $ausente,
             'terms-en' => ['en' => 'terms-en', 'es' => 'terminos'] + $ausente,
             'preguntas' => ['en' => 'faq', 'es' => 'preguntas'] + $ausente,
@@ -125,7 +126,7 @@ final class LocaleRouteMap
 
         if ($route !== null) {
             $dest = self::destinationAlternateUrls($route, $slug);
-            if ($dest !== null && ($locale === 'es' || $locale === 'en')) {
+            if ($dest !== null && isset($dest[$locale])) {
                 return $dest[$locale];
             }
 
@@ -156,7 +157,7 @@ final class LocaleRouteMap
     public static function blogListUrl(string $locale): string
     {
         return match ($locale) {
-            'pt' => route('pt.index'),
+            'pt' => Route::has('pt.blog.index') ? route('pt.blog.index') : route('pt.index'),
             'en' => route('enlistado'),
             default => route('listado'),
         };
@@ -228,34 +229,40 @@ final class LocaleRouteMap
     }
 
     /**
-     * @return array{es: string, en: string}|null URLs absolutas
+     * @return array{es?: string, en?: string, pt?: string}|null URLs absolutas
      */
     public static function destinationAlternateUrls(?string $routeName, mixed $slug = null): ?array
     {
         $esToEn = DestiniesPeruController::ES_SLUG_TO_EN_SLUG;
+        $ptToEn = DestiniesPeruController::PT_SLUG_TO_EN_SLUG;
+        $enToEs = array_flip($esToEn);
+        $enToPt = array_flip($ptToEn);
 
+        $enSlug = null;
         if ($routeName && isset($esToEn[$routeName])) {
             $enSlug = $esToEn[$routeName];
-
-            return [
-                'es' => route($routeName),
-                'en' => route('destinies-peru.destination', ['slug' => $enSlug]),
-            ];
+        } elseif ($routeName === 'destinies-peru.destination' && $slug && isset($enToEs[$slug])) {
+            $enSlug = $slug;
+        } elseif ($routeName === 'pt.destinos.destination' && $slug && isset($ptToEn[$slug])) {
+            $enSlug = $ptToEn[$slug];
         }
 
-        if ($routeName === 'destinies-peru.destination' && $slug) {
-            $enToEs = array_flip($esToEn);
-            if (isset($enToEs[$slug])) {
-                $esRouteName = $enToEs[$slug];
-
-                return [
-                    'es' => route($esRouteName),
-                    'en' => route('destinies-peru.destination', ['slug' => $slug]),
-                ];
-            }
+        if ($enSlug === null) {
+            return null;
         }
 
-        return null;
+        $res = [];
+        if (isset($enToEs[$enSlug]) && Route::has($enToEs[$enSlug])) {
+            $res['es'] = route($enToEs[$enSlug]);
+        }
+        if (Route::has('destinies-peru.destination')) {
+            $res['en'] = route('destinies-peru.destination', ['slug' => $enSlug]);
+        }
+        if (isset($enToPt[$enSlug]) && Route::has('pt.destinos.destination')) {
+            $res['pt'] = route('pt.destinos.destination', ['slug' => $enToPt[$enSlug]]);
+        }
+
+        return ! empty($res) ? $res : null;
     }
 
     /**

@@ -122,6 +122,18 @@
                                     </a>
                                 </div>
                                 <ul class="site-menu main-menu js-clone-nav d-none d-xl-block">
+                                    <li class="has-children">
+                                        <a href="{{ route('pt.destinos') }}" class="nav-link @if(request()->is('pt/destinos*')) active @endif">Destinos</a>
+                                        <ul class="dropdown arrow-top">
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'cusco-umbigo-do-mundo']) }}" class="nav-link">Cusco</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'lima-cidade-dos-reis']) }}" class="nav-link">Lima</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'arequipa-a-cidade-branca']) }}" class="nav-link">Arequipa</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'a-cidade-de-puno']) }}" class="nav-link">Puno</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'cidade-de-ica']) }}" class="nav-link">Ica</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'cidade-de-pisco']) }}" class="nav-link">Pisco</a></li>
+                                            <li><a href="{{ route('pt.destinos.destination', ['slug' => 'puerto-maldonado']) }}" class="nav-link">Puerto Maldonado</a></li>
+                                        </ul>
+                                    </li>
                                     <li>
                                         <a href="{{ route('pt.categoria', ['categoria' => 'trilhas']) }}" class="nav-link">Trilhas e caminhadas</a>
                                     </li>
@@ -209,6 +221,7 @@
                     <div class="col-lg-2 col-md-6 text-center mb-4">
                         <h4 class="h4-foot">Explore</h4>
                         <div class="linea-foot"></div>
+                        <a class="a-foot" href="{{ route('pt.destinos') }}">Destinos</a>
                         <a class="a-foot" href="{{ route('nosotros') }}">Quem somos</a>
                         <a class="a-foot" href="{{ route('terminos') }}">Termos e Condições</a>
                         <a class="a-foot" href="{{ route('preguntas') }}">Perguntas frequentes</a>

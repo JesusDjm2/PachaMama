@@ -1,10 +1,19 @@
 @if ($tours->isEmpty())
     <div class="col-12">
-        <p class="text-center text-muted py-4">Nenhum tour corresponde a esses filtros.</p>
+        <div class="tour-empty-state">
+            <div class="tour-empty-state__icon">
+                <span class="icon-compass" aria-hidden="true"></span>
+            </div>
+            <h4 class="tour-empty-state__title">Nenhum tour encontrado</h4>
+            <p class="tour-empty-state__text">Não encontramos tours com esses filtros. Tente ajustar os parâmetros ou limpar os filtros para explorar todas as nossas opções.</p>
+            <a href="{{ route('pt.index') }}" class="home-filter-btn home-filter-btn--submit js-home-tour-filters-clear px-4 d-inline-flex">
+                <span class="icon-refresh me-1" aria-hidden="true"></span> Ver todos os tours
+            </a>
+        </div>
     </div>
 @endif
 @foreach ($tours->take(8) as $tour)
-    <div class="col-lg-3 col-md-6">
+    <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-stretch mb-4">
         <div class="card card-new w-100">
             <a href="{{ route('pt.tour', $tour->slug) }}">
                 <img class="card-img-top" src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}"

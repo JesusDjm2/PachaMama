@@ -136,7 +136,6 @@ $(function() {
     }
 
     var fetchGrid = function(url) {
-      var $section = $('#home-tours-section');
       $results.addClass('home-tours-results--loading');
       $results.attr('aria-busy', 'true');
       fetch(url, {
@@ -157,9 +156,30 @@ $(function() {
           if (history.replaceState) {
             history.replaceState(null, '', url);
           }
+
+          // Actualizar contador dinámico de tours
+          var count = $results.find('.card-new').length;
+          $('.js-home-tours-count').text(count);
+
+          // Verificar si quedan filtros activos
+          var $form = $('form.js-home-tour-filters');
+          if ($form.length) {
+            var q = ($form.find('input[name="q"]').val() || '').trim();
+            var u = $form.find('select[name="ubicacion"]').val() || '';
+            var d = $form.find('select[name="dias"]').val() || '';
+            var p = $form.find('select[name="precio_max"]').val() || '';
+            if (!q && !u && !d && !p) {
+              $('.js-home-tour-active-tags').addClass('d-none');
+            }
+          }
+
+          // Scroll suave solo si el inicio de resultados está fuera de la pantalla
           var el = document.getElementById('home-tours-results');
-          if (el && typeof el.scrollIntoView === 'function') {
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (el && typeof el.getBoundingClientRect === 'function') {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < 60 || rect.top > window.innerHeight) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
           }
         })
         .catch(function() {
@@ -171,6 +191,7 @@ $(function() {
         });
     };
 
+    // Envío del formulario de filtros
     $(document).on('submit', 'form.js-home-tour-filters', function(e) {
       e.preventDefault();
       var action = $(this).attr('action') || window.location.pathname;
@@ -179,13 +200,69 @@ $(function() {
       fetchGrid(url);
     });
 
-    $(document).on('click', 'a.js-home-tour-filters-clear', function(e) {
+    // Auto-filtrar al cambiar cualquier select (Destino, Días, Presupuesto)
+    $(document).on('change', 'form.js-home-tour-filters select', function() {
+      var $form = $(this).closest('form.js-home-tour-filters');
+      if ($(this).attr('name') === 'ubicacion') {
+        var val = $(this).val() || '';
+        $('.js-chip-dest').removeClass('is-active');
+        var $chip = $('.js-chip-dest[data-value="' + val + '"]');
+        if ($chip.length) {
+          $chip.addClass('is-active');
+        } else if (!val) {
+          $('.js-chip-dest[data-value=""]').addClass('is-active');
+        }
+      }
+      $form.trigger('submit');
+    });
+
+    // Clic en chips de destinos populares
+    $(document).on('click', '.js-chip-dest', function(e) {
+      e.preventDefault();
+      var val = $(this).attr('data-value') || '';
+      var $form = $('form.js-home-tour-filters');
+      var $select = $form.find('select[name="ubicacion"]');
+      if ($select.length) {
+        if (val && $select.find('option[value="' + val + '"]').length === 0) {
+          $select.append($('<option>', { value: val, text: val }));
+        }
+        $select.val(val);
+      }
+      $('.js-chip-dest').removeClass('is-active');
+      $(this).addClass('is-active');
+      $form.trigger('submit');
+    });
+
+    // Eliminar etiqueta de filtro individual
+    $(document).on('click', '.js-remove-filter-tag', function(e) {
+      e.preventDefault();
+      var field = $(this).attr('data-field');
+      var $form = $('form.js-home-tour-filters');
+      if (field === 'q') {
+        $form.find('input[name="q"]').val('');
+      } else if (field) {
+        $form.find('select[name="' + field + '"]').val('');
+        if (field === 'ubicacion') {
+          $('.js-chip-dest').removeClass('is-active');
+          $('.js-chip-dest[data-value=""]').addClass('is-active');
+        }
+      }
+      $(this).closest('.home-tour-active-tag').remove();
+      $form.trigger('submit');
+    });
+
+    // Limpiar todos los filtros
+    $(document).on('click', '.js-home-tour-filters-clear', function(e) {
       e.preventDefault();
       var href = $(this).attr('href') || '/';
-      var $form = $(this).closest('form.js-home-tour-filters');
+      var $form = $('form.js-home-tour-filters');
       if ($form.length) {
         $form.find('select').val('');
+        $form.find('input[type="search"], input[type="text"]').val('');
       }
+      $('.js-chip-dest').removeClass('is-active');
+      $('.js-chip-dest[data-value=""]').addClass('is-active');
+      $('.js-home-tour-active-tags').addClass('d-none');
       var base = href.split('?')[0];
       fetchGrid(base);
     });

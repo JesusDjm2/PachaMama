@@ -20,15 +20,6 @@ class TourptController extends Controller
             ->orderBy('created_at', 'desc');
         HomeTourFilters::applyToTourptQuery($query, $request);
 
-        if ($request->filled('q')) {
-            $termino = trim((string) $request->input('q'));
-            $query->where(function ($w) use ($termino) {
-                $w->where('nombre', 'like', '%' . $termino . '%')
-                  ->orWhere('ubicacion', 'like', '%' . $termino . '%')
-                  ->orWhere('descripcion', 'like', '%' . $termino . '%');
-            });
-        }
-
         $tours = $query->get();
 
         $blogsRecientes = Ptblog::query()

@@ -159,7 +159,6 @@
                 </div>
                 <div class="space"></div>
                 <div class="col-12" id="home-tours-section">
-                    <h2 class="h2-tierras">Top tours mas vendidos:</h2>
                     @include('partials.home-tour-filters')
                     <div class="row g-3 home-tours-results" id="home-tours-results" aria-live="polite">
                         @include('partials.home-tours-grid-es')

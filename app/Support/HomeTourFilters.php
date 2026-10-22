@@ -30,6 +30,14 @@ class HomeTourFilters
      */
     public static function applyToQuery(Builder $query, Request $request): void
     {
+        if ($request->filled('q')) {
+            $q = trim((string) $request->input('q'));
+            $query->where(function ($w) use ($q) {
+                $w->where('nombre', 'like', '%' . $q . '%')
+                  ->orWhere('ubicacion', 'like', '%' . $q . '%')
+                  ->orWhere('descripcion', 'like', '%' . $q . '%');
+            });
+        }
         if ($request->filled('ubicacion')) {
             $u = trim((string) $request->input('ubicacion'));
             $query->where('ubicacion', 'like', '%' . $u . '%');

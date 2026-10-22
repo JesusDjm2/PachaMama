@@ -20,3 +20,5 @@ yarn-error.log
 # Respaldos de BD y logs locales (no publicar)
 /storage/backups/
 /storage/logs/
+_notes/
+.claude/

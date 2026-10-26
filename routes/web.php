@@ -114,7 +114,18 @@ Route::resource('users', UserControler::class)->middleware('auth');
 Route::get('registrarPacha', [UserControler::class, 'create'])->middleware('auth')->name('registrar');
 Route::post('upload_image', [ArticleController::class, 'uploadImage'])->name('upload');
 Auth::routes();
-Route::get('/djm2', [HomeController::class, 'index']);
+Route::get('/djm2', [HomeController::class, 'index'])->name('dashboard');
+
+// Acceso directo a administracion y login
+Route::get('/admin', function () {
+    return auth()->check() ? redirect()->route('dashboard') : redirect()->route('login');
+})->name('admin');
+
+Route::get('/admin/login', function () {
+    return auth()->check() ? redirect()->route('dashboard') : redirect()->route('login');
+})->name('admin.login');
+
+Route::redirect('/home', '/djm2');
 
 //Crud de imagenes
 Route::resource('imagenes', ImagenesController::class)->middleware('auth');

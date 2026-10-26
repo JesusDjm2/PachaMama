@@ -15,6 +15,7 @@ class Category extends Model
     {
         return 'link';
     }
+    public function tours() { return $this->toursens(); }
     public function toursens()
     {
         return $this->belongsToMany(Toursen::class, 'category_toursen');

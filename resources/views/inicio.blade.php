@@ -292,6 +292,9 @@
             </div>
         </div>
     </section>
+
+    @include('partials.home-reviews', ['locale' => 'es'])
+
     <section class="section-home-cta py-5">
         <div class="container">
             <div class="row align-items-center">

@@ -18,6 +18,7 @@ class Ptcategory extends Model
         return 'link';
     }
 
+    public function toursens() { return $this->tours(); }
     public function tours()
     {
         return $this->belongsToMany(Tourpt::class, 'ptcategory_tourspt', 'ptcategory_id', 'tourspt_id');

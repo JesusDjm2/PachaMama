@@ -2,7 +2,7 @@
 @section('titulo', 'Tours en Inglés')
 
 @section('contenido')
-<div class="pm-page-header">
+@php $filtroCategoria = $filtroCategoria ?? request('categoria'); $categories = $categories ?? ($categorias ?? \App\Models\Category::orderBy('nombre')->get()); @endphp\n<div class="pm-page-header">
     <div>
         <h1>Tours en Inglés</h1>
         <small>Gestiona todos los tours publicados en inglés</small>

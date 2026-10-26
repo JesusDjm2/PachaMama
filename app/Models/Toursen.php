@@ -12,6 +12,7 @@ class Toursen extends Model
     {
         return $this->belongsTo(Tour::class);
     }
+    public function categorias() { return $this->categories(); }
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_toursen');

@@ -276,6 +276,8 @@
         </footer>
     </section>
 
+    @include('layouts.schema_org')
+
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>

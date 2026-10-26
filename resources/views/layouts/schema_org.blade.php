@@ -69,7 +69,15 @@
         "@type": "Country",
         "name": "Peru"
       },
-      "knowsLanguage": ["es", "en"],
+      "knowsLanguage": ["es", "en", "pt"],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "bestRating": "5",
+        "worstRating": "1",
+        "ratingCount": "184",
+        "reviewCount": "184"
+      },
       "sameAs": [
         "https://www.facebook.com/PachaMamaSpiritMountain",
         "https://www.instagram.com/pachamamaspiritmountain/",

@@ -259,6 +259,9 @@
             </div>
         </div>
     </section>
+
+    @include('partials.home-reviews', ['locale' => 'pt'])
+
     <section>
         <div class="container mt-3">
             <div class="row">

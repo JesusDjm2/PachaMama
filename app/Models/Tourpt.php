@@ -22,6 +22,8 @@ class Tourpt extends Model
         return $this->belongsTo(Tour::class);
     }
 
+    public function categorias() { return $this->categories(); }
+    public function ptcategories() { return $this->categories(); }
     public function categories()
     {
         return $this->belongsToMany(Ptcategory::class, 'ptcategory_tourspt', 'tourspt_id', 'ptcategory_id');

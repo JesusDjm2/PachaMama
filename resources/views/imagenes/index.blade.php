@@ -40,7 +40,7 @@
                     <tr>
                         <td style="color:#9ca3af; font-size:0.78rem;">{{ $imagen->id }}</td>
                         <td>
-                            <img src="../img/galeria/{{ $imagen->img }}" width="100" height="65"
+                            <img src="/img/galeria/{{ $imagen->img }}" width="100" height="65"
                                 style="border-radius:8px; object-fit:cover;" alt="{{ $imagen->img }}">
                         </td>
                         <td>

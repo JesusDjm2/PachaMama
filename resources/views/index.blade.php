@@ -267,12 +267,9 @@
             </div>
         </div>
     </section>
-    <!---<section>
-     <div class="container">
-      <div class="row">
-     </div>
-     </div>
-    </section>--->
+
+    @include('partials.home-reviews', ['locale' => 'en'])
+
     <section>
         <div class="container mt-3">
             <div class="row">

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="nofollow">
-    <title>@yield('titulo')</title>
+    <title>@yield('titulo', 'Admin') — Pacha Mama Spirit</title>
     <link rel="shortcut icon" href="{{ asset('img/icono-home.png') }}">
     <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -15,241 +15,300 @@
 
 <body id="page-top">
     <div id="wrapper">
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('index') }}">
-                <img src="{{ asset('img/Pacha-Mama-Spirit-Blanco.png') }}" width="100%" alt="">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion pm-sidebar" id="accordionSidebar">
+            <!-- Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center py-3" href="{{ route('dashboard') }}">
+                <img src="{{ asset('img/Pacha-Mama-Spirit-Blanco.png') }}" class="img-fluid" style="max-height: 44px; object-fit: contain;" alt="Pacha Mama Spirit">
             </a>
-            <hr class="sidebar-divider">
-            <div class="sidebar-heading">
-                Tours
-            </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tourses"
-                    aria-expanded="false" aria-controls="tourses">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Tours Español</span>
+
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
                 </a>
-                <div id="tourses" class="collapse" aria-labelledby="headingTourses" data-parent="#accordionSidebar">
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <!-- Heading: TOURS -->
+            <div class="sidebar-heading">Tours & Destinos</div>
+
+            @php
+                $isToursEs = request()->routeIs('tours.*', 'categoria.*');
+                $isToursEn = request()->routeIs('toursen.*', 'category.*');
+                $isToursPt = request()->routeIs('tourspt.*', 'ptcategoria.*');
+                $isBlogsEs = request()->routeIs('blogs.*', 'tags.*');
+                $isBlogsEn = request()->routeIs('enblogs.*', 'entags.*');
+                $isBlogsPt = request()->routeIs('ptblogs.*', 'pttags.*');
+            @endphp
+
+            <!-- Tours Español -->
+            <li class="nav-item {{ $isToursEs ? 'active' : '' }}">
+                <a class="nav-link {{ $isToursEs ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseToursEs"
+                    aria-expanded="{{ $isToursEs ? 'true' : 'false' }}" aria-controls="collapseToursEs">
+                    <i class="fas fa-fw fa-map-marked-alt text-success"></i>
+                    <span>Tours <span class="badge badge-success ml-1 px-1 py-0" style="font-size:0.65rem;">ES</span></span>
+                </a>
+                <div id="collapseToursEs" class="collapse {{ $isToursEs ? 'show' : '' }}" aria-labelledby="headingToursEs" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('tours.index') }}">
-                            Tours
+                        <a class="collapse-item {{ request()->routeIs('tours.index') ? 'active font-weight-bold' : '' }}" href="{{ route('tours.index') }}">
+                            <i class="fas fa-list fa-xs mr-1 text-muted"></i> Lista Tours
                         </a>
-                        <a class="collapse-item" href="{{ route('categoria.index') }}">
-                            Categorías
+                        <a class="collapse-item {{ request()->routeIs('categoria.*') ? 'active font-weight-bold' : '' }}" href="{{ route('categoria.index') }}">
+                            <i class="fas fa-tags fa-xs mr-1 text-muted"></i> Categorías
                         </a>
                     </div>
                 </div>
             </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#toursen"
-                    aria-expanded="false" aria-controls="es">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Tours Inglés</span>
+
+            <!-- Tours English -->
+            <li class="nav-item {{ $isToursEn ? 'active' : '' }}">
+                <a class="nav-link {{ $isToursEn ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseToursEn"
+                    aria-expanded="{{ $isToursEn ? 'true' : 'false' }}" aria-controls="collapseToursEn">
+                    <i class="fas fa-fw fa-globe text-primary"></i>
+                    <span>Tours <span class="badge badge-primary ml-1 px-1 py-0" style="font-size:0.65rem;">EN</span></span>
                 </a>
-                <div id="toursen" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
-                    style="">
+                <div id="collapseToursEn" class="collapse {{ $isToursEn ? 'show' : '' }}" aria-labelledby="headingToursEn" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('toursen.index') }}">
-                            Tours
+                        <a class="collapse-item {{ request()->routeIs('toursen.index') ? 'active font-weight-bold' : '' }}" href="{{ route('toursen.index') }}">
+                            <i class="fas fa-list fa-xs mr-1 text-muted"></i> Tours List
                         </a>
-                        <a class="collapse-item" href="{{ route('category.index') }}">
-                            Categorias
+                        <a class="collapse-item {{ request()->routeIs('category.*') ? 'active font-weight-bold' : '' }}" href="{{ route('category.index') }}">
+                            <i class="fas fa-tags fa-xs mr-1 text-muted"></i> Categories
                         </a>
                     </div>
                 </div>
             </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tourspt"
-                    aria-expanded="false" aria-controls="tourspt">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Tours Português</span>
+
+            <!-- Tours Português -->
+            <li class="nav-item {{ $isToursPt ? 'active' : '' }}">
+                <a class="nav-link {{ $isToursPt ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseToursPt"
+                    aria-expanded="{{ $isToursPt ? 'true' : 'false' }}" aria-controls="collapseToursPt">
+                    <i class="fas fa-fw fa-globe-americas text-info"></i>
+                    <span>Tours <span class="badge badge-info ml-1 px-1 py-0" style="font-size:0.65rem;">PT</span></span>
                 </a>
-                <div id="tourspt" class="collapse" aria-labelledby="headingTourspt" data-parent="#accordionSidebar">
+                <div id="collapseToursPt" class="collapse {{ $isToursPt ? 'show' : '' }}" aria-labelledby="headingToursPt" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('tourspt.index') }}">
-                            Tours
+                        <a class="collapse-item {{ request()->routeIs('tourspt.index') ? 'active font-weight-bold' : '' }}" href="{{ route('tourspt.index') }}">
+                            <i class="fas fa-list fa-xs mr-1 text-muted"></i> Lista Tours
                         </a>
-                        <a class="collapse-item" href="{{ route('ptcategoria.index') }}">
-                            Categorias
+                        <a class="collapse-item {{ request()->routeIs('ptcategoria.*') ? 'active font-weight-bold' : '' }}" href="{{ route('ptcategoria.index') }}">
+                            <i class="fas fa-tags fa-xs mr-1 text-muted"></i> Categorias
                         </a>
                     </div>
                 </div>
             </li>
+
             <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#es"
-                    aria-expanded="false" aria-controls="es">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Blogs Español</span>
+
+            <!-- Heading: BLOGS -->
+            <div class="sidebar-heading">Blogs & Artículos</div>
+
+            <!-- Blogs Español -->
+            <li class="nav-item {{ $isBlogsEs ? 'active' : '' }}">
+                <a class="nav-link {{ $isBlogsEs ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseBlogsEs"
+                    aria-expanded="{{ $isBlogsEs ? 'true' : 'false' }}" aria-controls="collapseBlogsEs">
+                    <i class="fas fa-fw fa-newspaper text-success"></i>
+                    <span>Blogs <span class="badge badge-success ml-1 px-1 py-0" style="font-size:0.65rem;">ES</span></span>
                 </a>
-                <div id="es" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
-                    style="">
+                <div id="collapseBlogsEs" class="collapse {{ $isBlogsEs ? 'show' : '' }}" aria-labelledby="headingBlogsEs" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('tags.index') }}">
-                            Tags de blogs
+                        <a class="collapse-item {{ request()->routeIs('blogs.index') ? 'active font-weight-bold' : '' }}" href="{{ route('blogs.index') }}">
+                            <i class="fas fa-file-alt fa-xs mr-1 text-muted"></i> Artículos
                         </a>
-                        <a class="collapse-item" href="{{ route('blogs.index') }}">
-                            Blogs
+                        <a class="collapse-item {{ request()->routeIs('tags.*') ? 'active font-weight-bold' : '' }}" href="{{ route('tags.index') }}">
+                            <i class="fas fa-hashtag fa-xs mr-1 text-muted"></i> Tags
                         </a>
                     </div>
                 </div>
             </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ingles"
-                    aria-expanded="false" aria-controls="ingles">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Blogs Inglés</span>
+
+            <!-- Blogs English -->
+            <li class="nav-item {{ $isBlogsEn ? 'active' : '' }}">
+                <a class="nav-link {{ $isBlogsEn ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseBlogsEn"
+                    aria-expanded="{{ $isBlogsEn ? 'true' : 'false' }}" aria-controls="collapseBlogsEn">
+                    <i class="fas fa-fw fa-newspaper text-primary"></i>
+                    <span>Blogs <span class="badge badge-primary ml-1 px-1 py-0" style="font-size:0.65rem;">EN</span></span>
                 </a>
-                <div id="ingles" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"
-                    style="">
+                <div id="collapseBlogsEn" class="collapse {{ $isBlogsEn ? 'show' : '' }}" aria-labelledby="headingBlogsEn" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('entags.index') }}">
-                            Tags de blogs
+                        <a class="collapse-item {{ request()->routeIs('enblogs.index') ? 'active font-weight-bold' : '' }}" href="{{ route('enblogs.index') }}">
+                            <i class="fas fa-file-alt fa-xs mr-1 text-muted"></i> Articles
                         </a>
-                        <a class="collapse-item" href="{{ route('enblogs.index') }}">
-                            Blogs
+                        <a class="collapse-item {{ request()->routeIs('entags.*') ? 'active font-weight-bold' : '' }}" href="{{ route('entags.index') }}">
+                            <i class="fas fa-hashtag fa-xs mr-1 text-muted"></i> Tags
                         </a>
                     </div>
                 </div>
             </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#portugues"
-                    aria-expanded="false" aria-controls="portugues">
-                    <i class="fas fa-fw fa-language"></i>
-                    <span>Blogs Português</span>
+
+            <!-- Blogs Português -->
+            <li class="nav-item {{ $isBlogsPt ? 'active' : '' }}">
+                <a class="nav-link {{ $isBlogsPt ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseBlogsPt"
+                    aria-expanded="{{ $isBlogsPt ? 'true' : 'false' }}" aria-controls="collapseBlogsPt">
+                    <i class="fas fa-fw fa-newspaper text-info"></i>
+                    <span>Blogs <span class="badge badge-info ml-1 px-1 py-0" style="font-size:0.65rem;">PT</span></span>
                 </a>
-                <div id="portugues" class="collapse" aria-labelledby="headingPortugues" data-parent="#accordionSidebar">
+                <div id="collapseBlogsPt" class="collapse {{ $isBlogsPt ? 'show' : '' }}" aria-labelledby="headingBlogsPt" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('pttags.index') }}">
-                            Tags de blogs
+                        <a class="collapse-item {{ request()->routeIs('ptblogs.index') ? 'active font-weight-bold' : '' }}" href="{{ route('ptblogs.index') }}">
+                            <i class="fas fa-file-alt fa-xs mr-1 text-muted"></i> Artigos
                         </a>
-                        <a class="collapse-item" href="{{ route('ptblogs.index') }}">
-                            Blogs
+                        <a class="collapse-item {{ request()->routeIs('pttags.*') ? 'active font-weight-bold' : '' }}" href="{{ route('pttags.index') }}">
+                            <i class="fas fa-hashtag fa-xs mr-1 text-muted"></i> Tags
                         </a>
                     </div>
                 </div>
             </li>
+
             <hr class="sidebar-divider">
-            <li class="nav-item">
+
+            <!-- Heading: SISTEMA -->
+            <div class="sidebar-heading">Multimedia & Sistema</div>
+
+            <!-- Imágenes -->
+            <li class="nav-item {{ request()->routeIs('imagenes.*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('imagenes.index') }}">
                     <i class="fas fa-fw fa-images"></i>
-                    <span>Imágenes</span>
+                    <span>Galería de Imágenes</span>
+                </a>
+            </li>
+
+            <!-- Usuarios -->
+            <li class="nav-item {{ request()->routeIs('users.*', 'registrar') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('users.index') }}">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Usuarios</span>
                 </a>
             </li>
 
             <hr class="sidebar-divider d-none d-md-block">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.index') }}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Usuarios</span>
-                </a>
-            </li>
-            <hr class="sidebar-divider d-none d-md-block">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Proveedores</span>
-                </a>
-            </li>
-            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Toggler -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
         </ul>
 
+        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow-sm px-3">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
+
+                    <!-- Topbar Breadcrumb / Current View Title -->
+                    <div class="d-none d-md-flex align-items-center">
+                        <span class="badge badge-light border text-muted px-2 py-1 mr-2" style="font-size:0.75rem; font-weight:600; letter-spacing:0.04em;">PANEL ADMIN</span>
+                        <h6 class="mb-0 font-weight-bold text-gray-800" style="font-size:0.95rem;">@yield('titulo')</h6>
+                    </div>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <!-- Live Site Links Dropdown -->
+                        <li class="nav-item dropdown no-arrow mr-2">
+                            <a class="btn btn-sm btn-outline-info dropdown-toggle font-weight-bold" href="#" id="viewSiteDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-radius:20px; font-size:0.78rem; padding:5px 14px;">
+                                <i class="fas fa-external-link-alt mr-1"></i> Ver Sitio Web
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="viewSiteDropdown" style="min-width: 220px;">
+                                <div class="dropdown-header font-weight-bold text-uppercase text-xs">Versiones Públicas</div>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="{{ route('inicio') }}" target="_blank">
+                                    <span class="badge badge-success mr-2" style="font-size:0.7rem;">ES</span>
+                                    <div>
+                                        <div class="font-weight-bold" style="font-size:0.85rem;">Español</div>
+                                        <small class="text-muted">/inicio</small>
                                     </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="{{ route('index') }}" target="_blank">
+                                    <span class="badge badge-primary mr-2" style="font-size:0.7rem;">EN</span>
+                                    <div>
+                                        <div class="font-weight-bold" style="font-size:0.85rem;">English</div>
+                                        <small class="text-muted">/</small>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center py-2" href="{{ route('pt.index') }}" target="_blank">
+                                    <span class="badge badge-info mr-2" style="font-size:0.7rem;">PT</span>
+                                    <div>
+                                        <div class="font-weight-bold" style="font-size:0.85rem;">Português</div>
+                                        <small class="text-muted">/pt</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- User Profile Dropdown -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center py-2" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#2aa8a8,#1a2e45);
+                                            display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700;
+                                            font-size:0.85rem; margin-right:8px; box-shadow:0 2px 6px rgba(42,168,168,0.25);">
+                                    {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                                </div>
+                                <span class="mr-2 d-none d-lg-inline text-gray-700 font-weight-bold" style="font-size:0.85rem;">
+                                    {{ Auth::user()->name ?? 'Admin' }}
+                                </span>
+                                <i class="fas fa-chevron-down fa-xs text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <div class="dropdown-header font-weight-bold text-uppercase text-xs">Cuenta Conectada</div>
+                                <div class="px-3 py-1 text-muted" style="font-size:0.78rem;">
+                                    <i class="fas fa-envelope mr-1 text-gray-400"></i> {{ Auth::user()->email ?? '' }}
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ route('users.index') }}">
+                                    <i class="fas fa-users-cog fa-sm fa-fw mr-2 text-gray-400"></i> Administrar Usuarios
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i> Cerrar Sesión
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
                                 </form>
                             </div>
                         </li>
-                        <li class="nav-item no-arrow mx-1">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link mr-4" href="#" role="button" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-danger mt-3 btn-sm" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </nav>
-                <div class="container-fluid">
+
+                <!-- Page Content -->
+                <div class="container-fluid px-3 px-md-4">
                     @yield('contenido')
                 </div>
             </div>
-            <footer class="sticky-footer bg-white">
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white mt-4">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Made by <a href="https://www.facebook.com/DjmWebMaster" rel="no-follow"
-                                target="_blank"> DJM2</a></span>
+                        <span>Pacha Mama Spirit &copy; {{ date('Y') }} — Panel de Control | Desarrollado por <a href="https://www.facebook.com/DjmWebMaster" rel="no-follow" target="_blank">DJM2</a></span>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
+
+    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.1/ckeditor.js"></script> --}}
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.9.2/ckeditor.js"></script>
     <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/chart.js/Chart.min.js') }}"></script>
-    <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
     @stack('admin_scripts')
 </body>
 

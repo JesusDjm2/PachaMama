@@ -332,6 +332,79 @@ $(function() {
   initHomeBlogRailNav();
 
   /**
+   * Carrusel de reseñas de visitantes (Inicio ES / Index EN / Início PT)
+   */
+  var initHomeReviewsCarousel = function() {
+    $('.home-reviews-carousel-viewport').each(function() {
+      var $vp = $(this);
+      var $track = $vp.find('.home-reviews-track');
+      var $prev = $vp.find('.home-reviews-arrow--prev');
+      var $next = $vp.find('.home-reviews-arrow--next');
+      var $section = $vp.closest('.home-reviews-section');
+      var $dots = $section.find('.home-reviews-dot');
+
+      if (!$track.length) return;
+
+      var getScrollStep = function() {
+        var $firstSlide = $track.find('.home-reviews-slide').first();
+        return $firstSlide.length ? $firstSlide.outerWidth(true) : 340;
+      };
+
+      var updateActiveDot = function() {
+        var el = $track[0];
+        var scrollLeft = el.scrollLeft;
+        var step = getScrollStep();
+        var index = Math.round(scrollLeft / step);
+        if ($dots.length) {
+          $dots.removeClass('active');
+          $dots.eq(Math.min(index, $dots.length - 1)).addClass('active');
+        }
+      };
+
+      $track.on('scroll', function() {
+        window.requestAnimationFrame(updateActiveDot);
+      });
+
+      $prev.on('click', function(e) {
+        e.preventDefault();
+        var el = $track[0];
+        var maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+        if (maxScroll <= 10) return;
+
+        if (el.scrollLeft <= 25) {
+          el.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+          var step = getScrollStep();
+          el.scrollBy({ left: -step, behavior: 'smooth' });
+        }
+      });
+
+      $next.on('click', function(e) {
+        e.preventDefault();
+        var el = $track[0];
+        var maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+        if (maxScroll <= 10) return;
+
+        if (el.scrollLeft >= maxScroll - 25) {
+          el.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          var step = getScrollStep();
+          el.scrollBy({ left: step, behavior: 'smooth' });
+        }
+      });
+
+      $dots.on('click', function(e) {
+        e.preventDefault();
+        var targetIdx = parseInt($(this).data('target-slide'), 10);
+        var step = getScrollStep();
+        var el = $track[0];
+        el.scrollTo({ left: targetIdx * step, behavior: 'smooth' });
+      });
+    });
+  };
+  initHomeReviewsCarousel();
+
+  /**
    * Cóndor del pie: la animación arranca al hacer scroll hasta la silueta de cerros
    * (ahorra trabajo antes de que el usuario llegue al footer).
    */

@@ -2,7 +2,7 @@
 @section('titulo', 'Tours em Português')
 
 @section('contenido')
-<div class="pm-page-header">
+@php $filtroCategoria = $filtroCategoria ?? request('categoria'); $categories = $categories ?? ($categorias ?? \App\Models\Ptcategory::orderBy('nombre')->get()); @endphp\n<div class="pm-page-header">
     <div>
         <h1>Tours em Português</h1>
         <small>Gerencie todos os tours publicados em português</small>
@@ -19,7 +19,7 @@
     </div>
 @endif
 
-@if ($errors->any())
+@if (isset($errors) && $errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
             @foreach ($errors->all() as $error)

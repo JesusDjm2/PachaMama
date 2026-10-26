@@ -634,3 +634,127 @@
     color: #1a2e45 !important;
     font-weight: 600 !important;
 }
+
+/* ============================================================
+   RESPONSIVE DESIGN SYSTEM — Tablets (<=991px) & Mobile (<=576px)
+   ============================================================ */
+
+/* ---------- Tablet Optimizations (iPad / Android Tablets) ---------- */
+@media (max-width: 991px) {
+    .container-fluid {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .pm-page-header {
+        margin-bottom: 1.25rem;
+    }
+    .pm-page-header h1 {
+        font-size: 1.15rem;
+    }
+    .pm-card {
+        margin-bottom: 1.25rem !important;
+        border-radius: 10px !important;
+    }
+    .pm-card-header {
+        padding: 0.85rem 1rem !important;
+    }
+    .pm-table thead th {
+        padding: 0.75rem 0.85rem !important;
+        font-size: 0.74rem;
+    }
+    .pm-table tbody td {
+        padding: 0.65rem 0.85rem !important;
+    }
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+        border-radius: 0 0 10px 10px;
+    }
+}
+
+/* ---------- Mobile Phone Optimizations (Smartphones) ---------- */
+@media (max-width: 576px) {
+    .container-fluid {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    .pm-page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    .pm-page-header > div:first-child {
+        width: 100%;
+    }
+    .pm-page-header h1 {
+        font-size: 1.05rem;
+    }
+    .pm-page-header .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+    .pm-card-header {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.65rem;
+        padding: 0.85rem !important;
+    }
+    .pm-card-header > div:first-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .pm-search {
+        max-width: 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+    .pm-search .form-control {
+        width: 100% !important;
+    }
+    .pm-form-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    .pm-form-actions .btn {
+        width: 100%;
+        justify-content: center;
+        margin-right: 0 !important;
+    }
+    .table-responsive {
+        box-shadow: inset -6px 0 8px -4px rgba(0,0,0,0.08);
+    }
+    .pm-table tbody td {
+        font-size: 0.82rem;
+    }
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    .pm-modal-content {
+        border-radius: 12px !important;
+    }
+    .pm-modal-body img {
+        max-height: 60vh !important;
+    }
+    .pm-modal-footer {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 0.65rem;
+    }
+    .pm-modal-footer > div {
+        max-width: 100% !important;
+        width: 100%;
+        justify-content: center;
+    }
+    .pm-swal-popup {
+        width: 90% !important;
+        padding: 1.25rem 1rem !important;
+    }
+}

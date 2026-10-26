@@ -1,213 +1,234 @@
 @extends('layouts.admin')
-@section('titulo', 'Editar tour en inglés')
+@section('titulo', 'Editar Tour en Inglés — ' . $tour->nombre)
 
 @section('contenido')
-    @if (session('status'))
-        <div class="text-success">
-            <h4>{{ session('status') }}</h4>
+<div class="pm-page-header">
+    <div>
+        <h1>Editar Tour en Inglés</h1>
+        <small>{{ $tour->nombre }}</small>
+    </div>
+    <div class="d-flex align-items-center" style="gap:0.5rem;">
+        <a href="{{ route('toursen.show', ['slug' => $tour->slug]) }}" target="_blank" class="btn btn-outline-info btn-sm">
+            <i class="fas fa-external-link-alt mr-1"></i> Ver en web
+        </a>
+        <a href="{{ route('toursen.index') }}" class="btn btn-secondary btn-sm">
+            <i class="fas fa-arrow-left mr-1"></i> Volver
+        </a>
+    </div>
+</div>
+
+@if(session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle mr-1"></i> {{ session('status') }}
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+@endif
+
+@if (isset($errors) && $errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle mr-1"></i> Por favor revisa los campos requeridos.
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+    </div>
+@endif
+
+<form action="/toursen/{{ $tour->id }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+
+    {{-- Información básica --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6><i class="fas fa-info-circle text-teal mr-2" style="color:#2aa8a8;"></i> Información básica</h6>
         </div>
-    @endif
-    <div class="row">
-        <div class="col-lg-12">
-            <h3 class="float-left">Actualizar tour: {{ $tour->nombre }}</h3>
-            <a href="{{ route('toursen.index') }}" class="btn btn-primary btn-sm float-right">Volver</a>
-        </div>
-        <div class="col-12">
-            <form action="/toursen/{{ $tour->id }}" method="post" enctype="multipart/form-data" class="bg-light"
-                style="padding: 1em">
-                @csrf
-                @method('PUT')
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control form-control-sm" required
-                            value="{{ $tour->nombre }}">
-                    </div>
-                    <div class="col-lg-3">
-                        <label for="" class="form-label">Precio:</label>
-                        <input type="text" id="precio" name="precio" class="form-control form-control-sm" required
-                            value="{{ $tour->precio }}">
-                    </div>
-                    <div class="col-lg-3">
-                        <label for="" class="form-label">Días:</label>
-                        <input type="text" id="dias" name="dias" class="form-control form-control-sm" required
-                            value="{{ $tour->dias }}">
-                    </div>
-                    <div class="col-lg-12 mt-3">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <input type="text" id="descripcion" name="descripcion" class="form-control form-control-sm"
-                            required value="{{ $tour->descripcion }}">
-                    </div>
-                    <div class="col-lg-12 mt-3">
-                        <label for="tour_id">Seleccionar Tour:</label>
-                        <select name="tour_id" id="tour_id" class="form-control form-control-sm">
-                            <option value="">Seleccionar Tour</option>
-                            @foreach ($toursDisponibles as $tourDisponible)
-                                <option value="{{ $tourDisponible->id }}"
-                                    {{ $tourDisponible->id == old('tour_id', $tour->tour_id) ? 'selected' : '' }}>
-                                    {{ $tourDisponible->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-lg-12 mt-3">
-                        <label for="contenido" class="form-label">Contenido:</label>
-                        <textarea class="ckeditor form-control" name="contenido" id="contenido">{!! Request::old('content', $tour->contenido) !!}</textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-12 mt-3">
-                        <label for="detallado" class="form-label">Detalle del tour:</label>
-                        <textarea class="ckeditor form-control" name="detallado" id="detallado">{!! Request::old('content', $tour->detallado) !!}</textarea>
-                        </textarea>
-                    </div>
-                    <div class="col-lg-6 mt-3">
-                        <label for="incluidos" class="form-label">Incluidos:</label>
-                        <textarea class="ckeditor form-control" name="incluidos" id="incluidos">{!! Request::old('content', $tour->incluidos) !!}</textarea>
-                        </textarea>
-                    </div>
-
-                    <div class="col-lg-6 mt-3">
-                        <label for="incluidos" class="form-label">Importante:</label>
-                        <textarea class="ckeditor form-control" name="importante" id="importante">{!! Request::old('content', $tour->importante) !!}</textarea>
-                        </textarea>
-                    </div>
-
-
-                    <div class="col-lg-4 mt-3">
-                        <label for="img" class="form-label">Imagen:</label>
-                        <input type="file" id="img" name="img" class="form-control form-control-sm"
-                            accept="image/*" value="{{ $tour->img }}">
-                        <img src="../../{{ $tour->img }}" width="100%" height="220px" style="object-fit: cover"><br>
-                    </div>
-
-                    {{-- <div class="col-lg-3 mt-3">
-                        <label for="" class="form-label">Categoría:</label><br>
-                        <select name="categoria[]" id="categoria" class="form-control form-control-sm"
-                            aria-label="Default select example" required multiple="multiple">
-                            <option value="{{ $tour->categoria }}" selected style="text-transform: capitalize">
-                                {{ $tour->categoria }} <small>(Seleccionado)</small></option>
-                            <option value="hikes">Caminatas</option>
-                            <option value="around">Alrededor de Perú</option>
-                            <option value="machupicchu">Machu Picchu</option>
-                            <option value="luxury">Luxury</option>
-                            <option value="fullday">Full day</option>
-                        </select>
-                    </div> --}}
-                    <div class="col-lg-8 mt-3">
-                        <label for="categories">Categorías:</label>
-                        <div class="row">
-                            @foreach ($categorias as $categoria)
-                                <div class="col-md-4">
-                                    <div class="form-check">
-                                        <input type="checkbox" name="categories[]" value="{{ $categoria->id }}"
-                                            class="form-check-input" id="categoria-{{ $categoria->id }}"
-                                            {{-- Mostrar el old value si existe, sino las categorías relacionadas --}}
-                                            {{ in_array($categoria->id, old('categories', $tour->categories->pluck('id')->toArray())) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="categoria-{{ $categoria->id }}">
-                                            {{ $categoria->nombre }}
-                                        </label>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        {{-- Mostrar errores de validación para categorías --}}
-                        @if ($errors->has('categories'))
-                            <div class="text-danger">
-                                {{ $errors->first('categories') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-lg-5 mt-3">
-                        <label for="" class="form-label">Clase:</label>
-                        <select name="clase" id="clase" class="form-control form-control-sm">
-                            <option value="aventuras">Camino Inca Salkantay</option>
-                            <option value="imperdible">Cusco city tour</option>
-                            <option value="machu">Machu Picchu</option>
-                            <option value="ollantaytambo">Ollantaytambo</option>
-                            <option value="pachamamalodge">Vista Valle Sagrado</option>
-                            <option value="valle">Vista Valle Sagrado 2</option>
-                            <option value="santuaryLodge">Hotel Sanctuary Lodge</option>
-                            <option value="puno">Balsa en Lago Titicaca</option>
-                            <option value="selva">Amazonas</option>
-                            <option value="caminata">Caminata Salkantay</option>
-                            <option value="nazca">Lineas de Nazca</option>
-                            <option value="lima">Ciudad de Lima</option>
-                            <option value="arequipa">Ciudad de Arequipa</option>
-                            <option value="huchuy">Huchuy Qosqo</option>
-                            <option value="choque">Choquequirao</option>
-                            <option value="humantay">Laguna Humantay</option>
-                            <option value="vinicunca">Vinicunca</option>
-                            <option value="ica">Huacachina</option>
-                            <option value="pisco">Reserva Nacional Paracas</option>
-                            <option value="puerto">Puerto Maldonado</option>
-                        </select>
-                        <div style="width: 100%; height: 280px; object-fit: cover;" id="dynamic-class-div"
-                            class="default-class">
-                            <!-- Contenido aquí -->
-                        </div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var selectElement = document.getElementById('clase');
-                                var dynamicDiv = document.getElementById('dynamic-class-div');
-
-                                // Inicializa el div con la clase correspondiente al valor seleccionado por defecto
-                                var defaultClass = selectElement.value;
-                                if (defaultClass) {
-                                    dynamicDiv.classList.add(defaultClass);
-                                }
-
-                                // Actualiza la clase del div cuando cambia la selección
-                                selectElement.addEventListener('change', function() {
-                                    var selectedClass = this.value;
-
-                                    // Elimina todas las clases dinámicas anteriores (excepto la clase predeterminada)
-                                    dynamicDiv.className = 'default-class';
-
-                                    // Agrega la nueva clase basada en la opción seleccionada
-                                    if (selectedClass) {
-                                        dynamicDiv.classList.add(selectedClass);
-                                    }
-                                });
-                            });
-                        </script>
-                    </div>
-
-
-                    <div class="col-lg-4 pt-3">
-                        <label for="" class="form-label">Ubicación:</label>
-                        <input type="text" id="ubicacion" name="ubicacion" class="form-control form-control-sm"
-                            required value="{{ $tour->ubicacion }}">
-                    </div>
-                    <div class="col-lg-8 pt-3">
-                        <label for="mapa" class="form-label">Mapa:</label>
-                        <textarea name="mapa" id="mapa" class="form-control form-control-sm"> {!! Request::old('content', $tour->mapa) !!}</textarea>
-                        @if ($errors->has('mapa'))
-                            <div class="text-danger">
-                                {{ $errors->first('mapa') }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-lg-12">
-                        <label for="" class="form-label">Keywords:</label>
-                        <input type="text" id="keywords" name="keywords" class="form-control form-control-sm"
-                            required value="{{ $tour->keywords }}">
-                    </div>
-                    <div class="col-lg-12">
-                        <label for="" class="form-label">Slug:</label>
-                        <input type="text" id="slug" name="slug" class="form-control form-control-sm"
-                            required value="{{ $tour->slug }}">
-                    </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label font-weight-600">Nombre del tour</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control form-control-sm @error('nombre') is-invalid @enderror" required value="{{ old('nombre', $tour->nombre) }}">
+                    @error('nombre')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
-                <a href="/toursen" class="btn btn-secondary mt-4">Cancelar</a>
-                <button class="btn btn-primary mt-4" type="submit">Guardar</button>
-            </form>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label font-weight-600">Precio (USD)</label>
+                    <input type="text" name="precio" class="form-control form-control-sm @error('precio') is-invalid @enderror" required value="{{ old('precio', $tour->precio) }}">
+                </div>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label font-weight-600">Días</label>
+                    <input type="text" name="dias" class="form-control form-control-sm @error('dias') is-invalid @enderror" required value="{{ old('dias', $tour->dias) }}">
+                </div>
+                <div class="col-lg-2 col-md-4 mb-3">
+                    <label class="form-label font-weight-600">Ubicación</label>
+                    <input type="text" name="ubicacion" class="form-control form-control-sm @error('ubicacion') is-invalid @enderror" required value="{{ old('ubicacion', $tour->ubicacion) }}">
+                </div>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label font-weight-600">Slug (URL amigable)</label>
+                    <input type="text" name="slug" id="slug" class="form-control form-control-sm @error('slug') is-invalid @enderror" required value="{{ old('slug', $tour->slug) }}">
+                </div>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label font-weight-600">Tour en español vinculado <small class="text-muted">(opcional)</small></label>
+                    <select name="tour_id" id="tour_id" class="form-control form-control-sm">
+                        <option value="">— Ninguno / Sin vincular —</option>
+                        @foreach ($toursDisponibles as $tourDisponible)
+                            <option value="{{ $tourDisponible->id }}"
+                                {{ (string) $tourDisponible->id === (string) old('tour_id', $tour->tour_id) ? 'selected' : '' }}>
+                                {{ $tourDisponible->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-12 mb-2">
+                    <label class="form-label font-weight-600">Descripción corta <small class="text-muted">— usada en tarjetas y resumen</small></label>
+                    <input type="text" name="descripcion" class="form-control form-control-sm @error('descripcion') is-invalid @enderror" required value="{{ old('descripcion', $tour->descripcion) }}">
+                </div>
+            </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.ckeditor').ckeditor();
+
+    {{-- Categorías --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-tags text-teal mr-2" style="color:#2aa8a8;"></i>
+                <h6>Categorías del Tour</h6>
+            </div>
+            <small class="text-muted">Selecciona todas las categorías que apliquen</small>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                @foreach ($categorias as $categoria)
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-2">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="categories[]" value="{{ $categoria->id }}"
+                                   class="custom-control-input" id="categoria-{{ $categoria->id }}"
+                                   {{ in_array($categoria->id, old('categories', $tour->categories->pluck('id')->toArray())) ? 'checked' : '' }}>
+                            <label class="custom-control-label font-weight-500" for="categoria-{{ $categoria->id }}" style="font-size:0.86rem; cursor:pointer;">
+                                {{ $categoria->nombre }}
+                            </label>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            @error('categories')
+                <div class="text-danger mt-2" style="font-size:0.8rem;">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+
+    {{-- Contenido detallado --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6><i class="fas fa-align-left text-teal mr-2" style="color:#2aa8a8;"></i> Contenido e Itinerario</h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <label class="form-label font-weight-600">Presentación / Resumen general</label>
+                <textarea class="ckeditor form-control" name="contenido" id="contenido">{!! old('contenido', $tour->contenido) !!}</textarea>
+            </div>
+            <div class="mb-4">
+                <label class="form-label font-weight-600">Itinerario detallado</label>
+                <textarea class="ckeditor form-control" name="detallado" id="detallado">{!! old('detallado', $tour->detallado) !!}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label font-weight-600">Qué incluye</label>
+                    <textarea class="ckeditor form-control" name="incluidos" id="incluidos">{!! old('incluidos', $tour->incluidos) !!}</textarea>
+                </div>
+                <div class="col-lg-6 col-md-12 mb-3">
+                    <label class="form-label font-weight-600">Información importante / Qué llevar</label>
+                    <textarea class="ckeditor form-control" name="importante" id="importante">{!! old('importante', $tour->importante) !!}</textarea>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label class="form-label font-weight-600">Código embebido de Mapa <small class="text-muted">(iframe Google Maps)</small></label>
+                <textarea name="mapa" id="mapa" class="form-control form-control-sm" rows="3">{!! old('mapa', $tour->mapa) !!}</textarea>
+            </div>
+        </div>
+    </div>
+
+    {{-- Multimedia y SEO --}}
+    <div class="card pm-card">
+        <div class="card-header pm-card-header">
+            <h6><i class="fas fa-image text-teal mr-2" style="color:#2aa8a8;"></i> Imagen, Banner y SEO</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <label class="form-label font-weight-600">Imagen principal de portada</label>
+                    <input type="file" id="img" name="img" class="form-control form-control-sm mb-2" accept="image/*">
+                    @if($tour->img)
+                        <div class="mt-2 p-2 border rounded bg-light" style="display:inline-block;">
+                            <img src="{{ asset($tour->img) }}" alt="{{ $tour->nombre }}" class="rounded shadow-sm" style="max-height:160px; max-width:100%; object-fit:cover;">
+                            <small class="text-muted d-block mt-1 font-monospace">{{ $tour->img }}</small>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="col-lg-6 col-md-12 mb-4">
+                    <label class="form-label font-weight-600">Clase del banner panorámico</label>
+                    <select name="clase" id="clase" class="form-control form-control-sm mb-2">
+                        @php
+                            $clases = [
+                                'aventuras' => 'Camino Inca Salkantay',
+                                'imperdible' => 'Cusco city tour',
+                                'machu' => 'Machu Picchu',
+                                'ollantaytambo' => 'Ollantaytambo',
+                                'pachamamalodge' => 'Vista Valle Sagrado',
+                                'valle' => 'Vista Valle Sagrado 2',
+                                'santuaryLodge' => 'Hotel Sanctuary Lodge',
+                                'puno' => 'Balsa en Lago Titicaca',
+                                'selva' => 'Amazonas',
+                                'caminata' => 'Caminata Salkantay',
+                                'nazca' => 'Lineas de Nazca',
+                                'lima' => 'Ciudad de Lima',
+                                'arequipa' => 'Ciudad de Arequipa',
+                                'huchuy' => 'Huchuy Qosqo',
+                                'choque' => 'Choquequirao',
+                                'humantay' => 'Laguna Humantay',
+                                'vinicunca' => 'Vinicunca',
+                                'ica' => 'Huacachina',
+                                'pisco' => 'Reserva Nacional Paracas',
+                                'puerto' => 'Puerto Maldonado'
+                            ];
+                        @endphp
+                        @foreach($clases as $val => $lbl)
+                            <option value="{{ $val }}" {{ old('clase', $tour->clase) === $val ? 'selected' : '' }}>
+                                {{ $lbl }} ({{ $val }})
+                            </option>
+                        @endforeach
+                    </select>
+                    <div id="dynamic-class-div" class="{{ old('clase', $tour->clase) }} rounded border shadow-sm" style="width:100%; height:140px; background-size:cover; background-position:center;">
+                    </div>
+                </div>
+
+                <div class="col-12 mb-2">
+                    <label class="form-label font-weight-600">Keywords SEO <small class="text-muted">— separar por comas</small></label>
+                    <input type="text" id="keywords" name="keywords" class="form-control form-control-sm" value="{{ old('keywords', $tour->keywords) }}" placeholder="machu picchu tour, inca trail, cusco travel">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Acciones --}}
+    <div class="pm-form-actions mb-4">
+        <button type="submit" class="btn btn-pm-primary">
+            <i class="fas fa-save mr-1"></i> Guardar Cambios
+        </button>
+        <a href="{{ route('toursen.index') }}" class="btn btn-secondary">
+            <i class="fas fa-times mr-1"></i> Cancelar
+        </a>
+    </div>
+</form>
+
+@push('admin_scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var selectElement = document.getElementById('clase');
+    var dynamicDiv = document.getElementById('dynamic-class-div');
+    if (selectElement && dynamicDiv) {
+        selectElement.addEventListener('change', function() {
+            dynamicDiv.className = 'rounded border shadow-sm ' + this.value;
         });
-    </script>
+    }
+});
+</script>
+@endpush
 @endsection

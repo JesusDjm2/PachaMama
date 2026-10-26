@@ -1,24 +1,26 @@
 @extends('layouts.admin')
-@section('titulo', 'Blogs inglés')
+@section('titulo', 'Crear Blog en Inglés')
+
 @section('contenido')
-<section class="content container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                    <span class="card-title">Crear blog en inglés</span>
-                    <a style="float: right" class="btn btn-primary" href="{{route('enblogs.index')}}">Volver</a>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('enblogs.store') }}"  role="form" enctype="multipart/form-data">
-                        @csrf
-
-                        @include('blogs.en.blogs.form')
-
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="pm-page-header">
+    <div>
+        <h1>Crear Blog en Inglés</h1>
+        <small>Nuevo artículo para el blog en inglés</small>
     </div>
-</section>
+    <a href="{{ route('enblogs.index') }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left mr-1"></i> Volver
+    </a>
+</div>
+
+<div class="card pm-card">
+    <div class="card-header pm-card-header">
+        <h6><i class="fas fa-pen-fancy text-teal mr-2" style="color:#2aa8a8;"></i> Contenido del artículo (EN)</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('enblogs.store') }}" enctype="multipart/form-data">
+            @csrf
+            @include('blogs.en.blogs.form')
+        </form>
+    </div>
+</div>
 @endsection

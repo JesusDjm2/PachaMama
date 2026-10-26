@@ -1,68 +1,116 @@
 @extends('layouts.admin')
-@section('titulo', 'Categorías')
+@section('titulo', 'Categorías en Español')
+
 @section('contenido')
-    <div class="row">
-        <div class="col-12 mt-2">
-            <div class="row">
-                <div class="col-6 float-left">
-                    <h2>Lista de Categorías en español:</h2>
-                </div>
-                <div class="col-6">
-                    <a href="{{ route('categoria.create') }}" class="btn btn-primary btn-sm float-right mr-2">Nueva
-                        Categoría</a>
-                </div>
-                <div class="col-lg-12">
-                    @if (session('status'))
-                        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                            {{ session('status') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            <table class="table mt-4 table-hover">
-                <thead class="thead-dark">
+<div class="pm-page-header">
+    <div>
+        <h1>Categorías de Tours en Español</h1>
+        <small>Categorías organizadas para el catálogo de tours en español</small>
+    </div>
+    <a href="{{ route('categoria.create') }}" class="btn btn-pm-primary btn-sm">
+        <i class="fas fa-plus mr-1"></i> Nueva Categoría
+    </a>
+</div>
+
+@if (session('status'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle mr-1"></i> {{ session('status') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
+
+<div class="card pm-card">
+    <div class="card-header pm-card-header">
+        <div class="d-flex align-items-center flex-wrap" style="gap:0.75rem;">
+            <h6>Listado de categorías</h6>
+            <span class="badge badge-pill badge-light border text-muted" style="font-size:0.75rem; font-weight:600;">
+                <span id="catTotalCount">{{ count($categories) }}</span> categorías
+            </span>
+        </div>
+        <div class="pm-search">
+            <input type="text" id="search" class="form-control" placeholder="Buscar categoría...">
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table id="tabladatos" class="table pm-table table-hover mb-0">
+                <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Link</th>
-                        <th scope="col" class="text-center">Acciones</th>
+                        <th>Nombre</th>
+                        <th>Enlace (slug)</th>
+                        <th class="text-center" style="width:140px;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($categories as $category)
+                    @forelse ($categories as $category)
                         <tr>
-                            <td>{{ $category->nombre }}</td>
-                            <td>{{ $category->link }}</td>
-                            <td class="text-center">
-                                {{-- <a href="{{ route('category.show', $category->id) }}" class="btn btn-info btn-sm" title="Ver">
-                                    <i class="fa fa-eye"></i>
-                                </a> --}}
-                                <a href="{{ route('categoria.show', $category) }}" class="btn btn-info btn-sm" title="Ver">
-                                    <i class="fa fa-eye"></i>
+                            <td class="font-weight-bold" style="color:#1a2e45;">{{ $category->nombre }}</td>
+                            <td><code style="font-size:0.78rem; color:#6b7280;">{{ $category->link }}</code></td>
+                            <td class="text-center" style="white-space:nowrap;">
+                                <a href="{{ route('categoria.show', $category) }}" class="btn btn-action btn-action-view" title="Ver en web" target="_blank">
+                                    <i class="fas fa-eye"></i>
                                 </a>
-                                
-                                <a href="{{ route('categoria.edit', $category) }}" class="btn btn-warning btn-sm"
-                                    title="Editar">
-                                    <i class="fa fa-edit"></i>
+                                <a href="{{ route('categoria.edit', $category) }}" class="btn btn-action btn-action-edit" title="Editar">
+                                    <i class="fas fa-edit"></i>
                                 </a>
-                                 <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeletion('{{ route('categoria.destroy', $category) }}')">
-                                    <i class="fa fa-trash"></i>
-                                </button>                              
+                                <button type="button" class="btn btn-action btn-action-delete" title="Eliminar categoría"
+                                    onclick="confirmDeletion('{{ route('categoria.destroy', $category) }}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="3" class="text-center py-4 text-muted">
+                                <i class="fas fa-folder-open fa-2x mb-2 d-block" style="opacity:0.4;"></i>
+                                No hay categorías registradas.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
+</div>
 
-   
+@push('admin_scripts')
+<script>
+function confirmDeletion(url) {
+    confirmarEliminarUrl(url, '¿Eliminar categoría en español?', 'Esta categoría será eliminada permanentemente del catálogo.');
+}
 
-    <script>
-        function confirmDeletion(url) {
-            confirmarEliminarUrl(url, '¿Eliminar categoría en español?', 'Esta categoría será eliminada permanentemente del catálogo.');
-        }
-    </script>
+(function() {
+    var searchInput = document.getElementById('search');
+    var table = document.getElementById('tabladatos');
+    if (!searchInput || !table) return;
+
+    var tbody = table.querySelector('tbody');
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    var countEl = document.getElementById('catTotalCount');
+
+    function normalizar(str) {
+        return (str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    searchInput.addEventListener('input', function() {
+        var query = normalizar(this.value.trim());
+        var visibleCount = 0;
+
+        rows.forEach(function(row) {
+            if (row.cells.length < 2) return;
+            var name = normalizar(row.cells[0].textContent);
+            var link = normalizar(row.cells[1].textContent);
+            var match = query === '' || name.includes(query) || link.includes(query);
+
+            row.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+        });
+
+        if (countEl) countEl.textContent = visibleCount;
+    });
+})();
+</script>
+@endpush
 @endsection

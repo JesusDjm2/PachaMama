@@ -1,22 +1,26 @@
 @extends('layouts.admin')
-@section('titulo', 'Blogs português')
+@section('titulo', 'Criar Blog em Português')
+
 @section('contenido')
-<section class="content container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card card-default">
-                <div class="card-header">
-                    <span class="card-title">Criar blog em português</span>
-                    <a style="float: right" class="btn btn-primary" href="{{ route('ptblogs.index') }}">Voltar</a>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('ptblogs.store') }}" role="form" enctype="multipart/form-data">
-                        @csrf
-                        @include('blogs.pt.blogs.form')
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="pm-page-header">
+    <div>
+        <h1>Criar Blog em Português</h1>
+        <small>Novo artigo para o blog em português</small>
     </div>
-</section>
+    <a href="{{ route('ptblogs.index') }}" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left mr-1"></i> Voltar
+    </a>
+</div>
+
+<div class="card pm-card">
+    <div class="card-header pm-card-header">
+        <h6><i class="fas fa-pen-fancy text-teal mr-2" style="color:#2aa8a8;"></i> Conteúdo do artigo (PT)</h6>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="{{ route('ptblogs.store') }}" enctype="multipart/form-data">
+            @csrf
+            @include('blogs.pt.blogs.form')
+        </form>
+    </div>
+</div>
 @endsection

@@ -63,14 +63,7 @@
 @push('admin_scripts')
 <script>
 function confirmDeletion(url) {
-    if (!confirm('¿Está seguro de que desea eliminar esta categoría?')) return;
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = url;
-    form.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                     '<input type="hidden" name="_method" value="DELETE">';
-    document.body.appendChild(form);
-    form.submit();
+    confirmarEliminarUrl(url, '¿Eliminar categoría en inglés?', 'Esta categoría en inglés será eliminada permanentemente del catálogo.');
 }
 </script>
 @endpush

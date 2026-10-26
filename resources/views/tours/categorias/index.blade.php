@@ -62,29 +62,7 @@
 
     <script>
         function confirmDeletion(url) {
-            if (confirm('¿Está seguro de que desea eliminar esta categoría?')) {
-                // Crea un formulario para enviar la solicitud DELETE
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = url;
-
-                // Agrega los campos necesarios
-                var csrfToken = document.createElement('input');
-                csrfToken.type = 'hidden';
-                csrfToken.name = '_token';
-                csrfToken.value = '{{ csrf_token() }}';
-                form.appendChild(csrfToken);
-
-                var methodField = document.createElement('input');
-                methodField.type = 'hidden';
-                methodField.name = '_method';
-                methodField.value = 'DELETE';
-                form.appendChild(methodField);
-
-                // Agrega el formulario al body y envíalo
-                document.body.appendChild(form);
-                form.submit();
-            }
+            confirmarEliminarUrl(url, '¿Eliminar categoría en español?', 'Esta categoría será eliminada permanentemente del catálogo.');
         }
     </script>
 @endsection

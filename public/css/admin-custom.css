@@ -592,3 +592,45 @@
     background: #2aa8a8 !important;
     color: #fff !important;
 }
+
+/* ---------- SweetAlert2 System Styling ---------- */
+.pm-swal-popup {
+    border-radius: 16px !important;
+    padding: 1.75rem 1.5rem !important;
+    box-shadow: 0 16px 48px rgba(26, 46, 69, 0.22) !important;
+    font-family: inherit !important;
+}
+.pm-swal-popup .swal2-title {
+    color: #1a2e45 !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+}
+.pm-swal-popup .swal2-html-container {
+    color: #4b5563 !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    margin: 0.5rem 0 1.25rem 0 !important;
+}
+.pm-swal-popup .swal2-actions {
+    gap: 0.5rem !important;
+    margin-top: 0.5rem !important;
+}
+.pm-swal-popup .swal2-styled {
+    border-radius: 8px !important;
+    font-size: 0.84rem !important;
+    font-weight: 600 !important;
+    padding: 0.55rem 1.25rem !important;
+    letter-spacing: 0.02em !important;
+    box-shadow: none !important;
+}
+.swal2-toast {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 28px rgba(26, 46, 69, 0.16) !important;
+    padding: 0.75rem 1rem !important;
+}
+.swal2-toast .swal2-title {
+    font-size: 0.88rem !important;
+    color: #1a2e45 !important;
+    font-weight: 600 !important;
+}

@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="nofollow">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <title>@yield('titulo', 'Admin') — Pacha Mama Spirit</title>
     <link rel="shortcut icon" href="{{ asset('img/icono-home.png') }}">
     <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -269,8 +271,7 @@
                                     <i class="fas fa-users-cog fa-sm fa-fw mr-2 text-gray-400"></i> Administrar Usuarios
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); confirmarCerrarSesion();">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i> Cerrar Sesión
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -309,6 +310,199 @@
     <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
+    
+    <!-- SweetAlert2 Library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Modal Logout Fallback -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content pm-modal-content">
+                <div class="modal-header pm-modal-header d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-sign-out-alt text-danger mr-2" style="font-size:1.15rem;"></i>
+                        <h6 class="modal-title font-weight-bold" id="logoutModalLabel" style="color:#1a2e45; margin:0;">
+                            ¿Cerrar sesión?
+                        </h6>
+                    </div>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body py-4 px-4">
+                    <p class="mb-0 text-gray-700">¿Estás seguro de que deseas salir del panel de administración? Se finalizará tu sesión de trabajo de forma segura.</p>
+                </div>
+                <div class="modal-footer pm-modal-footer d-flex justify-content-end" style="gap:0.5rem;">
+                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger btn-sm" type="button" onclick="document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Sí, cerrar sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // 1. Confirmación de Cierre de Sesión con SweetAlert2
+    function confirmarCerrarSesion() {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: '¿Cerrar sesión?',
+                text: '¿Estás seguro de que deseas salir del panel de administración? Se finalizará tu sesión de trabajo.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#e02424',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-sign-out-alt mr-1"></i> Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                focusCancel: true,
+                customClass: {
+                    popup: 'pm-swal-popup'
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
+        } else {
+            $('#logoutModal').modal('show');
+        }
+    }
+
+    // 2. Función global para eliminar por URL (para categorías y llamadas directas)
+    function confirmarEliminarUrl(url, title, text) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: title || '¿Eliminar este registro?',
+                text: text || 'Esta acción no se puede deshacer y borrará el elemento permanentemente.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e02424',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                focusCancel: true,
+                customClass: {
+                    popup: 'pm-swal-popup'
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    var form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    var csrf = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '{{ csrf_token() }}';
+                    form.innerHTML = '<input type="hidden" name="_token" value="' + csrf + '">' +
+                                     '<input type="hidden" name="_method" value="DELETE">';
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        } else {
+            if (confirm((title || '¿Eliminar?') + '\n' + (text || 'Esta acción no se puede deshacer.'))) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = url;
+                var csrf = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '{{ csrf_token() }}';
+                form.innerHTML = '<input type="hidden" name="_token" value="' + csrf + '">' +
+                                 '<input type="hidden" name="_method" value="DELETE">';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    }
+
+    // 3. Interceptor global para todos los botones de eliminación en tablas y vistas
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.btn-action-delete, [data-confirm-delete]');
+        if (!btn) return;
+
+        var form = btn.closest('form');
+        if (!form) return;
+
+        // Si ya fue confirmado, permitir el envío normal
+        if (form.dataset.confirmed === 'true') return;
+
+        // Detener la acción por defecto y cualquier onclick nativo
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        var title = btn.getAttribute('data-confirm-title') || '¿Eliminar este registro?';
+        var text = btn.getAttribute('data-confirm-text') || 'Esta acción no se puede deshacer y borrará el elemento permanentemente.';
+
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: title,
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e02424',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '<i class="fas fa-trash-alt mr-1"></i> Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true,
+                focusCancel: true,
+                customClass: {
+                    popup: 'pm-swal-popup'
+                }
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    form.dataset.confirmed = 'true';
+                    btn.removeAttribute('onclick');
+                    form.submit();
+                }
+            });
+        } else {
+            if (confirm(title + '\n' + text)) {
+                form.dataset.confirmed = 'true';
+                btn.removeAttribute('onclick');
+                form.submit();
+            }
+        }
+    }, true); // useCapture: true para adelantarse a cualquier onclick inline
+
+    // 4. Notificaciones automáticas Toast/Alert para respuestas del servidor (Éxito o Error)
+    @if(session('status') || session('success'))
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swal !== 'undefined') {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
+            Toast.fire({
+                icon: 'success',
+                title: {!! json_encode(session('status') ?? session('success')) !!}
+            });
+        }
+    });
+    @endif
+
+    @if(session('error') || (isset($errors) && $errors->any()))
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Atención',
+                text: {!! json_encode(session('error') ?? ($errors->any() ? $errors->first() : 'Ocurrió un error en la solicitud.')) !!},
+                confirmButtonColor: '#2aa8a8',
+                confirmButtonText: 'Entendido',
+                customClass: {
+                    popup: 'pm-swal-popup'
+                }
+            });
+        }
+    });
+    @endif
+    </script>
+
     @stack('admin_scripts')
 </body>
 

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/estilos-bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}?v={{ filemtime(public_path('css/estilos.css')) }}">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap"></noscript>
@@ -60,6 +60,22 @@
             </form>
         </div>
         <div class="site-mobile-menu-body"></div>
+        <div class="site-mobile-menu-footer">
+            <div class="site-mobile-menu-contact">
+                <a href="https://api.whatsapp.com/send?phone=51921136755" target="_blank" rel="noopener" class="mobile-menu-contact-item">
+                    <span class="icon-whatsapp mr-2" aria-hidden="true"></span>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="tel:+51921136755" class="mobile-menu-contact-item">
+                    <span class="icon-phone mr-2" aria-hidden="true"></span>
+                    <span>+51 921 136 755</span>
+                </a>
+                <a href="mailto:info@pachamamaspirit.com" class="mobile-menu-contact-item">
+                    <span class="icon-envelope mr-2" aria-hidden="true"></span>
+                    <span>info@pachamamaspirit.com</span>
+                </a>
+            </div>
+        </div>
     </div> <!-- .site-mobile-menu -->
     <div class="site-navbar-wrap">
         <div class="site-navbar-top">
@@ -105,21 +121,24 @@
         <div class="site-navbar site-navbar-target js-sticky-header">
             <div class="container">
                 <div class="row align-items-center row-menu">
-                    <div class="col-2">
+                    <div class="col-6 col-sm-5 col-md-4 col-xl-2">
                         <a href="{{ route('index') }}">
                             <img src="{{ asset('img/pacha-mama-spirit-logo.png') }}" alt="Pacha mama Spirit logo"
                                 class="logo" title="Logo Pacha Mama Spirit">
                         </a>
                     </div>
-                    <div class="col-10">
+                    <div class="col-6 col-sm-7 col-md-8 col-xl-10">
                         <nav class="site-navigation" role="navigation">
-                            <div class="container">
-                                <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3 site-nav-mobile-toggle">
-                                    <a href="#" class="site-menu-toggle js-menu-toggle text-white" aria-label="Open menu">
-                                        <span class="icon-menu h3" aria-hidden="true"></span>
-                                    </a>
-                                </div>
-                                <ul class="site-menu main-menu js-clone-nav d-none d-lg-block">
+                            <div class="site-tablet-actions d-flex align-items-center justify-content-end d-xl-none">
+                                <button type="button" class="site-nav-search-trigger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" aria-label="Search tours">
+                                    <span class="icon-search" aria-hidden="true"></span>
+                                </button>
+                                <a href="#" class="site-menu-toggle js-menu-toggle text-white ml-2" aria-label="Open menu">
+                                    <span class="icon-menu h3 mb-0" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                            <ul class="site-menu main-menu js-clone-nav d-none d-xl-block">
                                     <li class="has-children">
                                         <a href="{{ route('destinies-peru') }}" class="nav-link"
                                             @if (request()->is('destinies')) id="active" @endif>Destinies</a>
@@ -180,7 +199,6 @@
                                             data-bs-target="#exampleModal" role="button" tabindex="0" aria-label="Search tours"></i>
                                     </li>
                                 </ul>
-                            </div>
                         </nav>
                     </div>
                 </div>
@@ -280,7 +298,7 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/jquery.sticky.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" defer></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}?v={{ filemtime(public_path('js/main.js')) }}" defer></script>
     @stack('scripts')
 
 </body>

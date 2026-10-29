@@ -58,7 +58,6 @@
         </div>
     </div>
     <!--------Fin formulario ---------->
-    </div>
     <section>
         <div class="container" id="pachamama">
             <div class="row justify-content-center">

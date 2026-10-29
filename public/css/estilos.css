@@ -247,11 +247,11 @@ strong {
 @keyframes pacha-cover-breathe-portrait {
   0%,
   100% {
-    background-size: auto 118%;
+    background-size: auto 120%;
   }
 
   50% {
-    background-size: auto 128%;
+    background-size: auto 132%;
   }
 }
 
@@ -298,48 +298,51 @@ strong {
 }
 
 /*
- * Viewport en móvil/tablet: dvh/svh evitan franjas bajo barra del navegador.
- * En vertical, la animación usa alto % (keyframes portrait) para que la foto cubra el alto.
+ * Viewport en móvil/tablet/desktop: dvh/svh evitan franjas bajo barra del navegador dinámicas.
  */
-@media (max-width: 1024px) {
-  .hero,
-  .destinos,
-  .aventuras,
-  .imperdible,
-  .machu,
-  .ollantaytambo,
-  .pachamamalodge,
-  .santuaryLodge,
-  .paquetes,
-  .blog,
-  .terminos,
-  .preguntas,
-  .blog-temas,
-  .puno,
-  .valle,
-  .selva,
-  .caminata,
-  .nazca,
-  .lima,
-  .arequipa,
-  .cusco,
-  .ollanta,
-  .huchuy,
-  .choque,
-  .humantay,
-  .vinicunca,
-  .ica,
-  .pisco,
-  .puerto,
-  .salkantay,
-  .manu {
-    min-height: 100vh;
-    min-height: 100svh;
-    min-height: 100dvh;
-  }
+.hero,
+.destinos,
+.aventuras,
+.imperdible,
+.machu,
+.ollantaytambo,
+.pachamamalodge,
+.santuaryLodge,
+.paquetes,
+.blog,
+.terminos,
+.preguntas,
+.blog-temas,
+.puno,
+.valle,
+.selva,
+.caminata,
+.nazca,
+.lima,
+.arequipa,
+.cusco,
+.ollanta,
+.huchuy,
+.choque,
+.humantay,
+.vinicunca,
+.ica,
+.pisco,
+.puerto,
+.salkantay,
+.manu {
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+/*
+ * Animación por alto (portrait / pantallas no ultrapanorámicas):
+ * Cualquier dispositivo en vertical (móvil, iPad Mini, iPad Air, iPad Pro 1032px+, monitores verticales)
+ * o con ratio menor a 16:9 en apaisado (tablets 4:3, laptops 3:2 o 16:10).
+ * Esto garantiza que la foto cubra el 100% de la altura sin dejar franjas grises vacías.
+ */
+@media (orientation: portrait), (max-aspect-ratio: 16/10) {
   .hero,
   .destinos,
   .aventuras,
@@ -371,13 +374,13 @@ strong {
   .puerto,
   .salkantay,
   .manu {
-    animation-name: pacha-cover-breathe-portrait;
+    animation-name: pacha-cover-breathe-portrait !important;
     will-change: background-size;
   }
 }
 
-@media (max-width: 768px) {
-  /* fixed + animación suele ir pesado en móvil (solo .hero usa attachment fixed en el tema) */
+@media (max-width: 1200px) {
+  /* fixed + animación suele ir pesado o recortarse en tablets y móviles */
   .hero {
     background-attachment: scroll !important;
   }
@@ -3185,7 +3188,7 @@ footer p {
 
 /* ---------- Responsive ---------- */
 @media (min-width: 768px) and (max-width: 1199px) {
-  .logo { margin-left: -1em; }
+  .logo { margin-left: 0; }
   .h1-destinos { margin-top: 7em; font-size: 2rem; }
 }
 
@@ -3351,4 +3354,450 @@ footer p {
 
   .full-img h5 { font-size: 1.2rem; }
   .full-img p { font-size: 0.85rem; }
+}
+
+/* ========================================================
+   RESPONSIVE NAVIGATION & TABLET STYLES (768px - 1199.98px)
+   ======================================================== */
+
+/* Evitar scroll del fondo cuando el menú off-canvas está abierto */
+body.offcanvas-menu {
+  overflow: hidden !important;
+  touch-action: none !important;
+}
+
+body.offcanvas-menu:before {
+  z-index: 1999 !important;
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* Barra superior: prevenir cortes de texto y saltos de línea antiestéticos */
+.site-navbar-top {
+  white-space: nowrap !important;
+}
+
+.site-navbar-top a,
+.site-navbar-top a span {
+  white-space: nowrap !important;
+}
+
+.site-navbar-top .d-flex {
+  flex-wrap: nowrap !important;
+}
+
+/* Sombra suave superior para garantizar legibilidad del logo y botones sobre fondos claros */
+.site-navbar {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%);
+  padding: 10px 0;
+  transition: all 0.3s ease;
+}
+
+/* En tablets y móviles, aprovechar el ancho completo sin márgenes vacíos de 120px */
+@media (max-width: 1199.98px) {
+  .site-navbar-top .container,
+  .site-navbar .container {
+    max-width: 100% !important;
+    padding-left: clamp(16px, 3vw, 32px) !important;
+    padding-right: clamp(16px, 3vw, 32px) !important;
+  }
+
+  .site-navbar .row-menu {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+/* Acciones en la barra de navegación para móvil y tablets (< 1200px) */
+.site-tablet-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+@media (min-width: 1200px) {
+  .site-tablet-actions {
+    display: none !important;
+  }
+}
+
+/* Botón de búsqueda directa en el navbar */
+.site-nav-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  touch-action: manipulation;
+}
+
+.site-nav-search-trigger:hover,
+.site-nav-search-trigger:focus {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff;
+  transform: scale(1.06);
+  outline: none;
+}
+
+.site-nav-search-trigger:active {
+  transform: scale(0.95);
+}
+
+/* Botón hamburguesa (toggle) */
+.site-navbar .site-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 44px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  touch-action: manipulation;
+}
+
+.site-navbar .site-menu-toggle:hover,
+.site-navbar .site-menu-toggle:focus,
+.site-navbar .site-menu-toggle.active {
+  background: #2aa8a8;
+  border-color: #2aa8a8;
+  color: #ffffff !important;
+  outline: none;
+}
+
+.site-navbar .site-menu-toggle:active {
+  transform: scale(0.95);
+}
+
+.site-navbar .site-menu-toggle .icon-menu {
+  float: none !important;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: block;
+}
+
+/* ---------- Panel Offcanvas del Menú Lateral ---------- */
+.site-mobile-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  padding-top: 0 !important;
+  background: #ffffff !important;
+  box-shadow: -15px 0 45px rgba(15, 23, 42, 0.28) !important;
+  z-index: 2000 !important;
+}
+
+.site-mobile-menu .site-mobile-menu-body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 10px 18px 24px 18px !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(42, 168, 168, 0.4) transparent !important;
+}
+
+.site-mobile-menu .site-mobile-menu-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.site-mobile-menu .site-mobile-menu-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.site-mobile-menu .site-mobile-menu-body::-webkit-scrollbar-thumb {
+  background: rgba(42, 168, 168, 0.4);
+  border-radius: 10px;
+}
+
+/* Buscador dentro del panel */
+.site-mobile-menu-search {
+  flex-shrink: 0;
+  padding: 14px 20px 4px !important;
+}
+
+.site-mobile-menu-search .mobile-menu-search-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.site-mobile-menu-search .mobile-menu-search-input {
+  height: 44px !important;
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  font-size: 0.92rem !important;
+  box-shadow: none !important;
+}
+
+.site-mobile-menu-search .mobile-menu-search-input:focus {
+  border-color: #2aa8a8 !important;
+  box-shadow: 0 0 0 3px rgba(42, 168, 168, 0.15) !important;
+}
+
+.site-mobile-menu-search .mobile-menu-search-submit {
+  height: 40px !important;
+  border-radius: 10px !important;
+  margin-top: 8px !important;
+  font-size: 0.9rem !important;
+  background: #2aa8a8 !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.site-mobile-menu-search .mobile-menu-search-submit:hover {
+  background: #1f8282 !important;
+}
+
+/* Enlaces del panel */
+.site-mobile-menu .site-nav-wrap > li > a {
+  padding: 12px 16px !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #1e293b !important;
+  border-radius: 10px !important;
+  display: block;
+}
+
+.site-mobile-menu .site-nav-wrap > li > a:hover {
+  background: rgba(42, 168, 168, 0.08) !important;
+  color: #2aa8a8 !important;
+}
+
+/* Botones de idioma dentro del panel (píldoras elegantes) */
+.site-mobile-menu .site-nav-wrap > li > a.castellano-es {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 6px 8px 0 !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  padding: 8px 18px !important;
+  border-radius: 20px !important;
+  background: #2aa8a8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(42, 168, 168, 0.22);
+}
+
+.site-mobile-menu .site-nav-wrap > li > a.castellano-es:hover {
+  background: #1a2e45 !important;
+  color: #ffffff !important;
+}
+
+/* Pie de contacto dentro del panel offcanvas */
+.site-mobile-menu-footer {
+  flex-shrink: 0 !important;
+  padding: 14px 20px 20px !important;
+  border-top: 1px solid rgba(26, 46, 69, 0.08) !important;
+  background: #f8fafc !important;
+}
+
+.site-mobile-menu-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-menu-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a2e45 !important;
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-contact-item:hover,
+.mobile-menu-contact-item:focus {
+  background: rgba(42, 168, 168, 0.12);
+  color: #147979 !important;
+  border-color: rgba(42, 168, 168, 0.3);
+}
+
+.mobile-menu-contact-item .icon-whatsapp {
+  color: #25D366;
+  font-size: 1.15rem;
+}
+
+.mobile-menu-contact-item .icon-phone {
+  color: #2aa8a8;
+  font-size: 1.1rem;
+}
+
+.mobile-menu-contact-item .icon-envelope {
+  color: #e67e22;
+  font-size: 1.05rem;
+}
+
+/* ---------- Reglas específicas para Tablets (768px a 1199.98px) ---------- */
+@media (min-width: 768px) and (max-width: 1199.98px) {
+  /* Barra superior ajustada en tablets */
+  .site-navbar-top {
+    font-size: 0.78rem !important;
+  }
+
+  .site-navbar-top .col-7 {
+    flex: 0 0 70% !important;
+    max-width: 70% !important;
+  }
+
+  .site-navbar-top .col-5 {
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+  }
+
+  .site-navbar-top .col-7 .d-flex a {
+    margin-right: 1.2rem !important;
+  }
+
+  .site-navbar-top .col-5 a {
+    padding: 0.25rem 0.4rem !important;
+  }
+
+  /* Logo bien dimensionado en tablets */
+  .site-navbar .logo {
+    max-width: 190px !important;
+    max-height: 52px !important;
+    width: auto;
+    height: auto;
+    margin-left: 0 !important;
+  }
+
+  /* Header sticky en tablets */
+  .sticky-wrapper.is-sticky .site-navbar {
+    background: #1e293b !important;
+    padding: 8px 0 !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  }
+
+  .sticky-wrapper.is-sticky .site-navbar .logo {
+    max-height: 44px !important;
+  }
+
+  /* Panel del menú optimizado para tablet */
+  .site-mobile-menu {
+    width: 400px !important;
+    max-width: 85vw !important;
+  }
+
+  .site-mobile-menu .site-mobile-menu-header {
+    padding: 18px 24px 16px !important;
+  }
+
+  .site-mobile-menu-title {
+    font-size: 1.1rem !important;
+  }
+
+  .site-mobile-menu .site-nav-wrap > li > a {
+    font-size: 1.05rem !important;
+    padding: 13px 20px !important;
+  }
+
+  .site-mobile-menu .site-nav-wrap > li > ul > li > a {
+    font-size: 0.98rem !important;
+    padding: 11px 20px 11px 40px !important;
+  }
+
+  .site-mobile-menu .site-nav-wrap button.arrow-collapse {
+    width: 44px;
+    height: 44px;
+    top: 6px;
+    right: 10px;
+    border-radius: 10px;
+  }
+
+  .site-mobile-menu-footer {
+    padding: 18px 24px 24px !important;
+  }
+}
+
+/* En pantallas móviles (< 768px) */
+@media (max-width: 767.98px) {
+  .site-navbar .logo {
+    max-width: 140px;
+    max-height: 42px;
+    height: auto;
+    width: auto;
+    margin-left: 0 !important;
+  }
+
+  .site-tablet-actions {
+    gap: 8px;
+  }
+
+  .site-nav-search-trigger {
+    width: 40px;
+    height: 40px;
+    font-size: 1.05rem;
+  }
+
+  .site-navbar .site-menu-toggle {
+    width: 42px;
+    height: 40px;
+  }
+}
+
+/* En escritorios compactos (1200px a 1399.98px), asegurar que los 9 ítems nunca se envuelvan */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .site-navbar .site-navigation .site-menu > li > a {
+    padding: 18px 7px !important;
+    font-size: 13px !important;
+    letter-spacing: normal;
+  }
+
+  .sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li > a {
+    padding: 10px 7px !important;
+    font-size: 13px !important;
+  }
+
+  .site-navbar .site-navigation .site-menu > li.has-children > a {
+    padding-right: 16px !important;
+  }
+
+  .site-navbar .site-navigation .site-menu > li > a.castellano-es {
+    padding: 4px 7px !important;
+    font-size: 11px !important;
+  }
+
+  .site-menu.main-menu > li.nav-item-search .botonsearch {
+    padding: 18px 6px !important;
+  }
 }

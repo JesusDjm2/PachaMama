@@ -84,25 +84,32 @@ $(function() {
     $(window).resize(function() {
       var $this = $(this),
           w = $this.width();
-      if ( w > 768 ) {
+      if ( w >= 1200 ) {
         if ( $('body').hasClass('offcanvas-menu') ) {
           $('body').removeClass('offcanvas-menu');
           $('.site-mobile-menu').attr('aria-hidden', 'true');
+          $('.js-menu-toggle').removeClass('active');
         }
       }
     });
+
+    var closeOffcanvas = function() {
+      if ( $('body').hasClass('offcanvas-menu') ) {
+        $('body').removeClass('offcanvas-menu');
+        $('.site-mobile-menu').attr('aria-hidden', 'true');
+        $('.js-menu-toggle').removeClass('active');
+      }
+    };
 
     $('body').on('click', '.js-menu-toggle', function(e) {
       var $this = $(this);
       e.preventDefault();
       if ( $('body').hasClass('offcanvas-menu') ) {
-        $('body').removeClass('offcanvas-menu');
-        $('.site-mobile-menu').attr('aria-hidden', 'true');
-        $this.removeClass('active');
+        closeOffcanvas();
       } else {
         $('body').addClass('offcanvas-menu');
         $('.site-mobile-menu').attr('aria-hidden', 'false');
-        $this.addClass('active');
+        $('.js-menu-toggle').addClass('active');
         window.setTimeout(function() {
           var $inp = $('.js-mobile-menu-search-input').filter(':visible').first();
           if ($inp.length) {
@@ -112,14 +119,22 @@ $(function() {
       }
     });
 
-    // Click outside offcanvas
-    $(document).mouseup(function(e) {
-      var container = $(".site-mobile-menu");
-      if (!container.is(e.target) && container.has(e.target).length === 0) {
-        if ( $('body').hasClass('offcanvas-menu') ) {
-          $('body').removeClass('offcanvas-menu');
-          $('.site-mobile-menu').attr('aria-hidden', 'true');
-        }
+    // Cerrar al hacer clic o tap fuera del panel (funciona en móvil y tablets)
+    $(document).on('click.offcanvas touchend.offcanvas', function(e) {
+      if (!$('body').hasClass('offcanvas-menu')) {
+        return;
+      }
+      var $target = $(e.target);
+      if ($target.closest('.js-menu-toggle').length || $target.closest('.site-mobile-menu').length) {
+        return;
+      }
+      closeOffcanvas();
+    });
+
+    // Cerrar con tecla Escape (accesibilidad)
+    $(document).on('keydown.offcanvas', function(e) {
+      if (e.key === 'Escape' || e.keyCode === 27) {
+        closeOffcanvas();
       }
     });
   };
